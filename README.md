@@ -5,4 +5,4 @@ Albion \
 Ketua Kelompok: \
 Anggota 1: Muhammad Luthfan Arrayyan - 21/479825/TK/52943\
 Anggota 2: \
-Anggota 3: 
+Anggota 3: Partahi Bonaruli Sitorus - 21/482615/TK/53324
