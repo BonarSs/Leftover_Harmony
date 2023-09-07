@@ -3,6 +3,6 @@ Aplikasi yang menghubungkan para donatur dan juga yayasan penerima donasi yang n
 
 Albion \
 Ketua Kelompok: \
-Anggota 1: \
+Anggota 1: Muhammad Luthfan Arrayyan - 21/479825/TK/52943\
 Anggota 2: \
 Anggota 3: 
