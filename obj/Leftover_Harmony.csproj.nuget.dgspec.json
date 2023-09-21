@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\athanasia\\Documents\\athanasia\\junpro\\project\\Leftover_Harmony\\Leftover_Harmony.csproj": {}
+    "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj": {}
   },
   "projects": {
-    "C:\\Users\\athanasia\\Documents\\athanasia\\junpro\\project\\Leftover_Harmony\\Leftover_Harmony.csproj": {
+    "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\athanasia\\Documents\\athanasia\\junpro\\project\\Leftover_Harmony\\Leftover_Harmony.csproj",
+        "projectUniqueName": "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj",
         "projectName": "Leftover_Harmony",
-        "projectPath": "C:\\Users\\athanasia\\Documents\\athanasia\\junpro\\project\\Leftover_Harmony\\Leftover_Harmony.csproj",
-        "packagesPath": "C:\\Users\\athanasia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\athanasia\\Documents\\athanasia\\junpro\\project\\Leftover_Harmony\\obj\\",
+        "projectPath": "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj",
+        "packagesPath": "C:\\Users\\ekowi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\athanasia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ekowi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
