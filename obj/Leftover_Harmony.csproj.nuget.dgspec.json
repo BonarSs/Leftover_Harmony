@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj": {}
+    "C:\\Users\\ekowi\\Source\\Repos\\Leftover_Harmony\\Leftover_Harmony.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj": {
+    "C:\\Users\\ekowi\\Source\\Repos\\Leftover_Harmony\\Leftover_Harmony.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj",
+        "projectUniqueName": "C:\\Users\\ekowi\\Source\\Repos\\Leftover_Harmony\\Leftover_Harmony.csproj",
         "projectName": "Leftover_Harmony",
-        "projectPath": "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\Leftover_Harmony.csproj",
+        "projectPath": "C:\\Users\\ekowi\\Source\\Repos\\Leftover_Harmony\\Leftover_Harmony.csproj",
         "packagesPath": "C:\\Users\\ekowi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ekowi\\source\\repos\\Leftover_Harmony\\obj\\",
+        "outputPath": "C:\\Users\\ekowi\\Source\\Repos\\Leftover_Harmony\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ekowi\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -13,14 +13,15 @@ namespace Leftover_Harmony.Models
         private string _description;
         private DateTime _date;
         private Donee _donee;
-        private string _status = "ongoing";
+        private List<Donor> _donors;
+        private List<Donor> _approvedDonors;
 
         public Leftover Item {  get { return _item; } }
         public string Title { get { return _title; } }
         public string Description { get { return _description; } }
         public DateTime Date { get { return _date; } }
         public Donee Donee { get { return _donee; } }
-        public string Status { get { return _status; } }
+        public List<Donor> Donors { get { return _donors; } }
 
         Request(Leftover item, string title, string description, DateTime date, Donee donee)
         {
@@ -31,8 +32,25 @@ namespace Leftover_Harmony.Models
             _donee = donee;
         }
 
-        public void Approve() { _status = "approved"; }
-        public void Reject() { _status = "rejected"; }
+        public bool Approve(Donor donor) {
+            if (!_donors.Contains(donor)) return false;
+            _approvedDonors.Add(donor);
+            return true;
+        }
+        public bool Reject(Donor donor)
+        {
+            return RemoveDonor(donor);
+        }
+        public bool AddDonor(Donor donor) {
+            if (_donors.Contains(donor)) return false;
+            _donors.Add(donor);
+            return true;
+        }
+        public bool RemoveDonor(Donor donor) {
+            if (!_donors.Contains(donor)) return false;
+            _donors.Remove(donor);
+            return true;
+        }
 
     }
 }
