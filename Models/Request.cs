@@ -21,6 +21,7 @@ namespace Leftover_Harmony.Models
         public string Description { get { return _description; } }
         public DateTime Date { get { return _date; } }
         public Donee Donee { get { return _donee; } }
+        public List<Donor> Donors { get { return _donors; } }
 
         Request(Leftover item, string title, string description, DateTime date, Donee donee)
         {

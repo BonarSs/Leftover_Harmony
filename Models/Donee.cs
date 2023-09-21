@@ -19,16 +19,32 @@ namespace Leftover_Harmony.Models
             PhoneNumber = phoneNumber;
         }
 
-        public Boolean addRequest(Request request)
+        public Boolean AddRequest(Request request)
         {
             if (_requests.Contains(request)) return false;
             _requests.Add(request);
             return true;
         }
-        public Boolean approve(Request request)
+        public Boolean CancelRequest(Request request)
         {
             if (!_requests.Contains(request)) return false;
-            request.Approve();
+            _requests.Remove(request);
+            return true;
+        }
+        public Boolean Approve(Request request, Donor donor)
+        {
+            if (!_requests.Contains(request)) return false;
+            if (!request.Donors.Contains(donor)) return false;
+            request.Approve(donor);
+            donor.ApproveRequest(request);
+            return true;
+        }
+        public Boolean Reject(Request request, Donor donor)
+        {
+            if (!_requests.Contains(request)) return false;
+            if (!request.Donors.Contains(donor)) return false;
+            request.Reject(donor);
+            donor.RejectRequest(request);
             return true;
         }
     }
