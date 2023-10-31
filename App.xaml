@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Leftover_Harmony"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="Montserrat">pack://application:,,,/Resources/Fonts/#Montserrat</FontFamily>
+        <FontFamily x:Key="Roboto">pack://application:,,,/Resources/Fonts/#Roboto</FontFamily>
     </Application.Resources>
 </Application>

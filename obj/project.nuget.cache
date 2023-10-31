@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "C67sdaX5GeNCPBbnFQE7BxdJIZLrvgpQHHhNO/Y4cYZKmDI8FM0ymQmEnWNNYgU7KaFwoXoe3ZJvT7nCBEbrXw==",
+  "dgSpecHash": "+b+KWy01GI5EvH7V4LDXTjfkryjow5j8ln2Tlm79Q9bOeDd6silh3SkpAFtgI2gyjfingkaP9opb2gFuMKV/xA==",
   "success": true,
   "projectFilePath": "C:\\Users\\ekowi\\Source\\Repos\\Leftover_Harmony\\Leftover_Harmony.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ekowi\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\ekowi\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512"
+  ],
   "logs": []
 }

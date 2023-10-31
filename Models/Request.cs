@@ -1,56 +1,117 @@
-﻿using System;
+﻿using Leftover_Harmony.Services;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Leftover_Harmony.Models
 {
-    class Request
+    public class Request
     {
-        private Leftover _item;
+        private readonly int _id;
         private string _title;
         private string _description;
-        private DateTime _date;
-        private Donee _donee;
-        private List<Donor> _donors;
-        private List<Donor> _approvedDonors;
+        private DateTime _date_created;
 
-        public Leftover Item {  get { return _item; } }
-        public string Title { get { return _title; } }
-        public string Description { get { return _description; } }
-        public DateTime Date { get { return _date; } }
-        public Donee Donee { get { return _donee; } }
-        public List<Donor> Donors { get { return _donors; } }
+        private byte[]? _image; 
+        private List<Leftover>? _leftovers;
+        private Donee? _donee;
+        private List<Donation>? _donations;
 
-        Request(Leftover item, string title, string description, DateTime date, Donee donee)
+        public int Id { get { return _id; } }
+        
+        public string Title { get { return _title; } set { _title = value; } }
+        public string Description { get { return _description; } set { _description = value; } }
+        public DateTime Date { get { return _date_created; } }
+        public Donee Donee
         {
-            _item = item;
+            get
+            {
+                if (_donee == null) _donee = DataFetcher.Instance.FetchDonee(this);
+                return _donee;
+            }
+        }
+        public List<Leftover> Leftovers
+        {
+            get
+            {
+                if (_leftovers == null) _leftovers = DataFetcher.Instance.FetchRequestLeftover(this);
+                return _leftovers;
+            }
+        }
+        public List<Donation> Donations
+        {
+            get
+            {
+                if (_donations == null) _donations = DataFetcher.Instance.FetchRequestDonation(this);
+                return _donations;
+            }
+        }
+
+        public Request(int id, string title, string description, DateTime date)
+        {
+            _id = id;
             _title = title;
             _description = description;
-            _date = date;
-            _donee = donee;
+            _date_created = date;
         }
-
-        public bool Approve(Donor donor) {
-            if (!_donors.Contains(donor)) return false;
-            _approvedDonors.Add(donor);
-            return true;
-        }
-        public bool Reject(Donor donor)
+        public static Request From(DataRow dataRow)
         {
-            return RemoveDonor(donor);
-        }
-        public bool AddDonor(Donor donor) {
-            if (_donors.Contains(donor)) return false;
-            _donors.Add(donor);
-            return true;
-        }
-        public bool RemoveDonor(Donor donor) {
-            if (!_donors.Contains(donor)) return false;
-            _donors.Remove(donor);
-            return true;
-        }
+            string[] expectedFields = { "request_id", "title", "description", "date_created" };
+            foreach (string field in expectedFields)
+            {
+                if (!dataRow.Table.Columns.Contains(field)) throw new MissingFieldException($"The field {field} does not exist.");
+            }
 
+            string description = dataRow["description"] != DBNull.Value ? (string)dataRow["description"] : "";
+
+            Request request = new Request(
+                (int)dataRow["request_id"],
+                (string)dataRow["title"],
+                description,
+                (DateTime)dataRow["date_created"]
+            );
+
+            if (dataRow.Table.Columns.Contains("image") && dataRow["image"] != DBNull.Value) request.SetImage((byte[])dataRow["image"]);
+            return request;
+        }
+        public void SetImage(byte[] image) { _image = image; }
+        public List<Donation> AllDonations()
+        {
+            return Donations;
+        }
+        public List<Donation> ApprovedDonations()
+        {
+            return Donations.Where(donation => donation.Status == DonationStatus.Approved).ToList();   
+        }
+        public List<Donation> RejectedDonations()
+        {
+            return Donations.Where(donation => donation.Status == DonationStatus.Rejected).ToList();
+        }
+        public bool AddDonation(Donation donation)
+        {
+            if (Donations.Contains(donation)) { return false; }
+            Donations.Add(donation);
+            return true;
+        }
+        public bool RemoveDonation(Donation donation)
+        {
+            if (!Donations.Contains(donation)) { return false; }
+            Donations.Remove(donation);
+            return true;
+        }
+        public Donation? FindDonationByDonor(Donor donor)
+        {
+            try
+            {
+                return Donations.Find(donation => donation.Donor == donor);
+            }
+            catch (ArgumentNullException)
+            {
+                return null;
+            }
+        }
     }
 }
