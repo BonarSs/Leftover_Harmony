@@ -1,4 +1,5 @@
-﻿using Leftover_Harmony.Models;
+﻿using Leftover_Harmony.Helpers;
+using Leftover_Harmony.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace Leftover_Harmony.Views
             usrBio.Text = _account.Bio;
             usrEmail.Text = _account.Email;
             usrPhoneNumber.Text = _account.PhoneNumber;
+            if (_account.Image != null) usrProfilePicture.ImageSource = ImageConverter.ByteArraytoImage(_account.Image);
         }
 
         private void displayRecentDonations()
@@ -61,9 +63,6 @@ namespace Leftover_Harmony.Views
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             formatData();
-            _mainWindow.UserConsole.Document.Blocks.Add(
-                new Paragraph(
-                    new Run("Actual page dimension: " + this.ActualWidth.ToString() + " x " + this.ActualHeight.ToString())));
         }
     }
 }

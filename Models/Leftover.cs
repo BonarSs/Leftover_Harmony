@@ -13,12 +13,11 @@ namespace Leftover_Harmony.Models
         private string _name;
         private string _description;
         private byte[]? _image;
-        private Category _category;
+        private Category? _category;
 
         public int Id { get { return _id; } }
         public string Name { get { return _name; } set { _name = value; } }
         public string Description { get { return _description; } set { _description = value; } }
-        public Category Category { get { return _category; } set { _category = value; } }
         public Leftover(int id, string name, string description)
         {
             _id = id;

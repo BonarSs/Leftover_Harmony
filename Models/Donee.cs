@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leftover_Harmony.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace Leftover_Harmony.Models
     public class Donee : User
     {
         private string _organization;
-        private readonly List<Request>? _requests;
+        // private readonly List<Request>? _requests;
         public string Organization { get { return _organization; } }
-        public List<Request> Requests { get { return _requests; } }
+        public List<Request> Requests { get { return DataAccessProvider.Instance.FetchDoneeRequests(this); } }
 
         public Donee(int id, string username, string password, string email, string phoneNumber, string organization) : base(id, username, password, email, phoneNumber)
         {
@@ -49,8 +50,8 @@ namespace Leftover_Harmony.Models
         /// <returns></returns>
         public bool AddRequest(Request request)
         {
-            if (_requests.Contains(request)) return false;
-            _requests.Add(request);
+            if (Requests.Contains(request)) return false;
+            Requests.Add(request);
             return true;
         }
         /// <summary>
@@ -60,8 +61,8 @@ namespace Leftover_Harmony.Models
         /// <returns></returns>
         public bool RemoveRequest(Request request)
         {
-            if (!_requests.Contains(request)) return false;
-            _requests.Remove(request);
+            if (!Requests.Contains(request)) return false;
+            Requests.Remove(request);
             return true;
         }
         /// <summary>
@@ -95,24 +96,24 @@ namespace Leftover_Harmony.Models
             return true;
         }
         public bool Approve(Donation donation) {
-            if (!_requests.Contains(donation.Request)) return false;
+            if (!Requests.Contains(donation.Request)) return false;
             return donation.Approve();
         }
         public bool ApproveDonorInRequest(Request request, Donor donor)
         {
-            if (!_requests.Contains(request)) return false;
+            if (!Requests.Contains(request)) return false;
             Donation? donation = request.FindDonationByDonor(donor);
             if (donation == null) return false;
             donation.Approve();
             return true;
         }
         public bool Reject(Donation donation) {
-            if (!_requests.Contains(donation.Request)) return false;
+            if (!Requests.Contains(donation.Request)) return false;
             return donation.Reject(); 
         }
         public bool RejectDonorInRequest(Request request, Donor donor)
         {
-            if (!_requests.Contains(request)) return false;
+            if (!Requests.Contains(request)) return false;
             Donation? donation = request.FindDonationByDonor(donor);
             if (donation == null) return false;
             donation.Reject();

@@ -1,4 +1,5 @@
-﻿using Leftover_Harmony.Models;
+﻿using Leftover_Harmony.Helpers;
+using Leftover_Harmony.Models;
 using Leftover_Harmony.Services;
 using Leftover_Harmony.Views;
 using Npgsql;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -40,8 +42,8 @@ namespace Leftover_Harmony
         
         private void ClearFrame()
         {
+            while (MainFrame.NavigationService.RemoveBackEntry() != null) ;
             MainFrame.Content = null;
-            while (MainFrame.NavigationService.RemoveBackEntry() != null);
         }
 
         public MainWindow()
@@ -49,10 +51,19 @@ namespace Leftover_Harmony
             InitializeComponent();
         }
 
+        public MainWindow(User account)
+        {
+            InitializeComponent();
+            _user = account;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DataFetcher.Instance.Connect(connectionString);
-            _user = DataFetcher.Instance.FetchDonor(1);
+            DataAccessProvider.Instance.Connect(connectionString);
+            _user = DataAccessProvider.Instance.FetchDonor(1);
+
+            // _user.ChangeImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.yae.png"));
+            // DataAccessProvider.Instance.UpdateDonor((Donor)_user);
 
             Log(((Donor)_user).Donations[0].Request.Title);
         }

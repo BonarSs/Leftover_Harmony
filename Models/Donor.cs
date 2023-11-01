@@ -11,15 +11,7 @@ namespace Leftover_Harmony.Models
     public class Donor : User
     {
         // private List<Donation>? _donations;
-        public List<Donation> Donations {
-            get {
-                /*
-                if (_donations == null) _donations = DataFetcher.Instance.FetchDonorDonations(this);
-                return _donations;
-                */
-                return DataFetcher.Instance.FetchDonorDonations(this);
-            }
-        }
+        public List<Donation> Donations { get { return DataAccessProvider.Instance.FetchDonorDonations(this); } }
 
         public Donor(int id, string username, string password, string email, string phoneNumber) : base(id, username, password, email, phoneNumber) { }
 

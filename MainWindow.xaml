@@ -19,13 +19,13 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.Column="0" Background="#ccc"/>
-        <Grid VerticalAlignment="Center" Background="#eee" HorizontalAlignment="Center" Height="78" Width="1024" Grid.Column="1"/>
+        <Grid Background="#eee" Grid.Column="1"/>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="#ccc" Height="626" Width="256" Grid.Row="1">
+        <Grid Background="#ccc" Grid.Row="1">
             <RadioButton Content="Home" HorizontalAlignment="Left" Margin="43,38,0,0" VerticalAlignment="Top" GroupName="Navigation" Checked="RadioButton_Checked"/>
             <RadioButton x:Name="ProfileButton"  Content="Profile" HorizontalAlignment="Left" Margin="43,58,0,0" VerticalAlignment="Top" GroupName="Navigation" Checked="ProfileButton_Checked"/>
             <RichTextBox x:Name="UserConsole" Margin="0,406,0,0" IsReadOnly="True"/>
         </Grid>
-        <Frame x:Name="MainFrame" HorizontalAlignment="Center" VerticalAlignment="Center" Source="" Grid.Column="1" Grid.Row="1" Height="616" Width="1014"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Panel.ZIndex="1" Source="" Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Window>

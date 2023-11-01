@@ -28,45 +28,18 @@ namespace Leftover_Harmony.Models
         private string _description;
         private DateTime _date_donated;
         private int _amount;
-        private Donor? _donor;
-        private Request? _request;
-        private Leftover? _leftover;
+        // private Donor? _donor;
+        // private Request? _request;
+        // private Leftover? _leftover;
 
         public int Id { get { return _id; } }
         public DonationStatus Status { get { return _status; } }
         public string Description { get { return _description; } }
         public DateTime DateDonated { get { return _date_donated; } }
         public int Amount { get { return _amount; } }
-        public Donor Donor { 
-            get {
-                /*
-                if (_donor == null) _donor = DataFetcher.Instance.FetchDonor(this);
-                return _donor; 
-                */
-                return DataFetcher.Instance.FetchDonor(this);
-            } 
-        }
-        public Request Request {
-            get {
-                /*
-                if (_request == null) _request = DataFetcher.Instance.FetchRequest(this);
-                return _request;
-                */
-                return DataFetcher.Instance.FetchRequest(this);
-            }
-        }
-        public Leftover Leftover
-        {
-            get
-            {
-                /*
-                if (_leftover == null) _leftover = DataFetcher.Instance.FetchLeftover(this);
-                return _leftover;
-                */
-                return DataFetcher.Instance.FetchLeftover(this);
-            }
-        }
-        
+        public Donor Donor { get { return DataAccessProvider.Instance.FetchDonor(this); } }
+        public Request Request { get { return DataAccessProvider.Instance.FetchRequest(this); } }
+        public Leftover Leftover { get { return DataAccessProvider.Instance.FetchLeftover(this); } }
 
         public Donation(int id, DonationStatus status, string description, DateTime date, int amount)
         {

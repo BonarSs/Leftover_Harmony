@@ -15,11 +15,11 @@
     <None Remove="Resources\Images\bahan-pangan.jpg" />
     <None Remove="Resources\Images\rehan.png" />
     <None Remove="Resources\Images\roti.jpg" />
+    <None Remove="Resources\Images\yae.png" />
     <None Remove="Resources\lemalin.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
@@ -43,6 +43,9 @@
     <Resource Include="Resources\Images\bahan-pangan.jpg" />
     <Resource Include="Resources\Images\rehan.png" />
     <Resource Include="Resources\Images\roti.jpg" />
+    <EmbeddedResource Include="Resources\Images\yae.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Resources\lemalin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

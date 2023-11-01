@@ -16,39 +16,18 @@ namespace Leftover_Harmony.Models
         private DateTime _date_created;
 
         private byte[]? _image; 
-        private List<Leftover>? _leftovers;
-        private Donee? _donee;
-        private List<Donation>? _donations;
+        // private List<Leftover>? _leftovers;
+        // private Donee? _donee;
+        // private List<Donation>? _donations;
 
         public int Id { get { return _id; } }
         
         public string Title { get { return _title; } set { _title = value; } }
         public string Description { get { return _description; } set { _description = value; } }
         public DateTime Date { get { return _date_created; } }
-        public Donee Donee
-        {
-            get
-            {
-                if (_donee == null) _donee = DataFetcher.Instance.FetchDonee(this);
-                return _donee;
-            }
-        }
-        public List<Leftover> Leftovers
-        {
-            get
-            {
-                if (_leftovers == null) _leftovers = DataFetcher.Instance.FetchRequestLeftover(this);
-                return _leftovers;
-            }
-        }
-        public List<Donation> Donations
-        {
-            get
-            {
-                if (_donations == null) _donations = DataFetcher.Instance.FetchRequestDonation(this);
-                return _donations;
-            }
-        }
+        public Donee Donee { get { return DataAccessProvider.Instance.FetchDonee(this); } }
+        public List<Leftover> Leftovers { get { return DataAccessProvider.Instance.FetchRequestLeftover(this); } }
+        public List<Donation> Donations { get { return DataAccessProvider.Instance.FetchRequestDonation(this); } }
 
         public Request(int id, string title, string description, DateTime date)
         {
