@@ -1,0 +1,92 @@
+﻿<Page x:Class="Leftover_Harmony.Views.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Leftover_Harmony.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HomePage">
+
+    <Page.Resources>
+        <ControlTemplate x:Key="DonationContentTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <!--Gambar-->
+                <Grid Grid.Row="0">
+                    <StackPanel Margin="8,8,8,8" Orientation="Horizontal">
+                        <Rectangle Width="197" RadiusX="10" RadiusY="10">
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="/Resources/Images/roti.jpg" Stretch="UniformToFill"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </StackPanel>
+                </Grid>
+
+                <!--Judul Request-->
+                <Grid Grid.Row="1" Margin="20,0,20,0">
+                    <StackPanel>
+                        <TextBlock Text="PT Bonaruli" FontFamily="{StaticResource Montserrat}" FontSize="14" FontWeight="Bold" VerticalAlignment="Top" Height="15" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                        <Rectangle Grid.ColumnSpan="2" Stroke="Black" VerticalAlignment="Bottom"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <TextBlock Grid.Row="1" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. njdadbjab dnsjan dbsjadbasj" Margin="16,0,16,0"/>
+                </Grid>
+
+            </Grid>
+        </ControlTemplate>
+    </Page.Resources>
+
+    <Grid Background="#F4F6F1">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="27,10,27,10" Grid.Row="0" Grid.Column="0" >
+            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
+            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
+        </Grid>
+
+        <Grid Margin="27,10,27,10" Grid.Row="0" Grid.Column="1" >
+            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
+            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
+        </Grid>
+
+        <Grid Margin="27,10,27,10" Grid.Row="0" Grid.Column="2">
+            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
+            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
+        </Grid>
+
+        <Grid Margin="27,10,27,10" Grid.Row="1" Grid.Column="0">
+            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
+            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
+        </Grid>
+
+        <Grid Margin="27,10,27,10" Grid.Row="1" Grid.Column="1">
+            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
+            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
+        </Grid>
+
+        <Grid Margin="27,10,27,10" Grid.Row="1" Grid.Column="2">
+            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
+            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
+        </Grid>
+
+    </Grid>
+
+</Page>
