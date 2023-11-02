@@ -25,6 +25,7 @@ namespace Leftover_Harmony.Models
         public string Title { get { return _title; } set { _title = value; } }
         public string Description { get { return _description; } set { _description = value; } }
         public DateTime Date { get { return _date_created; } }
+        public byte[] Image { get { return _image; } }
         public Donee Donee { get { return DataAccessProvider.Instance.FetchDonee(this); } }
         public List<Leftover> Leftovers { get { return DataAccessProvider.Instance.FetchRequestLeftover(this); } }
         public List<Donation> Donations { get { return DataAccessProvider.Instance.FetchRequestDonation(this); } }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Leftover_Harmony.Helpers
@@ -17,6 +18,11 @@ namespace Leftover_Harmony.Helpers
             bitmapImage.EndInit();
 
             return bitmapImage;
+        }
+
+        public static TransformedBitmap ResizeBitmap(BitmapImage bitmapImage, double ratio)
+        {
+            return new TransformedBitmap(bitmapImage, new ScaleTransform(ratio, ratio));
         }
     }
 }

@@ -34,6 +34,13 @@
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
+        <DrawingImage x:Key="x_circle_fill">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF4A6B" Geometry="F1 M16,16z M0,0z M16,8A8,8,0,1,1,0,8A8,8,0,0,1,16,8z M5.354,4.646A0.5,0.5,0,1,0,4.646,5.354L7.293,8 4.646,10.646A0.5,0.5,0,0,0,5.354,11.354L8,8.707 10.646,11.354A0.5,0.5,0,0,0,11.354,10.646L8.707,8 11.354,5.354A0.5,0.5,0,0,0,10.646,4.646L8,7.293 5.354,4.646z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
         <ControlTemplate x:Key="DonationContentTemplate">
             <Grid>
                 <Grid.RowDefinitions>
@@ -48,13 +55,12 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel HorizontalAlignment="Left">
                         <TextBlock Text="Donation" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" VerticalAlignment="Top" Height="34" />
-                        <TextBlock Text="28 October 2023" FontFamily="{StaticResource Roboto}" FontSize="14"/>
+                        <TextBlock x:Name="dnDate" Text="28 October 2023" FontFamily="{StaticResource Roboto}" FontSize="14"/>
                     </StackPanel>
                     <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,4,0,12">
-                        <Image Source="{StaticResource check_circle_fill}" Margin="0,0,8,0" VerticalAlignment="Top"/>
+                        <Image x:Name="dnStatus" Source="{StaticResource check_circle_fill}" Margin="0,0,8,0" VerticalAlignment="Top"/>
                     </Grid>
                     <Rectangle Grid.ColumnSpan="2" Stroke="Black" VerticalAlignment="Bottom"/>
-
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
@@ -62,33 +68,26 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Margin="16,8,16,8" Orientation="Horizontal">
-                        <Rectangle Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left">
-                            <Rectangle.Fill>
-                                <ImageBrush ImageSource="/Resources/Images/roti.jpg" Stretch="UniformToFill"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <Rectangle x:Name="lfImage" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left" Stroke="#000"/>
                         <StackPanel Margin="8,0,0,0">
-                            <TextBlock Text="Roti" FontFamily="{StaticResource Montserrat}" FontWeight="Bold" FontSize="18"/>
-                            <TextBlock Text="Lorem ipsum dolor sit amet" FontFamily="{StaticResource Roboto}" FontSize="12"/>
-                            <TextBlock Text="Qty: 5" FontFamily="{StaticResource Roboto}" FontSize="12"/>
+                            <TextBlock x:Name="lfName" Text="Roti" FontFamily="{StaticResource Montserrat}" FontWeight="Bold" FontSize="18"/>
+                            <TextBlock x:Name="lfDescription" Text="Lorem ipsum dolor sit amet" FontFamily="{StaticResource Roboto}" FontSize="12"/>
+                            <TextBlock x:Name="lfQuantity" Text="Qty: {qty}" FontFamily="{StaticResource Roboto}" FontSize="12"/>
                         </StackPanel>
                     </StackPanel>
                     <Rectangle Stroke="Black" VerticalAlignment="Bottom" Margin="16,0,16,0"/>
                     <StackPanel Margin="16,8,16,8" Orientation="Horizontal" Grid.Row="1">
-                        <Rectangle Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left">
-                            <Rectangle.Fill>
-                                <ImageBrush ImageSource="/Resources/Images/bahan-pangan.jpg" Stretch="UniformToFill"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <Rectangle x:Name="rqImage" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left" Stroke="#000"/>
                         <StackPanel Margin="8,0,0,0">
                             <TextBlock Text="Donated to:" FontFamily="{StaticResource Roboto}" FontSize="12"/>
-                            <TextBlock Text="Bahan Pangan" FontFamily="{StaticResource Montserrat}" FontWeight="Bold" FontSize="18"/>
+                            <TextBlock x:Name="rqName" Text="Bahan Pangan" FontFamily="{StaticResource Montserrat}" FontWeight="Bold" FontSize="18"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
-                <TextBlock Grid.Row="2" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." Margin="16,0,16,0"/>
+                <TextBlock x:Name="dnDescription" Grid.Row="2" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." Margin="16,0,16,0"/>
             </Grid>
         </ControlTemplate>
+        
     </Page.Resources>
 
     <Grid Background="#F4F6F1">
@@ -102,17 +101,13 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <Ellipse Stroke="Black" VerticalAlignment="Stretch" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8">
-                    <Ellipse.Fill>
-                        <ImageBrush x:Name="usrProfilePicture" ImageSource="../Resources/Images/rehan.png" Stretch="UniformToFill"/>
-                    </Ellipse.Fill>
-                </Ellipse>
+                <Ellipse x:Name="usrProfilePicture" Stroke="Black" Fill="Transparent" VerticalAlignment="Stretch" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8"/>
                 <Rectangle Grid.Column="1" Margin="16,8,16,8" Stroke="Black" RadiusX="10" RadiusY="10"/>
                 <Grid Grid.Column="1" Margin="16,8,16,8">
                     <StackPanel Margin="24,18,24,0">
-                        <TextBlock x:Name="usrDisplayName" Text="Rehan Saputra" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" VerticalAlignment="Top" Height="34" Margin="0,0,0,4" />
+                        <TextBlock x:Name="usrDisplayName" Text="Display Name" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" VerticalAlignment="Top" Height="34" Margin="0,0,0,4" />
                         <TextBlock x:Name="usrSubtitle" TextWrapping="Wrap" Text="Donor" VerticalAlignment="Center" FontFamily="{StaticResource Montserrat}" FontSize="16" FontStyle="Italic" Margin="0,0,0,4"/>
-                        <TextBlock x:Name="usrBio" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="14" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia..."/>
+                        <TextBlock x:Name="usrBio" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="14" Text="Bio"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="24,0,24,18">
                         <Grid VerticalAlignment="Top" Height="30" Margin="0,0,32,0">
@@ -144,22 +139,6 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Margin="0,0,16,0" Grid.Column="0" >
-                        <!--#region-->
-                        <ContentControl Template="{StaticResource DonationContentTemplate}"/>
-                        <!--#endregion-->
-                        <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-                    </Grid>
-                    <Grid Margin="8,0,8,0" Grid.Column="1" >
-                        <ContentControl>
-                            <!--Content Template-->
-                        </ContentControl>
-                        <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-                    </Grid>
-                    <Grid Margin="16,0,0,0" Grid.Column="2" >
-                        <!--Content Template-->
-                        <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

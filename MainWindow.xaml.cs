@@ -6,7 +6,9 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -33,11 +35,13 @@ namespace Leftover_Harmony
         private User _user;
 
         // database
-        private string connectionString = "Host=localhost;Username=postgres;Password=Munyamunya;Database=Leftover_Harmony";
+        // private string connectionString = "Host=floppy.db.elephantsql.com;Username=wnnyslmp;Password=8KGndrH9LfiTFYOp9kzLSRp6NhV67gDf;Database=wnnyslmp";
+        private string connectionString = ConfigurationManager.ConnectionStrings["PostgresUri"].ConnectionString;
 
-        private void Log(string message)
+
+        public void Log(string message)
         {
-            UserConsole.Document.Blocks.Add(new Paragraph(new Run(message)));
+            Trace.WriteLine(message);
         }
         
         private void ClearFrame()
@@ -60,12 +64,11 @@ namespace Leftover_Harmony
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DataAccessProvider.Instance.Connect(connectionString);
-            _user = DataAccessProvider.Instance.FetchDonor(1);
+            if (_user == null) _user = DataAccessProvider.Instance.FetchDonor(1);
 
-            // _user.ChangeImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.yae.png"));
-            // DataAccessProvider.Instance.UpdateDonor((Donor)_user);
+            HomeButton.IsChecked = true;
 
-            Log(((Donor)_user).Donations[0].Request.Title);
+            if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush(ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25));
         }
 
         private void ProfileButton_Checked(object sender, RoutedEventArgs e)
@@ -74,9 +77,19 @@ namespace Leftover_Harmony
             MainFrame.NavigationService.Navigate(new DonorProfilePage(this, (Donor)_user));
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void HomeButton_Checked(object sender, RoutedEventArgs e)
         {
             ClearFrame();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FocusManager.SetFocusedElement(this, this);
+        }
+
+        private void uiProfilePicture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ProfileButton.IsChecked = true;
         }
     }
 }

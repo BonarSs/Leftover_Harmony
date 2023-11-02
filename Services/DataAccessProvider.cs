@@ -54,7 +54,7 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
 
-            VirtualDatabase.Instance.Donors.Add(donor_id, donor);
+            if (_caching) VirtualDatabase.Instance.Donors.Add(donor_id, donor);
 
             return donor;
         }
@@ -79,7 +79,7 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
 
-            VirtualDatabase.Instance.Donations.Add(donation_id, donation);
+            if (_caching) VirtualDatabase.Instance.Donations.Add(donation_id, donation);
 
             return donation;
         }
@@ -104,7 +104,7 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
 
-            VirtualDatabase.Instance.Requests.Add(request_id, request);
+            if (_caching) VirtualDatabase.Instance.Requests.Add(request_id, request);
 
             return request;
         }
@@ -129,7 +129,7 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
 
-            VirtualDatabase.Instance.Leftovers.Add(leftover_id, leftover);
+            if (_caching) VirtualDatabase.Instance.Leftovers.Add(leftover_id, leftover);
 
             return leftover;
         }

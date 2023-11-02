@@ -7,9 +7,69 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" MouseLeftButtonDown="Window_MouseLeftButtonDown">
 
-    <Grid Background="#888">
+    <Window.Resources>
+        <Style x:Key="SidebarNavigationButton" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="FontFamily" Value="{StaticResource Inter}"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,8,0,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <Rectangle x:Name="BackgroundRectangle" Fill="#1565C0" RadiusX="10" RadiusY="10" Opacity="0"/>
+                            <ContentPresenter Margin="16,0,16,0" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="BackgroundRectangle" Property="Opacity" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundRectangle" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="BackgroundRectangle" Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SearchBarTextBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
+            <Setter Property="CaretBrush" Value="#fff"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Rectangle Fill="#0D47A1" RadiusX="5" RadiusY="5"/>
+                            <TextBlock x:Name="Placeholder" Text="Search..." Foreground="#fff" Margin="18,10,16,10" VerticalAlignment="Center" Opacity="0.5" Visibility="Hidden"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="16,10,16,10"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Placeholder" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#F4F6F1">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
@@ -18,13 +78,45 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Background="#ccc"/>
-        <Grid Background="#eee" Grid.Column="1"/>
+        <Grid Background="#1565C0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <TextBox x:Name="uiSearchBar" TextWrapping="Wrap" Text="" Style="{StaticResource SearchBarTextBox}" VerticalAlignment="Center" />
+            </Grid>
+            <Grid Grid.Column="2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" HorizontalAlignment="Right">
+                <Grid Margin="16,16,16,16">
+                    <Ellipse Fill="#F4F6F1"/>
+                    <Ellipse x:Name="uiProfilePicture" Fill="#F4F6F1" Cursor="Hand" MouseLeftButtonDown="uiProfilePicture_MouseLeftButtonDown"/>
+                </Grid>
+            </Grid>
+        </Grid>
 
-        <Grid Background="#ccc" Grid.Row="1">
-            <RadioButton Content="Home" HorizontalAlignment="Left" Margin="43,38,0,0" VerticalAlignment="Top" GroupName="Navigation" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="ProfileButton"  Content="Profile" HorizontalAlignment="Left" Margin="43,58,0,0" VerticalAlignment="Top" GroupName="Navigation" Checked="ProfileButton_Checked"/>
-            <RichTextBox x:Name="UserConsole" Margin="0,406,0,0" IsReadOnly="True"/>
+        <Grid Background="#000" Grid.RowSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="140.808"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Rectangle>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="/Resources/Images/default-logo.png"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Stroke="#fff" VerticalAlignment="Bottom" Margin="16,0,16,0"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Margin="16,16,16,0" Grid.RowSpan="2">
+                        <RadioButton x:Name="HomeButton" Content="Home" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="HomeButton_Checked"/>
+                        <RadioButton x:Name="ProfileButton" Content="Profile" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="ProfileButton_Checked"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
         </Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Panel.ZIndex="1" Source="" Grid.Column="1" Grid.Row="1"/>
     </Grid>
