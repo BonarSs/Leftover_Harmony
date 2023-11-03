@@ -64,6 +64,8 @@ namespace Leftover_Harmony
             HomeButton.IsChecked = true;
 
             if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush(ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25));
+
+            MainFrame.NavigationService.Navigate(new HomePage());
         }
 
         private void ProfileButton_Checked(object sender, RoutedEventArgs e)
@@ -75,6 +77,7 @@ namespace Leftover_Harmony
         private void HomeButton_Checked(object sender, RoutedEventArgs e)
         {
             ClearFrame();
+            MainFrame.NavigationService.Navigate(new HomePage());
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

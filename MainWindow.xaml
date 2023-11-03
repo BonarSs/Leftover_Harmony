@@ -13,7 +13,7 @@
         <Style x:Key="SidebarNavigationButton" TargetType="RadioButton">
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="Height" Value="48"/>
-            <Setter Property="FontFamily" Value="{StaticResource Inter}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Margin" Value="0,8,0,8"/>
             <Setter Property="Template">
