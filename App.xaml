@@ -9,6 +9,50 @@
         <FontFamily x:Key="Roboto">pack://application:,,,/Resources/Fonts/#Roboto</FontFamily>
         <FontFamily x:Key="Inter">pack://application:,,,/Resources/Fonts/#Inter</FontFamily>
         <FontFamily x:Key="Poppins">pack://application:,,,/Resources/Fonts/#Poppins</FontFamily>
+        <DrawingImage x:Key="leftover_harmony_logo_light">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V67 H67 V0 H0 Z">
+                    <GeometryDrawing Geometry="F1 M67,67z M0,0z M30,51L30,42.499C30,40.981,29.226,39.5601,27.9276,38.7222L26.2547,37.6414 24.2697,35.7104C23.2959,34.7632,21.7104,34.7632,20.7366,35.7104L20,36.4269">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFFFF" Thickness="3" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M67,67z M0,0z M22.625,51L22.625,46.2 13,37.8 13,27C15.2962,27,17.0562,28.596,17.125,30.6L17.125,34.2 24,40.2">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFFFF" Thickness="3" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M67,67z M0,0z M38,51L38,42.499C38,40.981,38.6966,39.5601,39.8652,38.7222L41.3708,37.6414 43.1573,35.7104C44.0337,34.7632,45.4607,34.7632,46.3371,35.7104L47,36.4269">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFFFF" Thickness="3" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M67,67z M0,0z M45.25,51L45.25,46.2 54,37.8 54,27C51.9125,27,50.3125,28.596,50.25,30.6L50.25,34.2 44,40.2">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFFFF" Thickness="3" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M67,67z M0,0z M24,34C24,30.134 28.2533,27 33.5,27 38.7467,27 43,30.134 43,34">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFFFF" Thickness="3" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M67,67z M0,0z M33.5,24C36.5376,24 39,21.5376 39,18.5 39,15.4624 36.5376,13 33.5,13 30.4624,13 28,15.4624 28,18.5 28,21.5376 30.4624,24 33.5,24z">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFFFF" Thickness="3" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFFFF" Thickness="3" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="32" RadiusY="32" Center="33.5,33.5" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
         <DrawingImage x:Key="leftover_harmony_logo">
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V67 H67 V0 H0 Z">

@@ -109,7 +109,8 @@ namespace Leftover_Harmony.Views
 
                 donationDate.Text = donation.DateDonated.ToString("dd MMMM yyyy");
                 donationDescription.Text = donation.Description;
-                if (donation.Status == DonationStatus.Approved || donation.Status == DonationStatus.Pending) donationStatus.Source = (DrawingImage)FindResource("check_circle_fill");
+                if (donation.Status == DonationStatus.Approved) donationStatus.Source = (DrawingImage)FindResource("check_circle_fill");
+                else if (donation.Status == DonationStatus.Pending) donationStatus.Source = (DrawingImage)FindResource("pending_fill");
                 else donationStatus.Source = (DrawingImage)FindResource("x_circle_fill");
 
                 leftoverName.Text = leftover.Name;

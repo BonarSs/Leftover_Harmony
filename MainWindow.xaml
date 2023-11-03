@@ -102,11 +102,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Rectangle>
-                        <Rectangle.Fill>
-                            <ImageBrush ImageSource="/Resources/Images/default-logo.png"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
+                    <Image Source="{StaticResource leftover_harmony_logo_light}" Margin="24,24,24,24"/>
                     <Rectangle Stroke="#fff" VerticalAlignment="Bottom" Margin="16,0,16,0"/>
                 </Grid>
                 <Grid Grid.Row="1">
