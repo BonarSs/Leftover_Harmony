@@ -161,6 +161,28 @@ namespace Leftover_Harmony.Services
         #endregion
 
         #region Specific Fetchers
+        public User? FetchUser(string username, string password)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM find_account(:_username, :_password);", conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+
+            dataTable.Load(cmd.ExecuteReader());
+            int account_type = (int)dataTable.Rows[0]["account_type"];
+            int id = (int)dataTable.Rows[0]["id"];
+
+            User? account = null;
+            if (account_type == 0) account = FetchDonor(id);
+            else if (account_type == 1) account = FetchDonee(id);
+
+            conn.Close();
+
+            return account;
+        }
         /// <summary>
         /// Retrieves a Request associated with a specific Donation.
         /// </summary>

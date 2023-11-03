@@ -1,0 +1,69 @@
+﻿<Window x:Class="Leftover_Harmony.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Leftover_Harmony"
+        mc:Ignorable="d"
+        Title="LoginPage" Height="720" Width="640">
+
+    <Window.Resources>
+        <Style x:Key="LoginButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="BackgroundRectangle" Background="#1565C0" CornerRadius="10"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="UsernameTextBox" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border BorderBrush="#000" BorderThickness="1" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="PasswordTextBox" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border BorderBrush="#000" BorderThickness="1" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#F4F6F1">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Leftover Harmony" FontSize="36" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource Montserrat}"/>
+                <TextBlock Text="Login to Your Account" FontSize="18" HorizontalAlignment="Center"/>
+            </StackPanel>
+            <Rectangle Stroke="#000" Margin="0,24,0,24"/>
+            <StackPanel>
+                <TextBlock Text="Username" FontFamily="{StaticResource Inter}" Margin="0,0,0,8" FontSize="18"/>
+                <TextBox x:Name="usrUsername" Padding="8,12,0,12" FontFamily="{StaticResource Roboto}" FontSize="18" Style="{StaticResource UsernameTextBox}"/>
+            </StackPanel>
+            <StackPanel Margin="0,8,0,0">
+                <TextBlock Text="Password" FontFamily="{StaticResource Inter}" Margin="0,0,0,8" FontSize="18"/>
+                <PasswordBox x:Name="usrPassword" Padding="8,12,0,12" FontSize="18" Style="{StaticResource PasswordTextBox}" />
+            </StackPanel>
+            <TextBlock x:Name="InvalidLabel" Text="*Username or password is incorrect" Margin="0,8,0,0" FontFamily="{StaticResource Roboto}" FontSize="14" Foreground="Red" Opacity="0"/>
+            <Button x:Name="usrLoginButton" Content="Login" Style="{StaticResource LoginButton}" Height="48" Margin="0,24,0,0" FontSize="18" Click="usrLoginButton_Click"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
