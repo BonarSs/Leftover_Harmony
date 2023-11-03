@@ -34,11 +34,6 @@ namespace Leftover_Harmony
     {
         private User _user;
 
-        // database
-        // private string connectionString = "Host=floppy.db.elephantsql.com;Username=wnnyslmp;Password=8KGndrH9LfiTFYOp9kzLSRp6NhV67gDf;Database=wnnyslmp";
-        private string connectionString = ConfigurationManager.ConnectionStrings["PostgresUri"].ConnectionString;
-
-
         public void Log(string message)
         {
             Trace.WriteLine(message);
@@ -63,7 +58,7 @@ namespace Leftover_Harmony
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DataAccessProvider.Instance.Connect(connectionString);
+            
             if (_user == null) _user = DataAccessProvider.Instance.FetchDonor(1);
 
             HomeButton.IsChecked = true;
