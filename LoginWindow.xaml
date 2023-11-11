@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:Leftover_Harmony.Resources.Components"
         xmlns:local="clr-namespace:Leftover_Harmony"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="LoginPage" Height="720" Width="640">
 
     <Window.Resources>
@@ -17,7 +19,16 @@
                         <Grid>
                             <Border x:Name="BackgroundRectangle" Background="#1565C0" CornerRadius="10"/>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
                         </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundRectangle" Property="Background" Value="#0D47A1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="BackgroundRectangle" Property="Background" Value="#1565C0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

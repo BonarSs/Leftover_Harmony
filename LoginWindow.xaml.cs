@@ -1,7 +1,9 @@
 ﻿using Leftover_Harmony.Models;
+using Leftover_Harmony.Resources.Components;
 using Leftover_Harmony.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,16 +28,27 @@ namespace Leftover_Harmony
             InitializeComponent();
         }
 
-        private void usrLoginButton_Click(object sender, RoutedEventArgs e)
+        private async void usrLoginButton_Click(object sender, RoutedEventArgs e)
         {
+            FrameworkElement spinner = (FrameworkElement)usrLoginButton.Template.FindName("Spinner", usrLoginButton);
+
+            spinner.Visibility = Visibility.Visible;
+            usrLoginButton.Content = "";
+
             string username = usrUsername.Text;
             string password = usrPassword.Password;
 
-            User? user = DataAccessProvider.Instance.FetchUser(username, password);
+            Trace.WriteLine("Fetching account...");
+
+            User? user = await DataAccessProvider.Instance.FetchUserAsync(username, password);
 
             if (user == null)
             {
                 InvalidLabel.Opacity = 1;
+
+                spinner.Visibility = Visibility.Hidden;
+                usrLoginButton.Content = "Login";
+
                 return;
             }
 

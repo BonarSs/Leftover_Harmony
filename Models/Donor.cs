@@ -10,7 +10,6 @@ namespace Leftover_Harmony.Models
 {
     public class Donor : User
     {
-        // private List<Donation>? _donations;
         public List<Donation> Donations { get { return DataAccessProvider.Instance.FetchDonorDonations(this); } }
 
         public Donor(int id, string username, string password, string email, string phoneNumber) : base(id, username, password, email, phoneNumber) { }
@@ -36,6 +35,11 @@ namespace Leftover_Harmony.Models
             if (dataRow.Table.Columns.Contains("image") && dataRow["image"] != DBNull.Value) donor.ChangeImage((byte[])dataRow["image"]);
 
             return donor;
+        }
+
+        public async Task<List<Donation>> GetDonationsAsync()
+        {
+            return await DataAccessProvider.Instance.FetchDonorDonationsAsync(this);
         }
 
         public bool Donate(Request request)

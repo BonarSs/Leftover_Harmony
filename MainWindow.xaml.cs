@@ -45,11 +45,6 @@ namespace Leftover_Harmony
             MainFrame.Content = null;
         }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
         public MainWindow(User account)
         {
             InitializeComponent();
@@ -63,7 +58,13 @@ namespace Leftover_Harmony
 
             HomeButton.IsChecked = true;
 
-            if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush(ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25));
+            if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush
+            {
+                ImageSource = ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25),
+                Stretch = Stretch.UniformToFill
+            };
+
+            CustomQueries();
 
             MainFrame.NavigationService.Navigate(new HomePage());
         }
@@ -88,6 +89,37 @@ namespace Leftover_Harmony
         private void uiProfilePicture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ProfileButton.IsChecked = true;
+        }
+
+        private void CustomQueries()
+        {
+            /*
+            Leftover leftover1 = DataAccessProvider.Instance.FetchLeftover(1);
+            Leftover leftover2 = DataAccessProvider.Instance.FetchLeftover(2);
+            Leftover leftover3 = DataAccessProvider.Instance.FetchLeftover(3);
+
+            leftover1.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.roti.jpg"));
+            leftover2.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.telur.jpg"));
+            leftover3.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.tepung.jpg"));
+
+            DataAccessProvider.Instance.UpdateLeftover(leftover1);
+            DataAccessProvider.Instance.UpdateLeftover(leftover2);
+            DataAccessProvider.Instance.UpdateLeftover(leftover3);
+            
+
+            Request request1 = DataAccessProvider.Instance.FetchRequest(1);
+            Request request2 = DataAccessProvider.Instance.FetchRequest(2);
+
+            request1.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.bahan-pangan.jpg"));
+            request2.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.pakaian.jpg"));
+
+            DataAccessProvider.Instance.UpdateRequest(request1);
+            DataAccessProvider.Instance.UpdateRequest(request2);
+            
+            _user.ChangeImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.rehan.png"));
+            DataAccessProvider.Instance.UpdateDonor((Donor)_user);
+            */
+
         }
     }
 }

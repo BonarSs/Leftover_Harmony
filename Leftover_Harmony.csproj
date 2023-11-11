@@ -15,8 +15,11 @@
     <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
     <None Remove="Resources\Images\bahan-pangan.jpg" />
     <None Remove="Resources\Images\default-logo.png" />
+    <None Remove="Resources\Images\pakaian.jpg" />
     <None Remove="Resources\Images\rehan.png" />
     <None Remove="Resources\Images\roti.jpg" />
+    <None Remove="Resources\Images\telur.jpg" />
+    <None Remove="Resources\Images\tepung.jpg" />
     <None Remove="Resources\Images\yae.png" />
   </ItemGroup>
 
@@ -42,10 +45,13 @@
     <Resource Include="Resources\Fonts\Roboto-Regular.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\bahan-pangan.jpg" />
+    <EmbeddedResource Include="Resources\Images\bahan-pangan.jpg" />
+    <EmbeddedResource Include="Resources\Images\pakaian.jpg" />
     <Resource Include="Resources\Images\default-logo.png" />
-    <Resource Include="Resources\Images\rehan.png" />
-    <Resource Include="Resources\Images\roti.jpg" />
+    <EmbeddedResource Include="Resources\Images\rehan.png" />
+    <EmbeddedResource Include="Resources\Images\roti.jpg" />
+    <EmbeddedResource Include="Resources\Images\telur.jpg" />
+    <EmbeddedResource Include="Resources\Images\tepung.jpg" />
     <EmbeddedResource Include="Resources\Images\yae.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

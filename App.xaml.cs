@@ -16,7 +16,7 @@ namespace Leftover_Harmony
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresUri"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["PostgresUriLocal"].ConnectionString;
             DataAccessProvider.Instance.Connect(connectionString);
         }
     }

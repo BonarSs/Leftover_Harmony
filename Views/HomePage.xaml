@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Leftover_Harmony.Views"
       mc:Ignorable="d" 
       d:DesignHeight="616" d:DesignWidth="1024"
-      Title="HomePage">
+      Title="HomePage" Loaded="Page_Loaded">
 
     <Page.Resources>
         <ControlTemplate x:Key="RequestContentTemplate">
@@ -17,19 +17,15 @@
                 </Grid.RowDefinitions>
 
                 <!--#region Gambar -->
-                <Border CornerRadius="10,10,0,0">
-                    <Border.Background>
-                        <ImageBrush ImageSource="/Resources/Images/roti.jpg" Stretch="UniformToFill"/>
-                    </Border.Background>
-                </Border>
+                <Border x:Name="rqImage" CornerRadius="10,10,0,0" BorderThickness="1" BorderBrush="Black"/>
                 <!--#endregion-->
                 <!--#region Info -->
                 <Grid Grid.Row="1">
                     <StackPanel>
-                        <TextBlock Text="PT Bonaruli" FontFamily="{StaticResource Montserrat}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,4"/>
-                        <TextBlock TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. njdadbjab dnsjan dbsjadbasj" Margin="8,0,8,0"/>
+                        <TextBlock x:Name="rqTitle" Text="PT Bonaruli" FontFamily="{StaticResource Montserrat}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,4"/>
+                        <TextBlock x:Name="rqDescription" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. njdadbjab dnsjan dbsjadbasj" Margin="8,0,8,0"/>
                     </StackPanel>
-                    <TextBlock FontFamily="{StaticResource Roboto}" FontSize="12" Text="Created at 28/10/2023" HorizontalAlignment="Right" Margin="0,0,16,16" VerticalAlignment="Bottom" Opacity="0.5"/>
+                    <TextBlock x:Name="rqDate" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Created at {date}" HorizontalAlignment="Right" Margin="0,0,16,16" VerticalAlignment="Bottom" Opacity="0.5"/>
                 </Grid>
                 <!--#endregion-->
                 <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" CornerRadius="10"/>
@@ -37,7 +33,7 @@
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid Background="#F4F6F1">
+    <Grid x:Name="RequestList" Background="#F4F6F1">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -49,12 +45,6 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <ContentControl Grid.Row="0" Grid.Column="0" Margin="16,16,16,16" Template="{StaticResource RequestContentTemplate}"/>
-        <ContentControl Grid.Row="0" Grid.Column="1" Margin="16,16,16,16" Template="{StaticResource RequestContentTemplate}"/>
-        <ContentControl Grid.Row="0" Grid.Column="2" Margin="16,16,16,16" Template="{StaticResource RequestContentTemplate}"/>
-        <ContentControl Grid.Row="1" Grid.Column="0" Margin="16,16,16,16" Template="{StaticResource RequestContentTemplate}"/>
-        <ContentControl Grid.Row="1" Grid.Column="1" Margin="16,16,16,16" Template="{StaticResource RequestContentTemplate}"/>
-        <ContentControl Grid.Row="1" Grid.Column="2" Margin="16,16,16,16" Template="{StaticResource RequestContentTemplate}"/>
     </Grid>
 
 </Page>
