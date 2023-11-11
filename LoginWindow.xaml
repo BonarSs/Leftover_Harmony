@@ -13,6 +13,7 @@
         <Style x:Key="LoginButton" TargetType="Button">
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">

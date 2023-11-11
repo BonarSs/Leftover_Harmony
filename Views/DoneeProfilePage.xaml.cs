@@ -38,11 +38,18 @@ namespace Leftover_Harmony.Views
             usrBio.Text = _account.Bio;
             usrEmail.Text = _account.Email;
             usrPhoneNumber.Text = _account.PhoneNumber;
-            if (_account.Image != null) usrProfilePicture.Fill = new ImageBrush
+            if (_account.Image != null)
             {
-                ImageSource = ImageConverter.ByteArraytoImage(_account.Image),
-                Stretch = Stretch.UniformToFill
-            };
+                BitmapImage image = ImageConverter.ByteArraytoImage(_account.Image);
+                usrProfilePicture.Fill = new ImageBrush
+                {
+                    ImageSource = image,
+                    Stretch = Stretch.UniformToFill
+                };
+                usrProfilePicture.Cursor = Cursors.Hand;
+
+                usrProfilePictureDisplayImage.Source = image;
+            }
         }
 
         private async Task DisplayRecentRequestsAsync()
@@ -104,6 +111,14 @@ namespace Leftover_Harmony.Views
         {
             FormatAccountInfo();
             await DisplayRecentRequestsAsync();
+        }
+        private void usrProfilePicture_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            usrProfilePictureDisplay.Visibility = Visibility.Visible;
+        }
+        private void usrProfilePictureDisplayBackground_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            usrProfilePictureDisplay.Visibility = Visibility.Hidden;
         }
     }
 }

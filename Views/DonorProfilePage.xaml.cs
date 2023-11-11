@@ -37,10 +37,17 @@ namespace Leftover_Harmony.Views
             usrBio.Text = _account.Bio;
             usrEmail.Text = _account.Email;
             usrPhoneNumber.Text = _account.PhoneNumber;
-            if (_account.Image != null) usrProfilePicture.Fill = new ImageBrush{ 
-                ImageSource = ImageConverter.ByteArraytoImage(_account.Image), 
-                Stretch = Stretch.UniformToFill 
-            };
+            if (_account.Image != null)
+            {
+                BitmapImage image = ImageConverter.ByteArraytoImage(_account.Image);
+                usrProfilePicture.Fill = new ImageBrush
+                {
+                    ImageSource = image,
+                    Stretch = Stretch.UniformToFill
+                };
+                usrProfilePicture.Cursor = Cursors.Hand;
+                usrProfilePictureDisplayImage.Source = image;
+            }
         }
 
         private void DisplayRecentDonations()
@@ -160,6 +167,16 @@ namespace Leftover_Harmony.Views
         {
             FormatAccountInfo();
             await DisplayRecentDonationsAsync();
+        }
+
+        private void usrProfilePicture_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            usrProfilePictureDisplay.Visibility = Visibility.Visible;
+        }
+
+        private void usrProfilePictureDisplayBackground_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            usrProfilePictureDisplay.Visibility = Visibility.Hidden;
         }
     }
 }

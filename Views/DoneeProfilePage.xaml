@@ -62,7 +62,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <Ellipse x:Name="usrProfilePicture" Stroke="Black" Fill="Transparent" VerticalAlignment="Stretch" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8"/>
+                <Ellipse x:Name="usrProfilePicture" Stroke="Black" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8" MouseDown="usrProfilePicture_MouseDown"/>
                 <Rectangle Grid.Column="1" Margin="16,8,16,8" Stroke="Black" RadiusX="10" RadiusY="10"/>
                 <Grid Grid.Column="1" Margin="16,8,16,8">
                     <StackPanel Margin="24,18,24,0">
@@ -106,5 +106,10 @@
                 </Grid>
             </Grid>
         </Grid>
+        <Grid x:Name="usrProfilePictureDisplay" Visibility="Hidden">
+            <Border x:Name="usrProfilePictureDisplayBackground" Background="Black" Opacity="0.5" MouseDown="usrProfilePictureDisplayBackground_MouseDown"/>
+            <Image x:Name="usrProfilePictureDisplayImage" Margin="32,32,32,32" Stretch="Uniform"/>
+        </Grid>
     </Grid>
+    
 </Page>

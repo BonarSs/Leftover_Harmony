@@ -92,6 +92,11 @@ namespace Leftover_Harmony
             ProfileButton.IsChecked = true;
         }
 
+        public bool IsCurrentUser(User user)
+        {
+            return _user == user;
+        }
+
         private void CustomQueries()
         {
 
