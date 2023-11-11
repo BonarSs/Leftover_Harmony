@@ -54,7 +54,11 @@ namespace Leftover_Harmony.Views
                 rqTitle.Text = request.Title;
                 rqDescription.Text = request.Description;
                 rqDate.Text = rqDate.Text.Replace("{date}", request.Date.ToString("dd MMMM yyyy"));
-                if (request.Image != null) rqImage.Background = new ImageBrush(ImageConverter.ByteArraytoImage(request.Image));
+                if (request.Image != null) rqImage.Background = new ImageBrush
+                {
+                    ImageSource = ImageConverter.ByteArraytoImage(request.Image),
+                    Stretch = Stretch.UniformToFill
+                };
             };
 
             RequestList.Children.Add(contentControl);

@@ -72,7 +72,8 @@ namespace Leftover_Harmony
         private void ProfileButton_Checked(object sender, RoutedEventArgs e)
         {
             ClearFrame();
-            MainFrame.NavigationService.Navigate(new DonorProfilePage(this, (Donor)_user));
+            if (_user is Donor) MainFrame.NavigationService.Navigate(new DonorProfilePage(this, (Donor)_user));
+            else MainFrame.NavigationService.Navigate(new DoneeProfilePage(this, (Donee)_user));
         }
 
         private void HomeButton_Checked(object sender, RoutedEventArgs e)
@@ -93,6 +94,7 @@ namespace Leftover_Harmony
 
         private void CustomQueries()
         {
+
             /*
             Leftover leftover1 = DataAccessProvider.Instance.FetchLeftover(1);
             Leftover leftover2 = DataAccessProvider.Instance.FetchLeftover(2);
@@ -118,6 +120,9 @@ namespace Leftover_Harmony
             
             _user.ChangeImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.rehan.png"));
             DataAccessProvider.Instance.UpdateDonor((Donor)_user);
+
+            _user.ChangeImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.yae.png"));
+            DataAccessProvider.Instance.UpdateDonee((Donee)_user);
             */
 
         }

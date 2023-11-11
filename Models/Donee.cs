@@ -43,6 +43,11 @@ namespace Leftover_Harmony.Models
 
             return donee;
         }
+        public async Task<List<Request>> GetRequestsAsync()
+        {
+            return await DataAccessProvider.Instance.FetchDoneeRequestsAsync(this);
+        }
+
         /// <summary>
         /// Adds a new request.
         /// </summary>

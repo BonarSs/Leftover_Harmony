@@ -428,6 +428,28 @@ namespace Leftover_Harmony.Services
         /// <param name="donee">The Donee object for which associated Requests are to be fetched.</param>
         /// <returns>A list of Request objects associated with the provided Donee.</returns>
         public List<Request> FetchDoneeRequests(Donee donee) { return FetchDoneeRequests(donee.Id); }
+        public async Task<List<Request>> FetchDoneeRequestsAsync(int donee_id)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<Request> requests = new List<Request>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT request_id FROM \"Request\" WHERE donee_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", donee_id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            foreach (DataRow row in dataTable.Rows)
+            {
+                requests.Add(FetchRequest((int)row["request_id"]));
+            }
+
+            conn.Close();
+
+            return requests;
+        }
+        public async Task<List<Request>> FetchDoneeRequestsAsync(Donee donee) { return await FetchDoneeRequestsAsync((int)donee.Id); }
         /// <summary>
         /// Retrieves a list of Donations associated with a specific Donor by their ID.
         /// </summary>
