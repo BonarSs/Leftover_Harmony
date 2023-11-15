@@ -110,6 +110,7 @@
                     <StackPanel Margin="16,16,16,0" Grid.RowSpan="2">
                         <RadioButton x:Name="HomeButton" Content="Home" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="HomeButton_Checked"/>
                         <RadioButton x:Name="ProfileButton" Content="Profile" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="ProfileButton_Checked"/>
+                        <RadioButton x:Name="SettingsButton" Content="Settings" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="SettingsButton_Checked"/>
                     </StackPanel>
                 </Grid>
             </Grid>

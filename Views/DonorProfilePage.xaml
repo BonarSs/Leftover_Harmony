@@ -110,7 +110,6 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <Ellipse x:Name="usrProfilePicture" Stroke="Black" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8" MouseDown="usrProfilePicture_MouseDown"/>
-                <Rectangle Grid.Column="1" Margin="16,8,16,8" Stroke="Black" RadiusX="10" RadiusY="10"/>
                 <Grid Grid.Column="1" Margin="16,8,16,8">
                     <StackPanel Margin="24,18,24,0">
                         <TextBlock x:Name="usrDisplayName" Text="Display Name" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" VerticalAlignment="Top" Height="34" Margin="0,0,0,4" />
@@ -133,6 +132,7 @@
                             </StackPanel>
                         </Grid>
                     </StackPanel>
+                    <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">

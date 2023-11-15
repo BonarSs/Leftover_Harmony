@@ -33,6 +33,7 @@ namespace Leftover_Harmony
     public partial class MainWindow : Window
     {
         private User _user;
+        public User CurrentUser { get { return _user; } }
 
         public void Log(string message)
         {
@@ -51,18 +52,23 @@ namespace Leftover_Harmony
             _user = account;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Refreshes user image
+        /// </summary>
+        public void Refresh()
         {
-            
-            if (_user == null) _user = DataAccessProvider.Instance.FetchDonor(1);
-
-            HomeButton.IsChecked = true;
-
             if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush
             {
                 ImageSource = ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25),
                 Stretch = Stretch.UniformToFill
             };
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            HomeButton.IsChecked = true;
+
+            Refresh();
 
             CustomQueries();
 
@@ -80,6 +86,12 @@ namespace Leftover_Harmony
         {
             ClearFrame();
             MainFrame.NavigationService.Navigate(new HomePage());
+        }
+
+        private void SettingsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ClearFrame();
+            MainFrame.NavigationService.Navigate(new SettingsPage(this));
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -131,5 +143,7 @@ namespace Leftover_Harmony
             */
 
         }
+
+        
     }
 }

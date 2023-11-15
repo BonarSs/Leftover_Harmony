@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,6 +20,33 @@ namespace Leftover_Harmony.Helpers
             bitmapImage.EndInit();
 
             return bitmapImage;
+        }
+
+        public static BitmapImage StreamtoImage(Stream stream)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = stream;
+            bitmapImage.EndInit();
+
+            return bitmapImage;
+        }
+
+        public static byte[]? ImageSourcetoByteArrayAsync(ImageSource imageSource)
+        {
+            if (imageSource is BitmapSource bitmapSource)
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+                    encoder.Save(memoryStream);
+
+                    return memoryStream.ToArray();
+                }
+            }
+
+            return null;
         }
 
         public static TransformedBitmap ResizeBitmap(BitmapImage bitmapImage, double ratio)

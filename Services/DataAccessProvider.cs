@@ -607,6 +607,37 @@ namespace Leftover_Harmony.Services
 
             return true;
         }
+        public async Task<bool> UpdateDonorAsync(Donor donor)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "UPDATE \"Donor\" " +
+                "SET " +
+                "username = :_username, " +
+                "password = :_password, " +
+                "email = :_email, " +
+                "phone_number = :_phone_number, " +
+                "display_name = :_display_name, " +
+                "bio = :_bio, " +
+                "image = :_image " +
+                "WHERE donor_id = :_id "
+                , conn);
+            cmd.Parameters.AddWithValue("_id", donor.Id);
+            cmd.Parameters.AddWithValue("_username", donor.Username);
+            cmd.Parameters.AddWithValue("_password", donor.Password);
+            cmd.Parameters.AddWithValue("_email", donor.Email);
+            cmd.Parameters.AddWithValue("_phone_number", donor.PhoneNumber);
+            cmd.Parameters.AddWithValue("_display_name", (donor.DisplayName != null) ? donor.DisplayName : DBNull.Value);
+            cmd.Parameters.AddWithValue("_bio", (donor.Bio != null) ? donor.Bio : DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (donor.Image != null) ? donor.Image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
         public bool UpdateDonee(Donee donee)
         {
             NpgsqlCommand cmd = new NpgsqlCommand(
@@ -635,6 +666,39 @@ namespace Leftover_Harmony.Services
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> UpdateDoneeAsync(Donee donee)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "UPDATE \"Donee\" " +
+                "SET " +
+                "username = :_username, " +
+                "password = :_password, " +
+                "email = :_email, " +
+                "phone_number = :_phone_number, " +
+                "organization = :_organization, " +
+                "display_name = :_display_name, " +
+                "bio = :_bio, " +
+                "image = :_image " +
+                "WHERE donee_id = :_id "
+                , conn);
+            cmd.Parameters.AddWithValue("_id", donee.Id);
+            cmd.Parameters.AddWithValue("_username", donee.Username);
+            cmd.Parameters.AddWithValue("_password", donee.Password);
+            cmd.Parameters.AddWithValue("_email", donee.Email);
+            cmd.Parameters.AddWithValue("_phone_number", donee.PhoneNumber);
+            cmd.Parameters.AddWithValue("_organization", donee.Organization);
+            cmd.Parameters.AddWithValue("_display_name", (donee.DisplayName != null) ? donee.DisplayName : DBNull.Value);
+            cmd.Parameters.AddWithValue("_bio", (donee.Bio != null) ? donee.Bio : DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (donee.Image != null) ? donee.Image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
 
             conn.Close();
 
