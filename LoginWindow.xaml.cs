@@ -45,10 +45,8 @@ namespace Leftover_Harmony
             if (user == null)
             {
                 InvalidLabel.Opacity = 1;
-
                 spinner.Visibility = Visibility.Hidden;
                 usrLoginButton.Content = "Login";
-
                 return;
             }
 
