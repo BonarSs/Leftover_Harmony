@@ -11,7 +11,7 @@
 
     <Window.Resources>
         <Style x:Key="SidebarNavigationButton" TargetType="RadioButton">
-            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="Foreground" Value="{DynamicResource SidebarForegroundColor}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Height" Value="48"/>
             <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
@@ -21,7 +21,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <Grid>
-                            <Rectangle x:Name="BackgroundRectangle" Fill="#1565C0" RadiusX="10" RadiusY="10" Opacity="0"/>
+                            <Rectangle x:Name="BackgroundRectangle" Fill="{DynamicResource Primary800}" RadiusX="10" RadiusY="10" Opacity="0"/>
                             <ContentPresenter Margin="16,0,16,0" VerticalAlignment="Center"/>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -42,15 +42,15 @@
         <Style x:Key="SearchBarTextBox" TargetType="TextBox">
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="Foreground" Value="{DynamicResource SidebarForegroundColor}"/>
             <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
-            <Setter Property="CaretBrush" Value="#fff"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource SidebarForegroundColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Grid>
-                            <Rectangle Fill="#0D47A1" RadiusX="5" RadiusY="5"/>
-                            <TextBlock x:Name="Placeholder" Text="Search..." Foreground="#fff" Margin="18,10,16,10" VerticalAlignment="Center" Opacity="0.5" Visibility="Hidden"/>
+                            <Rectangle Fill="{DynamicResource Primary900}" RadiusX="5" RadiusY="5"/>
+                            <TextBlock x:Name="Placeholder" Text="Search..." Foreground="{DynamicResource SidebarForegroundColor}" Margin="18,10,16,10" VerticalAlignment="Center" Opacity="0.5" Visibility="Hidden"/>
                             <ScrollViewer x:Name="PART_ContentHost" Margin="16,10,16,10"/>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -70,7 +70,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="#F4F6F1">
+    <Grid Background="{DynamicResource BackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
@@ -79,7 +79,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <Grid Background="#1565C0" Grid.Column="1">
+        <Grid Background="{DynamicResource Primary800}" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -90,13 +90,13 @@
             </Grid>
             <Grid Grid.Column="2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" HorizontalAlignment="Right">
                 <Grid Margin="16,16,16,16">
-                    <Ellipse Fill="#F4F6F1"/>
-                    <Ellipse x:Name="uiProfilePicture" Fill="#F4F6F1" Cursor="Hand" MouseLeftButtonDown="uiProfilePicture_MouseLeftButtonDown"/>
+                    <Ellipse Fill="{DynamicResource Primary800}"/>
+                    <Ellipse x:Name="uiProfilePicture" Fill="{DynamicResource Primary800}" Cursor="Hand" MouseLeftButtonDown="uiProfilePicture_MouseLeftButtonDown"/>
                 </Grid>
             </Grid>
         </Grid>
 
-        <Grid Background="#000" Grid.RowSpan="2">
+        <Grid Background="{DynamicResource SidebarBackgroundColor}" Grid.RowSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="140.808"/>
@@ -104,7 +104,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Image Source="{StaticResource leftover_harmony_logo_light}" Margin="24,24,24,24"/>
-                    <Rectangle Stroke="#fff" VerticalAlignment="Bottom" Margin="16,0,16,0"/>
+                    <Rectangle Stroke="{DynamicResource SidebarForegroundColor}" VerticalAlignment="Bottom" Margin="16,0,16,0"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <StackPanel Margin="16,16,16,0" Grid.RowSpan="2">

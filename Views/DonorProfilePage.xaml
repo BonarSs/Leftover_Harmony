@@ -17,21 +17,21 @@
                     <DrawingGroup.Transform>
                         <TranslateTransform X="0.00047093312605284154" Y="0" />
                     </DrawingGroup.Transform>
-                    <GeometryDrawing Brush="#FF000000" Geometry="F0 M16,16z M0,0z M1.885,0.511A1.745,1.745,0,0,1,4.495,0.674L6.29,2.98C6.619,3.403,6.735,3.954,6.605,4.474L6.058,6.664A0.678,0.678,0,0,0,6.236,7.307L8.693,9.764A0.678,0.678,0,0,0,9.337,9.942L11.526,9.395A1.745,1.745,0,0,1,13.02,9.71L15.326,11.504C16.155,12.149,16.231,13.374,15.489,14.115L14.455,15.149C13.715,15.889,12.609,16.214,11.578,15.851A18.634,18.634,0,0,1,4.568,11.431A18.634,18.634,0,0,1,0.148,4.422C-0.214,3.392,0.111,2.285,0.851,1.545L1.885,0.511z" />
+                    <GeometryDrawing Brush="{DynamicResource DarkColor}" Geometry="F0 M16,16z M0,0z M1.885,0.511A1.745,1.745,0,0,1,4.495,0.674L6.29,2.98C6.619,3.403,6.735,3.954,6.605,4.474L6.058,6.664A0.678,0.678,0,0,0,6.236,7.307L8.693,9.764A0.678,0.678,0,0,0,9.337,9.942L11.526,9.395A1.745,1.745,0,0,1,13.02,9.71L15.326,11.504C16.155,12.149,16.231,13.374,15.489,14.115L14.455,15.149C13.715,15.889,12.609,16.214,11.578,15.851A18.634,18.634,0,0,1,4.568,11.431A18.634,18.634,0,0,1,0.148,4.422C-0.214,3.392,0.111,2.285,0.851,1.545L1.885,0.511z" />
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
         <DrawingImage x:Key="envelope_fill">
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
-                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M16,16z M0,0z M0.05,3.555A2,2,0,0,1,2,2L14,2A2,2,0,0,1,15.95,3.555L8,8.414 0.05,3.555z M0,4.697L0,11.801 5.803,8.243 0,4.697z M6.761,8.83L0.191,12.857A2,2,0,0,0,2,14L14,14A2,2,0,0,0,15.808,12.856L9.238,8.829 8,9.586 6.761,8.829z M10.197,8.244L16,11.801 16,4.697 10.197,8.243z" />
+                    <GeometryDrawing Brush="{DynamicResource DarkColor}" Geometry="F1 M16,16z M0,0z M0.05,3.555A2,2,0,0,1,2,2L14,2A2,2,0,0,1,15.95,3.555L8,8.414 0.05,3.555z M0,4.697L0,11.801 5.803,8.243 0,4.697z M6.761,8.83L0.191,12.857A2,2,0,0,0,2,14L14,14A2,2,0,0,0,15.808,12.856L9.238,8.829 8,9.586 6.761,8.829z M10.197,8.244L16,11.801 16,4.697 10.197,8.243z" />
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
         <DrawingImage x:Key="check_circle_fill">
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
-                    <GeometryDrawing Brush="#38B54A" Geometry="F1 M16,16z M0,0z M16,8A8,8,0,1,1,0,8A8,8,0,0,1,16,8z M12.03,4.97A0.75,0.75,0,0,0,10.95,4.992L7.477,9.417 5.384,7.323A0.75,0.75,0,0,0,4.324,8.383L6.97,11.03A0.75,0.75,0,0,0,8.049,11.01L12.041,6.02A0.75,0.75,0,0,0,12.031,4.97z" />
+                    <GeometryDrawing Brush="{DynamicResource Success500}" Geometry="F1 M16,16z M0,0z M16,8A8,8,0,1,1,0,8A8,8,0,0,1,16,8z M12.03,4.97A0.75,0.75,0,0,0,10.95,4.992L7.477,9.417 5.384,7.323A0.75,0.75,0,0,0,4.324,8.383L6.97,11.03A0.75,0.75,0,0,0,8.049,11.01L12.041,6.02A0.75,0.75,0,0,0,12.031,4.97z" />
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
@@ -45,7 +45,7 @@
         <DrawingImage x:Key="x_circle_fill">
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
-                    <GeometryDrawing Brush="#FF4A6B" Geometry="F1 M16,16z M0,0z M16,8A8,8,0,1,1,0,8A8,8,0,0,1,16,8z M5.354,4.646A0.5,0.5,0,1,0,4.646,5.354L7.293,8 4.646,10.646A0.5,0.5,0,0,0,5.354,11.354L8,8.707 10.646,11.354A0.5,0.5,0,0,0,11.354,10.646L8.707,8 11.354,5.354A0.5,0.5,0,0,0,10.646,4.646L8,7.293 5.354,4.646z" />
+                    <GeometryDrawing Brush="{DynamicResource Danger400}" Geometry="F1 M16,16z M0,0z M16,8A8,8,0,1,1,0,8A8,8,0,0,1,16,8z M5.354,4.646A0.5,0.5,0,1,0,4.646,5.354L7.293,8 4.646,10.646A0.5,0.5,0,0,0,5.354,11.354L8,8.707 10.646,11.354A0.5,0.5,0,0,0,11.354,10.646L8.707,8 11.354,5.354A0.5,0.5,0,0,0,10.646,4.646L8,7.293 5.354,4.646z" />
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
@@ -68,7 +68,7 @@
                     <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,4,0,12">
                         <Image x:Name="dnStatus" Source="{StaticResource check_circle_fill}" Margin="0,0,8,0" VerticalAlignment="Top"/>
                     </Grid>
-                    <Rectangle Grid.ColumnSpan="2" Stroke="Black" VerticalAlignment="Bottom"/>
+                    <Rectangle Grid.ColumnSpan="2" Stroke="{DynamicResource DarkColor}" VerticalAlignment="Bottom"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
@@ -76,16 +76,16 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Margin="16,8,16,8" Orientation="Horizontal">
-                        <Rectangle x:Name="lfImage" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left" Stroke="#000"/>
+                        <Rectangle x:Name="lfImage" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left" Stroke="{DynamicResource DarkColor}"/>
                         <StackPanel Margin="8,0,0,0">
                             <TextBlock x:Name="lfName" Text="Roti" FontFamily="{StaticResource Montserrat}" FontWeight="Bold" FontSize="18"/>
                             <TextBlock x:Name="lfDescription" Text="Lorem ipsum dolor sit amet" FontFamily="{StaticResource Roboto}" FontSize="12"/>
                             <TextBlock x:Name="lfQuantity" Text="Qty: {qty}" FontFamily="{StaticResource Roboto}" FontSize="12"/>
                         </StackPanel>
                     </StackPanel>
-                    <Rectangle Stroke="Black" VerticalAlignment="Bottom" Margin="16,0,16,0"/>
+                    <Rectangle Stroke="{DynamicResource DarkColor}" VerticalAlignment="Bottom" Margin="16,0,16,0"/>
                     <StackPanel Margin="16,8,16,8" Orientation="Horizontal" Grid.Row="1">
-                        <Rectangle x:Name="rqImage" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left" Stroke="#000"/>
+                        <Rectangle x:Name="rqImage" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" RadiusX="10" RadiusY="10" HorizontalAlignment="Left" Stroke="{DynamicResource DarkColor}"/>
                         <StackPanel Margin="8,0,0,0">
                             <TextBlock Text="Donated to:" FontFamily="{StaticResource Roboto}" FontSize="12"/>
                             <TextBlock x:Name="rqName" Text="Bahan Pangan" FontFamily="{StaticResource Montserrat}" FontWeight="Bold" FontSize="18"/>
@@ -95,10 +95,9 @@
                 <TextBlock x:Name="dnDescription" Grid.Row="2" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." Margin="16,0,16,0"/>
             </Grid>
         </ControlTemplate>
-        
     </Page.Resources>
 
-    <Grid Background="#F4F6F1">
+    <Grid Background="{StaticResource BackgroundColor}">
         <Grid Margin="32,32,32,32">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
@@ -109,7 +108,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <Ellipse x:Name="usrProfilePicture" Stroke="Black" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8" MouseDown="usrProfilePicture_MouseDown"/>
+                <Ellipse x:Name="usrProfilePicture" Stroke="{DynamicResource DarkColor}" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8" MouseDown="usrProfilePicture_MouseDown"/>
                 <Grid Grid.Column="1" Margin="16,8,16,8">
                     <StackPanel Margin="24,18,24,0">
                         <TextBlock x:Name="usrDisplayName" Text="Display Name" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" VerticalAlignment="Top" Height="34" Margin="0,0,0,4" />
@@ -118,21 +117,21 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="24,0,24,18">
                         <Grid VerticalAlignment="Top" Height="30" Margin="0,0,32,0">
-                            <Rectangle Grid.Column="1" Stroke="Black" RadiusX="15" RadiusY="15"/>
+                            <Rectangle Grid.Column="1" Stroke="{DynamicResource DarkColor}" RadiusX="15" RadiusY="15"/>
                             <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
                                 <Image Source="{StaticResource telephone_fill}" Width="14"/>
                                 <TextBlock x:Name="usrPhoneNumber" Grid.Row="2" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="14" Text="081299999999" Margin="8,0,16,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Grid>
                         <Grid VerticalAlignment="Top" Height="30">
-                            <Rectangle Grid.Column="1" Stroke="Black" RadiusX="15" RadiusY="15"/>
+                            <Rectangle Grid.Column="1" Stroke="{DynamicResource DarkColor}" RadiusX="15" RadiusY="15"/>
                             <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
                                 <Image Source="{StaticResource envelope_fill}" Width="14"/>
                                 <TextBlock x:Name="usrEmail" Grid.Row="2" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="14" Text="rehan.saputra@mail.ugm.ac.id" Margin="8,0,16,0" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
-                    <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
+                    <Rectangle Stroke="{DynamicResource DarkColor}" RadiusX="10" RadiusY="10"/>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
@@ -154,7 +153,7 @@
             </Grid>
         </Grid>
         <Grid x:Name="usrProfilePictureDisplay" Visibility="Hidden">
-            <Border x:Name="usrProfilePictureDisplayBackground" Background="Black" Opacity="0.5" MouseDown="usrProfilePictureDisplayBackground_MouseDown"/>
+            <Border x:Name="usrProfilePictureDisplayBackground" Background="{DynamicResource DarkColor}" Opacity="0.5" MouseDown="usrProfilePictureDisplayBackground_MouseDown"/>
             <Image x:Name="usrProfilePictureDisplayImage" Margin="32,32,32,32" Stretch="Uniform"/>
         </Grid>
     </Grid>

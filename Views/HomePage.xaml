@@ -17,7 +17,7 @@
                 </Grid.RowDefinitions>
 
                 <!--#region Gambar -->
-                <Border x:Name="rqImage" CornerRadius="10,10,0,0" BorderThickness="1" BorderBrush="Black"/>
+                <Border x:Name="rqImage" CornerRadius="10,10,0,0" BorderThickness="1" BorderBrush="{DynamicResource DarkColor}"/>
                 <!--#endregion-->
                 <!--#region Info -->
                 <Grid Grid.Row="1">
@@ -28,12 +28,12 @@
                     <TextBlock x:Name="rqDate" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Created at {date}" HorizontalAlignment="Right" Margin="0,0,16,16" VerticalAlignment="Bottom" Opacity="0.5"/>
                 </Grid>
                 <!--#endregion-->
-                <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" CornerRadius="10"/>
+                <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" Grid.RowSpan="2" CornerRadius="10"/>
             </Grid>
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid x:Name="RequestList" Background="#F4F6F1">
+    <Grid x:Name="RequestList" Background="{DynamicResource BackgroundColor}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>

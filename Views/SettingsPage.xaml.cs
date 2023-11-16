@@ -49,6 +49,8 @@ namespace Leftover_Harmony.Views
             AccountSettingPage.Visibility = Visibility.Hidden;
 
             if (tab == Tab.Profile) ProfileSettingPage.Visibility = Visibility.Visible;
+            if (tab == Tab.Appearance) AppearanceSettingPage.Visibility = Visibility.Visible;
+            if (tab == Tab.Account) AccountSettingPage.Visibility = Visibility.Visible;
         }
 
         public void InitializeProfileTab()
@@ -81,9 +83,11 @@ namespace Leftover_Harmony.Views
             {
                 try
                 {
+                    BitmapImage transformedBitmap = ImageConverter.ResizeBitmapUniformToFill(ImageConverter.StreamtoImage(dialog.OpenFile()), 500);
+                    _mainWindow.Log(transformedBitmap.PixelWidth + " " + transformedBitmap.PixelHeight);
                     usrProfilePicture.Fill = new ImageBrush
                     {
-                        ImageSource = ImageConverter.StreamtoImage(dialog.OpenFile()),
+                        ImageSource = transformedBitmap,
                         Stretch = Stretch.UniformToFill
                     };
                 }
@@ -129,7 +133,7 @@ namespace Leftover_Harmony.Views
             User user = _mainWindow.CurrentUser;
             user.ChangeDisplayName(usrDisplayNameChange.Text);
             user.ChangeBio(usrBioChange.Text);
-            user.ChangeImage(ImageConverter.ImageSourcetoByteArrayAsync(((ImageBrush)usrProfilePicture.Fill).ImageSource));
+            user.ChangeImage(ImageConverter.ImageSourcetoByteArray(((ImageBrush)usrProfilePicture.Fill).ImageSource));
 
             _mainWindow.Refresh();
 
