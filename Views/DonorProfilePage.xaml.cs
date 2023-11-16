@@ -31,61 +31,93 @@ namespace Leftover_Harmony.Views
             _account = account;
         }
 
-        private void formatData()
+        private void FormatAccountInfo()
         {
             usrDisplayName.Text = _account.DisplayName;
             usrBio.Text = _account.Bio;
             usrEmail.Text = _account.Email;
             usrPhoneNumber.Text = _account.PhoneNumber;
-            if (_account.Image != null) usrProfilePicture.Fill = new ImageBrush(ImageConverter.ByteArraytoImage(_account.Image));
+            if (_account.Image != null)
+            {
+                BitmapImage image = ImageConverter.ByteArraytoImage(_account.Image);
+                usrProfilePicture.Fill = new ImageBrush
+                {
+                    ImageSource = image,
+                    Stretch = Stretch.UniformToFill
+                };
+                usrProfilePicture.Cursor = Cursors.Hand;
+                usrProfilePictureDisplayImage.Source = image;
+            }
         }
 
-        private void displayRecentDonations()
+        private void DisplayRecentDonations()
         {
+            usrRecentDonationsSpinner.Visibility = Visibility.Visible;
+
             List<Donation> donations = _account.Donations.OrderByDescending(donation => donation.Id).ToList();
             if (donations.Count == 0) return;
-            if (donations[0] != null)
+
+            Border GetBorder(int index)
             {
                 Border border = new Border();
-                border.Margin = new Thickness(0,0,16,0);
-                border.SetValue(Grid.ColumnProperty, 0);
+                border.SetValue(Grid.ColumnProperty, index);
                 border.BorderBrush = Brushes.Black;
                 border.BorderThickness = new Thickness(1, 1, 1, 1);
                 border.CornerRadius = new CornerRadius(10, 10, 10, 10);
 
-                formatDonation(donations[0], border);
+                if (index == 0) border.Margin = new Thickness(0, 0, 16, 0);
+                else if (index == 1) border.Margin = new Thickness(8, 0, 8, 0);
+                else border.Margin = new Thickness(16, 0, 0, 0);
 
-                usrRecentDonations.Children.Add(border);
+                return border;
             }
-            if (donations[1] != null)
+
+            for (int i = 0; i < 3; i++)
             {
-                Border border = new Border();
-                border.Margin = new Thickness(8, 0, 8, 0);
-                border.SetValue(Grid.ColumnProperty, 1);
-                border.BorderBrush = Brushes.Black;
-                border.BorderThickness = new Thickness(1, 1, 1, 1);
-                border.CornerRadius = new CornerRadius(10, 10, 10, 10);
+                if (donations[i] == null) break;
 
-                formatDonation(donations[1], border);
-
+                Border border = GetBorder(i);
+                FormatDonation(donations[i], border);
                 usrRecentDonations.Children.Add(border);
             }
-            if (donations[2] != null)
-            {
-                Border border = new Border();
-                border.Margin = new Thickness(16, 0, 0, 0);
-                border.SetValue(Grid.ColumnProperty, 2);
-                border.BorderBrush = Brushes.Black;
-                border.BorderThickness = new Thickness(1, 1, 1, 1);
-                border.CornerRadius = new CornerRadius(10, 10, 10, 10);
 
-                formatDonation(donations[2], border);
-
-                usrRecentDonations.Children.Add(border);
-            }
+            usrRecentDonationsSpinner.Visibility = Visibility.Hidden;
         }
 
-        private void formatDonation(Donation donation, Border container)
+        private async Task DisplayRecentDonationsAsync()
+        {
+            usrRecentDonationsSpinner.Visibility = Visibility.Visible;
+
+            List<Donation> donations = (await _account.GetDonationsAsync()).OrderByDescending(donation => donation.Id).ToList();
+
+            Border GetBorder(int index)
+            {
+                Border border = new Border();
+                border.SetValue(Grid.ColumnProperty, index);
+                border.BorderBrush = Brushes.Black;
+                border.BorderThickness = new Thickness(1, 1, 1, 1);
+                border.CornerRadius = new CornerRadius(10, 10, 10, 10);
+
+                if (index == 0) border.Margin = new Thickness(0, 0, 16, 0);
+                else if (index == 1) border.Margin = new Thickness(8, 0, 8, 0);
+                else border.Margin = new Thickness(16, 0, 0, 0);
+
+                return border;
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (donations[i] == null) break;
+
+                Border border = GetBorder(i);
+                FormatDonation(donations[i], border);
+                usrRecentDonations.Children.Add(border);
+            }
+
+            usrRecentDonationsSpinner.Visibility = Visibility.Hidden;
+        }
+
+        private void FormatDonation(Donation donation, Border container)
         {
             Leftover leftover = donation.Leftover;
             Request request = donation.Request;
@@ -109,25 +141,42 @@ namespace Leftover_Harmony.Views
 
                 donationDate.Text = donation.DateDonated.ToString("dd MMMM yyyy");
                 donationDescription.Text = donation.Description;
-                if (donation.Status == DonationStatus.Approved || donation.Status == DonationStatus.Pending) donationStatus.Source = (DrawingImage)FindResource("check_circle_fill");
+                if (donation.Status == DonationStatus.Approved) donationStatus.Source = (DrawingImage)FindResource("check_circle_fill");
+                else if (donation.Status == DonationStatus.Pending) donationStatus.Source = (DrawingImage)FindResource("pending_fill");
                 else donationStatus.Source = (DrawingImage)FindResource("x_circle_fill");
 
                 leftoverName.Text = leftover.Name;
                 leftoverDescription.Text = leftover.Description;
                 leftoverQuantity.Text = leftoverQuantity.Text.Replace("{qty}", donation.Amount.ToString());
-                if (leftover.Image != null) leftoverImage.Fill = new ImageBrush(ImageConverter.ByteArraytoImage(leftover.Image));
+                if (leftover.Image != null) leftoverImage.Fill = new ImageBrush { 
+                    ImageSource = ImageConverter.ByteArraytoImage(leftover.Image), 
+                    Stretch = Stretch.UniformToFill
+                };
 
                 requestName.Text = request.Title;
-                if (request.Image != null) requestImage.Fill = new ImageBrush(ImageConverter.ByteArraytoImage(request.Image));
+                if (request.Image != null) requestImage.Fill = new ImageBrush { 
+                    ImageSource = ImageConverter.ByteArraytoImage(request.Image), 
+                    Stretch = Stretch.UniformToFill 
+                };
             };
 
             container.Child = contentControl;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            formatData();
-            displayRecentDonations();
+            FormatAccountInfo();
+            await DisplayRecentDonationsAsync();
+        }
+
+        private void usrProfilePicture_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            usrProfilePictureDisplay.Visibility = Visibility.Visible;
+        }
+
+        private void usrProfilePictureDisplayBackground_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            usrProfilePictureDisplay.Visibility = Visibility.Hidden;
         }
     }
 }

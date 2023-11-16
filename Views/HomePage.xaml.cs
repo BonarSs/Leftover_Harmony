@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Leftover_Harmony.Helpers;
+using Leftover_Harmony.Models;
+using Leftover_Harmony.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +23,55 @@ namespace Leftover_Harmony.Views
     /// </summary>
     public partial class HomePage : Page
     {
+        private List<Request> requestList = new List<Request>();
+
         public HomePage()
         {
             InitializeComponent();
+        }
+
+        private void AddRequest(Request request)
+        {
+            if (request == null) return;
+
+            int index = requestList.Count;
+            if (index >= 5) return;
+
+            ContentControl contentControl = new ContentControl();
+            contentControl.SetValue(Grid.ColumnProperty, index % 3);
+            contentControl.SetValue(Grid.RowProperty, index / 3);
+            contentControl.Margin = new Thickness(16,16,16,16);
+
+            contentControl.Template = (ControlTemplate)FindResource("RequestContentTemplate");
+
+            contentControl.Loaded += (sender, e) =>
+            {
+                Border rqImage = (Border)contentControl.Template.FindName("rqImage", contentControl);
+                TextBlock rqTitle = (TextBlock)contentControl.Template.FindName("rqTitle", contentControl);
+                TextBlock rqDescription = (TextBlock)contentControl.Template.FindName("rqDescription", contentControl);
+                TextBlock rqDate = (TextBlock)contentControl.Template.FindName("rqDate", contentControl);
+
+                rqTitle.Text = request.Title;
+                rqDescription.Text = request.Description;
+                rqDate.Text = rqDate.Text.Replace("{date}", request.Date.ToString("dd MMMM yyyy"));
+                if (request.Image != null) rqImage.Background = new ImageBrush
+                {
+                    ImageSource = ImageConverter.ByteArraytoImage(request.Image),
+                    Stretch = Stretch.UniformToFill
+                };
+            };
+
+            RequestList.Children.Add(contentControl);
+            requestList.Add(request);
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<Request> requests = DataAccessProvider.Instance.FetchAllRequests();
+            foreach (Request request in requests)
+            {
+                this.AddRequest(request);
+            }
         }
     }
 }

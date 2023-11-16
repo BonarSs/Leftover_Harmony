@@ -3,21 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:Leftover_Harmony.Resources.Components"
         xmlns:local="clr-namespace:Leftover_Harmony"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="LoginPage" Height="720" Width="640">
 
     <Window.Resources>
         <Style x:Key="LoginButton" TargetType="Button">
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Border x:Name="BackgroundRectangle" Background="#1565C0" CornerRadius="10"/>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
                         </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundRectangle" Property="Background" Value="#0D47A1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="BackgroundRectangle" Property="Background" Value="#1565C0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -47,10 +59,12 @@
     </Window.Resources>
 
     <Grid Background="#F4F6F1">
+        <Image Source="{StaticResource leftover_harmony_logo}" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1280" Height="1280"/>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image Source="{StaticResource leftover_harmony_logo}" Height="80" Margin="0,0,0,16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <StackPanel>
                 <TextBlock Text="Leftover Harmony" FontSize="36" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource Montserrat}"/>
-                <TextBlock Text="Login to Your Account" FontSize="18" HorizontalAlignment="Center"/>
+                <TextBlock Text="Login to Your Account" FontSize="18" HorizontalAlignment="Center" FontFamily="{StaticResource Roboto}"/>
             </StackPanel>
             <Rectangle Stroke="#000" Margin="0,24,0,24"/>
             <StackPanel>

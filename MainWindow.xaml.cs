@@ -33,6 +33,7 @@ namespace Leftover_Harmony
     public partial class MainWindow : Window
     {
         private User _user;
+        public User CurrentUser { get { return _user; } }
 
         public void Log(string message)
         {
@@ -45,36 +46,52 @@ namespace Leftover_Harmony
             MainFrame.Content = null;
         }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
         public MainWindow(User account)
         {
             InitializeComponent();
             _user = account;
         }
 
+        /// <summary>
+        /// Refreshes user image
+        /// </summary>
+        public void Refresh()
+        {
+            if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush
+            {
+                ImageSource = ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25),
+                Stretch = Stretch.UniformToFill
+            };
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            if (_user == null) _user = DataAccessProvider.Instance.FetchDonor(1);
-
             HomeButton.IsChecked = true;
 
-            if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush(ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25));
+            Refresh();
+
+            CustomQueries();
+
+            MainFrame.NavigationService.Navigate(new HomePage());
         }
 
         private void ProfileButton_Checked(object sender, RoutedEventArgs e)
         {
             ClearFrame();
-            MainFrame.NavigationService.Navigate(new DonorProfilePage(this, (Donor)_user));
+            if (_user is Donor) MainFrame.NavigationService.Navigate(new DonorProfilePage(this, (Donor)_user));
+            else MainFrame.NavigationService.Navigate(new DoneeProfilePage(this, (Donee)_user));
         }
 
         private void HomeButton_Checked(object sender, RoutedEventArgs e)
         {
             ClearFrame();
+            MainFrame.NavigationService.Navigate(new HomePage());
+        }
+
+        private void SettingsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ClearFrame();
+            MainFrame.NavigationService.Navigate(new SettingsPage(this));
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -86,5 +103,47 @@ namespace Leftover_Harmony
         {
             ProfileButton.IsChecked = true;
         }
+
+        public bool IsCurrentUser(User user)
+        {
+            return _user == user;
+        }
+
+        private void CustomQueries()
+        {
+
+            /*
+            Leftover leftover1 = DataAccessProvider.Instance.FetchLeftover(1);
+            Leftover leftover2 = DataAccessProvider.Instance.FetchLeftover(2);
+            Leftover leftover3 = DataAccessProvider.Instance.FetchLeftover(3);
+
+            leftover1.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.roti.jpg"));
+            leftover2.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.telur.jpg"));
+            leftover3.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.tepung.jpg"));
+
+            DataAccessProvider.Instance.UpdateLeftover(leftover1);
+            DataAccessProvider.Instance.UpdateLeftover(leftover2);
+            DataAccessProvider.Instance.UpdateLeftover(leftover3);
+            
+
+            Request request1 = DataAccessProvider.Instance.FetchRequest(1);
+            Request request2 = DataAccessProvider.Instance.FetchRequest(2);
+
+            request1.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.bahan-pangan.jpg"));
+            request2.SetImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.pakaian.jpg"));
+
+            DataAccessProvider.Instance.UpdateRequest(request1);
+            DataAccessProvider.Instance.UpdateRequest(request2);
+            
+            _user.ChangeImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.rehan.png"));
+            DataAccessProvider.Instance.UpdateDonor((Donor)_user);
+
+            _user.ChangeImage(ResourceHandler.GetResource("Leftover_Harmony.Resources.Images.yae.png"));
+            DataAccessProvider.Instance.UpdateDonee((Donee)_user);
+            */
+
+        }
+
+        
     }
 }

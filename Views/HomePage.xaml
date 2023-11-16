@@ -5,46 +5,35 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Leftover_Harmony.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="HomePage">
+      d:DesignHeight="616" d:DesignWidth="1024"
+      Title="HomePage" Loaded="Page_Loaded">
 
     <Page.Resources>
-        <ControlTemplate x:Key="DonationContentTemplate">
+        <ControlTemplate x:Key="RequestContentTemplate">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="0.3*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
 
-                <!--Gambar-->
-                <Grid Grid.Row="0">
-                    <StackPanel Margin="8,8,8,8" Orientation="Horizontal">
-                        <Rectangle Width="197" RadiusX="10" RadiusY="10">
-                            <Rectangle.Fill>
-                                <ImageBrush ImageSource="/Resources/Images/roti.jpg" Stretch="UniformToFill"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </StackPanel>
-                </Grid>
-
-                <!--Judul Request-->
-                <Grid Grid.Row="1" Margin="20,0,20,0">
+                <!--#region Gambar -->
+                <Border x:Name="rqImage" CornerRadius="10,10,0,0" BorderThickness="1" BorderBrush="Black"/>
+                <!--#endregion-->
+                <!--#region Info -->
+                <Grid Grid.Row="1">
                     <StackPanel>
-                        <TextBlock Text="PT Bonaruli" FontFamily="{StaticResource Montserrat}" FontSize="14" FontWeight="Bold" VerticalAlignment="Top" Height="15" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                        <Rectangle Grid.ColumnSpan="2" Stroke="Black" VerticalAlignment="Bottom"/>
+                        <TextBlock x:Name="rqTitle" Text="PT Bonaruli" FontFamily="{StaticResource Montserrat}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,4"/>
+                        <TextBlock x:Name="rqDescription" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. njdadbjab dnsjan dbsjadbasj" Margin="8,0,8,0"/>
                     </StackPanel>
+                    <TextBlock x:Name="rqDate" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Created at {date}" HorizontalAlignment="Right" Margin="0,0,16,16" VerticalAlignment="Bottom" Opacity="0.5"/>
                 </Grid>
-
-                <Grid Grid.Row="2">
-                    <TextBlock Grid.Row="1" TextWrapping="Wrap" FontFamily="{StaticResource Roboto}" FontSize="12" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. njdadbjab dnsjan dbsjadbasj" Margin="16,0,16,0"/>
-                </Grid>
-
+                <!--#endregion-->
+                <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" CornerRadius="10"/>
             </Grid>
         </ControlTemplate>
     </Page.Resources>
 
-    <Grid Background="#F4F6F1">
+    <Grid x:Name="RequestList" Background="#F4F6F1">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -56,37 +45,6 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-
-        <Grid Margin="27,10,27,10" Grid.Row="0" Grid.Column="0" >
-            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
-            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-        </Grid>
-
-        <Grid Margin="27,10,27,10" Grid.Row="0" Grid.Column="1" >
-            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
-            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-        </Grid>
-
-        <Grid Margin="27,10,27,10" Grid.Row="0" Grid.Column="2">
-            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
-            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-        </Grid>
-
-        <Grid Margin="27,10,27,10" Grid.Row="1" Grid.Column="0">
-            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
-            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-        </Grid>
-
-        <Grid Margin="27,10,27,10" Grid.Row="1" Grid.Column="1">
-            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
-            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-        </Grid>
-
-        <Grid Margin="27,10,27,10" Grid.Row="1" Grid.Column="2">
-            <ContentControl Template="{StaticResource DonationContentTemplate}"/>
-            <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
-        </Grid>
-
     </Grid>
 
 </Page>

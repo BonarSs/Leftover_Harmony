@@ -2,7 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:uc="clr-namespace:Leftover_Harmony.Resources.Components"
       xmlns:local="clr-namespace:Leftover_Harmony.Views"
       mc:Ignorable="d" 
       d:DesignHeight="616" d:DesignWidth="1024"
@@ -31,6 +32,13 @@
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
                     <GeometryDrawing Brush="#38B54A" Geometry="F1 M16,16z M0,0z M16,8A8,8,0,1,1,0,8A8,8,0,0,1,16,8z M12.03,4.97A0.75,0.75,0,0,0,10.95,4.992L7.477,9.417 5.384,7.323A0.75,0.75,0,0,0,4.324,8.383L6.97,11.03A0.75,0.75,0,0,0,8.049,11.01L12.041,6.02A0.75,0.75,0,0,0,12.031,4.97z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="pending_fill">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V150 H150 V0 H0 Z">
+                    <GeometryDrawing Brush="#00AEFF" Geometry="F1 M150,150z M0,0z M75,0A75,75,0,0,0,0,75A75,75,0,0,0,75,150A75,75,0,0,0,150,75A75,75,0,0,0,75,0z M103.1543,25.125C104.78634,25.18352,106.30192,26.180136,106.91992,27.771484L111.08789,38.466797C111.24489,38.873696 111.33638,39.301729 111.35938,39.736328 111.68537,41.729226 110.46736,43.704841 108.44336,44.306641L97.283203,47.65625C95.074005,48.312749 92.741565,47.088626 92.072266,44.923828 91.402966,42.75893 92.650224,40.468999 94.857422,39.8125L95.775391,39.537109C93.130093,38.132711 90.339016,37.012459 87.449219,36.193359 83.750022,35.14606 79.804949,34.582031 75.689453,34.582031 64.012165,34.582031 53.438502,39.223976 45.787109,46.730469 38.133717,54.235061 33.400391,64.605358 33.400391,76.060547 33.400391,87.513835 38.133717,97.881679 45.787109,105.38867 52.721302,112.18967 62.053104,116.64106 72.433594,117.41406 75.401691,117.63506 78.456287,117.5625 81.396484,117.1875 84.253082,116.8155 86.509215,119.55575 85.541016,122.21875 85.035116,123.56875 83.860542,124.51508 82.402344,124.70508 79.046547,125.12808 75.657047,125.23081 72.28125,125.00781 59.827062,124.18481 48.621104,118.89099 40.320312,110.75 31.268522,101.87201 25.669922,89.606333 25.669922,76.060547 25.669922,62.51286 31.268522,50.247232 40.320312,41.369141 49.372103,32.49105 61.876667,27 75.689453,27 80.478248,27 85.145554,27.675348 89.59375,28.935547 93.243146,29.968346 96.759622,31.409117 100.07422,33.228516L99.087891,30.697266C98.265091,28.575468 99.350421,26.201477 101.51172,25.392578 102.05247,25.190853 102.61028,25.105492 103.1543,25.125z M114.28711,47.738281C115.56702,47.674521 116.88622,48.219076 117.71484,49.46875 119.22284,51.774248 120.54267,54.194393 121.63867,56.712891 122.46467,58.604189 121.61007,60.794598 119.70312,61.654297 117.72513,62.549096 115.4002,61.668587 114.5332,59.708984 113.6052,57.569487 112.49384,55.53397 111.21484,53.576172 110.66284,52.730173 110.48483,51.769808 110.67383,50.787109 111.06195,48.906674 112.64151,47.820258 114.28711,47.738281z M71.898438,52.314453C74.031935,52.314453,75.763672,54.012971,75.763672,56.105469L75.763672,79.183594 91.869141,86.126953C93.821339,86.969052 94.706255,89.204443 93.847656,91.119141 92.989157,93.031939 90.710011,93.902646 88.757812,93.060547L70.537109,85.205078C69.072911,84.663879,68.03125,83.279848,68.03125,81.65625L68.03125,56.105469C68.03125,54.012971,69.76304,52.314453,71.898438,52.314453z M121.43945,69.101562C122.11098,69.055992 122.81217,69.182492 123.48242,69.523438 124.67742,70.138937 125.45478,71.302295 125.55078,72.621094 125.74178,75.366191 125.69859,78.079162 125.43359,80.818359 125.14559,83.579157 122.11044,85.113786 119.64844,83.742188 118.33544,82.986088 117.59733,81.590461 117.73633,80.101562 117.96133,77.776565 118.00089,75.481341 117.83789,73.152344 117.67814,70.938196 119.42486,69.238287 121.43945,69.101562z M117.75195,91.255859C120.50695,91.371059 122.24786,94.137724 121.13086,96.607422 119.97086,99.108219 118.61873,101.49544 117.05273,103.77344 116.35974,104.78944 115.25067,105.38327 114.01367,105.44727 110.85068,105.58427 108.87377,102.12217 110.63477,99.546875 111.96076,97.616477 113.10199,95.604273 114.08398,93.484375 114.74098,92.071776 116.17195,91.205059 117.75195,91.255859z M102.83398,108.77539C104.83644,108.59553 106.81872,109.98747 107.04297,112.19922 107.15997,113.53322 106.59014,114.79666 105.49414,115.59766 103.24914,117.22365 100.85563,118.67139 98.361328,119.90039 97.456929,120.34339 96.48963,120.4243 95.519531,120.1543 92.166935,119.1723 91.753737,114.69676 94.865234,113.13477 96.974932,112.09577 98.989274,110.88381 100.88867,109.50781 101.49667,109.07031 102.1665,108.83534 102.83398,108.77539z" />
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
@@ -101,8 +109,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <Ellipse x:Name="usrProfilePicture" Stroke="Black" Fill="Transparent" VerticalAlignment="Stretch" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8"/>
-                <Rectangle Grid.Column="1" Margin="16,8,16,8" Stroke="Black" RadiusX="10" RadiusY="10"/>
+                <Ellipse x:Name="usrProfilePicture" Stroke="Black" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="0,8,0,8" MouseDown="usrProfilePicture_MouseDown"/>
                 <Grid Grid.Column="1" Margin="16,8,16,8">
                     <StackPanel Margin="24,18,24,0">
                         <TextBlock x:Name="usrDisplayName" Text="Display Name" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" VerticalAlignment="Top" Height="34" Margin="0,0,0,4" />
@@ -125,6 +132,7 @@
                             </StackPanel>
                         </Grid>
                     </StackPanel>
+                    <Rectangle Stroke="Black" RadiusX="10" RadiusY="10"/>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
@@ -132,15 +140,22 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
-                <Label Content="Recent Donations" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Regular" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                <Label Content="Recent Donations" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Margin="8,0,0,0" VerticalAlignment="Center"/>
                 <Grid x:Name="usrRecentDonations" Grid.Row="1" Margin="16,0,13,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
+                    <Border x:Name="usrRecentDonationsSpinner" Grid.ColumnSpan="3" Background="#7F000000" CornerRadius="10">
+                        <uc:SpinnerUserControl />
+                    </Border>
                 </Grid>
             </Grid>
+        </Grid>
+        <Grid x:Name="usrProfilePictureDisplay" Visibility="Hidden">
+            <Border x:Name="usrProfilePictureDisplayBackground" Background="Black" Opacity="0.5" MouseDown="usrProfilePictureDisplayBackground_MouseDown"/>
+            <Image x:Name="usrProfilePictureDisplayImage" Margin="32,32,32,32" Stretch="Uniform"/>
         </Grid>
     </Grid>
 </Page>

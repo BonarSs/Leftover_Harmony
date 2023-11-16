@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,9 +66,17 @@ namespace Leftover_Harmony.Models
             _bio = newBio;
             return true;
         }
-        public bool ChangeImage(byte[] newImage)
+        public bool ChangeImage(byte[]? newImage)
         {
             _image = newImage;
+            return true;
+        }
+        public bool ChangeImage(Stream stream)
+        {
+            byte[] buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, buffer.Length);
+
+            _image = buffer;
             return true;
         }
     }
