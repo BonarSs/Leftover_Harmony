@@ -93,6 +93,14 @@ namespace Leftover_Harmony.Views
             }
         }
 
+        public void InitializeAccountTab()
+        {
+            User user = _mainWindow.CurrentUser;
+            usrAccountUsername.Text = user.Username;
+            usrAccountEmail.Text = user.Email;
+            usrAccountPhone.Text = user.PhoneNumber;
+        }
+
         private void usrProfilePictureChange_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();

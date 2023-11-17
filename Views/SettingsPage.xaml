@@ -363,7 +363,7 @@
                         </Grid>
                     </DockPanel>
                 </Grid>
-                <DockPanel x:Name="AppearanceSettingPage" Visibility="Visible">
+                <DockPanel x:Name="AppearanceSettingPage" Visibility="Hidden">
                     <StackPanel>
                         <TextBlock Foreground="{DynamicResource DarkColor}" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Text="Theme"/>
                         <StackPanel Orientation="Horizontal">
@@ -372,7 +372,7 @@
                         </StackPanel>
                     </StackPanel>
                 </DockPanel>
-                <Grid x:Name="AccountSettingPage" Visibility="Hidden">
+                <Grid x:Name="AccountSettingPage" Visibility="Visible">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="11*"/>
                         <ColumnDefinition Width="9*"/>
@@ -427,7 +427,7 @@
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock x:Name="newUsernameInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Username already taken"/>
+                                            <TextBlock x:Name="newUsernameInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Username already taken" Visibility="Hidden"/>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
@@ -457,7 +457,7 @@
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock x:Name="newEmailInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Email already in use"/>
+                                            <TextBlock x:Name="newEmailInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Email already in use" Visibility="Hidden"/>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
@@ -502,7 +502,7 @@
                                                 <ColumnDefinition Width="2*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock x:Name="newPasswordInvalid" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Password has to be at least 8 characters"/>
+                                            <TextBlock x:Name="newPasswordInvalid" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Password has to be at least 8 characters" Visibility="Hidden"/>
                                             <Button x:Name="newPasswordChangeButton" Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change" Click="newPasswordChangeButton_Click"/>
                                         </Grid>
                                     </StackPanel>
@@ -526,7 +526,7 @@
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock x:Name="newPhoneInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Phone number already in use"/>
+                                            <TextBlock x:Name="newPhoneInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Phone number already in use" Visibility="Hidden"/>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
