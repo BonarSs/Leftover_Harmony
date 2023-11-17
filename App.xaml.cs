@@ -14,20 +14,22 @@ namespace Leftover_Harmony
     /// </summary>
     public partial class App : Application
     {
+        public static App Instance => ((App)Application.Current);
+        public Theme ApplicationTheme = Theme.Default;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresUri"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["PostgresUriLocal"].ConnectionString;
             DataAccessProvider.Instance.Connect(connectionString);
-            ChangeTheme(Theme.Coffee);
+            ChangeTheme(Theme.Default);
         }
 
-        enum Theme
+        public enum Theme
         {
             Default,
             Coffee
         }
 
-        private void ChangeTheme(Theme theme)
+        public void ChangeTheme(Theme theme)
         {
             ResourceDictionary themeResource = new ResourceDictionary();
 
@@ -36,6 +38,7 @@ namespace Leftover_Harmony
             else if(theme == Theme.Coffee) themeResource.Source = new Uri("Resources/Themes/CoffeeTheme.xaml", UriKind.Relative);
             
             App.Current.Resources.MergedDictionaries.Add(themeResource);
+            ApplicationTheme = theme;
         }
     }
 }

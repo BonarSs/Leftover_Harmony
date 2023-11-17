@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Leftover_Harmony"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="Leftover Harmony" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" MouseLeftButtonDown="Window_MouseLeftButtonDown">
 

@@ -11,7 +11,7 @@ namespace Leftover_Harmony.Models
     public class User
     {
         private readonly int _id;
-        private readonly string _username;
+        private string _username;
         private string _password;
         private string _email;
         private string _phoneNumber;
@@ -37,6 +37,12 @@ namespace Leftover_Harmony.Models
             _phoneNumber = phoneNumber;
         }
 
+        public bool ChangeUsername(string newUsername)
+        {
+            if (_username.Equals(newUsername)) return false;
+            _username = newUsername;
+            return true;
+        }
         public bool ChangePassword(string newPassword)
         {
             if (_password.Equals(newPassword)) return false;

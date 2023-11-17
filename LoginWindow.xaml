@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Leftover_Harmony"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="LoginPage" Height="720" Width="640">
+        Title="Leftover Harmony - Login" Height="720" Width="640">
 
     <Window.Resources>
         <Style x:Key="LoginButton" TargetType="Button">

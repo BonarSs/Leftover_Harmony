@@ -93,6 +93,20 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Padding" Value="8,4,0,0"/>
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="ScrollThumbStyle" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -157,6 +171,86 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="DefaultThemeRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Border" BorderBrush="Transparent" BorderThickness="2" Margin="4,0,4,0">
+                            <StackPanel Margin="8">
+                                <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1">
+                                    <Grid Width="225" Height="150">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="2*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.RowSpan="2" Background="#000">
+                                            <TextBlock Foreground="#F6F1F1" FontFamily="{StaticResource Montserrat}" FontSize="18" FontWeight="Bold" Text="Aa" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Grid Grid.Column="1" Background="#1565C0"/>
+                                        <Grid Grid.Column="1" Grid.Row="1" Background="#F4F6F1">
+                                            <TextBlock Foreground="#000000" FontFamily="{StaticResource Montserrat}" FontSize="18" FontWeight="Bold" Text="Aa" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <TextBlock HorizontalAlignment="Center" Foreground="{DynamicResource DarkColor}" FontFamily="{StaticResource Montserrat}" FontSize="20" FontWeight="Regular" Text="Default"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource Primary800}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource Primary200}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CoffeeThemeRadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Border" BorderBrush="Transparent" BorderThickness="2" Margin="4,0,4,0">
+                            <StackPanel Margin="8">
+                                <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1">
+                                    <Grid Width="225" Height="150">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="2*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.RowSpan="2" Background="#2a2523">
+                                            <TextBlock Foreground="#f1e6dd" FontFamily="{StaticResource Montserrat}" FontSize="18" FontWeight="Bold" Text="Aa" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Grid Grid.Column="1" Background="#a47767"/>
+                                        <Grid Grid.Column="1" Grid.Row="1" Background="#f1e6dd">
+                                            <TextBlock Foreground="#2a2523" FontFamily="{StaticResource Montserrat}" FontSize="18" FontWeight="Bold" Text="Aa" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                                <TextBlock HorizontalAlignment="Center" Foreground="{DynamicResource DarkColor}" FontFamily="{StaticResource Montserrat}" FontSize="20" FontWeight="Regular" Text="Coffee"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource Primary800}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource Primary200}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <DrawingImage x:Key="telephone_fill">
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
@@ -198,7 +292,7 @@
                 <RadioButton x:Name="AccountSettingsTab" Style="{StaticResource SettingsTabRadioButton}" Grid.Column="2" GroupName="SettingsTab" Content="ACCOUNT" Checked="AccountSettingsTab_Checked"/>
             </Grid>
             <Grid>
-                <Grid x:Name="ProfileSettingPage" Visibility="Visible">
+                <Grid x:Name="ProfileSettingPage" Visibility="Hidden">
                     <DockPanel>
                         <Grid DockPanel.Dock="Bottom">
                             <Grid.ColumnDefinitions>
@@ -269,7 +363,15 @@
                         </Grid>
                     </DockPanel>
                 </Grid>
-                <DockPanel x:Name="AppearanceSettingPage" Visibility="Hidden"/>
+                <DockPanel x:Name="AppearanceSettingPage" Visibility="Visible">
+                    <StackPanel>
+                        <TextBlock Foreground="{DynamicResource DarkColor}" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Text="Theme"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton x:Name="DefaultTheme" Style="{StaticResource DefaultThemeRadioButtonStyle}" GroupName="ThemeGroup" Checked="DefaultTheme_Checked"/>
+                            <RadioButton x:Name="CoffeeTheme" Style="{StaticResource CoffeeThemeRadioButtonStyle}" GroupName="ThemeGroup" Checked="CoffeeTheme_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
                 <Grid x:Name="AccountSettingPage" Visibility="Hidden">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="11*"/>
@@ -300,7 +402,7 @@
                             <DockPanel Margin="16">
                                 <Button DockPanel.Dock="Top" Margin="0,0,0,8" Height="40" Style="{StaticResource ButtonStyle}" Content="About"/>
                                 <Button DockPanel.Dock="Top" Margin="0,8,0,8" Height="40" Style="{StaticResource ButtonStyle}" Content="Support"/>
-                                <Button DockPanel.Dock="Bottom" Height="40" Style="{StaticResource DangerButtonStyle}" Content="Log Out"/>
+                                <Button x:Name="LogOutButton" DockPanel.Dock="Bottom" Height="40" Style="{StaticResource DangerButtonStyle}" Content="Log Out" Click="LogOutButton_Click"/>
                                 <Rectangle DockPanel.Dock="Top"/>
                             </DockPanel>
                         </Border>
@@ -318,26 +420,26 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="New Username"/>
                                             <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text=":"/>
-                                            <TextBox Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                                            <TextBox x:Name="newUsernameTextBox" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
                                         </Grid>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Username already taken"/>
+                                            <TextBlock x:Name="newUsernameInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Username already taken"/>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="2*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change"/>
+                                            <Button x:Name="newUsernameChangeButton" Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change" Click="newUsernameChangeButton_Click"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
-                            <StackPanel Margin="0,0,0,8">
+                            <StackPanel Margin="0,0,0,8" Visibility="Collapsed">
                                 <TextBlock Margin="0,0,0,4" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="Change Email"/>
                                 <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
                                     <StackPanel Margin="16">
@@ -348,21 +450,21 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="New Email"/>
                                             <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text=":"/>
-                                            <TextBox Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                                            <TextBox x:Name="newEmailTextBox" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
                                         </Grid>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Email already in use"/>
+                                            <TextBlock x:Name="newEmailInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Email already in use"/>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="2*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change"/>
+                                            <Button x:Name="newEmailChangeButton" Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change" Click="newEmailChangeButton_Click"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>
@@ -383,7 +485,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock VerticalAlignment="Top" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="New Password" Margin="0,3,0,0"/>
                                                 <TextBlock Margin="0,0,8,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text=":"/>
-                                                <TextBox Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                                                <PasswordBox x:Name="newPasswordTextBox" Grid.Column="1" Style="{StaticResource PasswordBoxStyle}"/>
                                             </Grid>
                                             <Grid Margin="0,8,0,0" Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
@@ -392,7 +494,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock VerticalAlignment="Top" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="Confirm Password" Margin="0,3,0,0"/>
                                                 <TextBlock Margin="0,0,8,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text=":"/>
-                                                <TextBox Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                                                <PasswordBox x:Name="newPasswordConfirmTextBox" Grid.Column="1" Style="{StaticResource PasswordBoxStyle}"/>
                                             </Grid>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
@@ -400,13 +502,13 @@
                                                 <ColumnDefinition Width="2*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Password has to be at least 8 characters"/>
-                                            <Button Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change"/>
+                                            <TextBlock x:Name="newPasswordInvalid" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Password has to be at least 8 characters"/>
+                                            <Button x:Name="newPasswordChangeButton" Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change" Click="newPasswordChangeButton_Click"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
-                            <StackPanel Margin="0,0,0,8">
+                            <StackPanel Margin="0,0,0,8" Visibility="Collapsed">
                                 <TextBlock Margin="0,0,0,4" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="Change Phone Number"/>
                                 <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
                                     <StackPanel Margin="16">
@@ -417,26 +519,26 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="New Number"/>
                                             <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text=":"/>
-                                            <TextBox Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                                            <TextBox x:Name="newPhoneTextBox" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
                                         </Grid>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Phone number already in use"/>
+                                            <TextBlock x:Name="newPhoneInvalid" Grid.Column="1" FontFamily="{StaticResource Montserrat}" Foreground="Red" Text="*Phone number already in use"/>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change"/>
+                                            <Button x:Name="newPhoneChangeButton" Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change" Click="newPhoneChangeButton_Click"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
-                            <StackPanel Margin="0,0,0,8" Visibility="Collapsed">
+                            <StackPanel Margin="0,0,0,8" x:Name="newOrganizationForm"  Visibility="Collapsed">
                                 <TextBlock Margin="0,0,0,4" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="Change Organization"/>
                                 <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
                                     <StackPanel Margin="16">
@@ -447,14 +549,14 @@
                                             </Grid.ColumnDefinitions>
                                             <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="New Organization"/>
                                             <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text=":"/>
-                                            <TextBox Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                                            <TextBox x:Name="newOrganizationTextBox" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
                                         </Grid>
                                         <Grid Margin="0,8,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change"/>
+                                            <Button x:Name="newOrganizationChangeButton" Grid.Column="1" Height="30" Style="{StaticResource ButtonStyle}" FontSize="16" Content="Change" Click="newOrganizationChangeButton_Click"/>
                                         </Grid>
                                     </StackPanel>
                                 </Border>
