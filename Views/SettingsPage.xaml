@@ -44,8 +44,8 @@
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Border x:Name="BackgroundRectangle" Background="{TemplateBinding Background}" CornerRadius="8"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -439,7 +439,7 @@
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
-                            <StackPanel Margin="0,0,0,8" Visibility="Collapsed">
+                            <StackPanel Margin="0,0,0,8">
                                 <TextBlock Margin="0,0,0,4" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="Change Email"/>
                                 <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
                                     <StackPanel Margin="16">
@@ -508,7 +508,7 @@
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
-                            <StackPanel Margin="0,0,0,8" Visibility="Collapsed">
+                            <StackPanel Margin="0,0,0,8">
                                 <TextBlock Margin="0,0,0,4" FontFamily="{StaticResource Montserrat}" FontWeight="SemiBold" FontSize="18" Text="Change Phone Number"/>
                                 <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
                                     <StackPanel Margin="16">

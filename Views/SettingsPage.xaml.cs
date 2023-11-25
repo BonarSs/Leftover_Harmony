@@ -99,8 +99,40 @@ namespace Leftover_Harmony.Views
             usrAccountUsername.Text = user.Username;
             usrAccountEmail.Text = user.Email;
             usrAccountPhone.Text = user.PhoneNumber;
+
+            if (user is Donee) newOrganizationForm.Visibility = Visibility.Visible;
         }
 
+        private void ToggleButtonSpinner(ref Button button)
+        {
+            ContentPresenter content = (ContentPresenter)button.Template.FindName("ContentPresenter", button);
+            FrameworkElement spinner = (FrameworkElement)button.Template.FindName("Spinner", button);
+
+            if (content == null || spinner == null) return;
+
+            if (spinner.Visibility == Visibility.Visible)
+            {
+                spinner.Visibility = Visibility.Hidden;
+                content.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                spinner.Visibility = Visibility.Visible;
+                content.Visibility = Visibility.Hidden;
+            }
+        }
+        private void DisplayErrorMessage(ref TextBlock textbox, string message)
+        {
+            textbox.Text = message;
+            textbox.Visibility = Visibility.Visible;
+        }
+        private async void UpdateUser()
+        {
+            if (_mainWindow.CurrentUser is Donee) await DataAccessProvider.Instance.UpdateDoneeAsync((Donee)_mainWindow.CurrentUser);
+            else await DataAccessProvider.Instance.UpdateDonorAsync((Donor)_mainWindow.CurrentUser);
+        }
+
+        #region ProfileSettings
         private void usrProfilePictureChange_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
@@ -172,107 +204,10 @@ namespace Leftover_Harmony.Views
             usrSaveButton.Content = "Save";
         }
 
-        private async void newUsernameChangeButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool valid = true;
-            string username = newUsernameTextBox.Text;
-            FrameworkElement spinner = (FrameworkElement)newUsernameChangeButton.Template.FindName("Spinner", newUsernameChangeButton);
+        #endregion
 
-            // length check
-            if (username.Length == 0)
-            {
-                newUsernameInvalid.Text = "*Username cannot be empty.";
-                valid = false;
-            }
-            if (username.Length < 4 || username.Length > 16)
-            {
-                newUsernameInvalid.Text = "*Username must be between 4 and 16 characters.";
-                valid = false;
-            }
 
-            // break before calling data to prevent unnecessary wait
-            if (!valid)
-            {
-                newUsernameInvalid.Visibility = Visibility.Visible;
-                return;
-            }
-
-            spinner.Visibility = Visibility.Visible;
-            newUsernameChangeButton.Content = "";
-
-            bool usernameExists = await DataAccessProvider.Instance.IsUsernameExistsAsync(username);
-            if (usernameExists)
-            {
-                newUsernameInvalid.Text = "*Username already exists.";
-                valid = false;
-            }
-
-            // modify data if valid
-            if (valid)
-            {
-                _mainWindow.CurrentUser.ChangeUsername(username);
-
-                if (_mainWindow.CurrentUser is Donee) await DataAccessProvider.Instance.UpdateDoneeAsync((Donee)_mainWindow.CurrentUser);
-                else await DataAccessProvider.Instance.UpdateDonorAsync((Donor)_mainWindow.CurrentUser);
-            }
-
-            spinner.Visibility = Visibility.Hidden;
-            newUsernameChangeButton.Content = "Change";
-        }
-
-        private void newEmailChangeButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private async void newPasswordChangeButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool valid = true;
-            if (!newPasswordTextBox.Password.Equals(newPasswordConfirmTextBox.Password))
-            {
-                newPasswordInvalid.Text = "*Password do not match.";
-                valid = false;
-            }
-
-            // break before calling data to prevent unnecessary wait
-            if (!valid)
-            {
-                newPasswordInvalid.Visibility = Visibility.Visible;
-                return;
-            }
-
-            string password = newPasswordTextBox.Password;
-            FrameworkElement spinner = (FrameworkElement)newPasswordChangeButton.Template.FindName("Spinner", newUsernameChangeButton);
-
-            spinner.Visibility = Visibility.Visible;
-            newPasswordChangeButton.Content = "";
-
-            _mainWindow.CurrentUser.ChangePassword(password);
-
-            if (_mainWindow.CurrentUser is Donee) await DataAccessProvider.Instance.UpdateDoneeAsync((Donee)_mainWindow.CurrentUser);
-            else await DataAccessProvider.Instance.UpdateDonorAsync((Donor)_mainWindow.CurrentUser);
-
-            spinner.Visibility = Visibility.Hidden;
-            newPasswordChangeButton.Content = "Change";
-        }
-
-        private void newPhoneChangeButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void newOrganizationChangeButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
-            _mainWindow.Close();
-        }
-
+        #region AppearanceSettings
         private void DefaultTheme_Checked(object sender, RoutedEventArgs e)
         {
             App.Instance.ChangeTheme(Theme.Default);
@@ -282,5 +217,86 @@ namespace Leftover_Harmony.Views
         {
             App.Instance.ChangeTheme(Theme.Coffee);
         }
+
+        #endregion
+
+        #region AccountSettings
+        private async void newUsernameChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = newUsernameTextBox.Text;
+
+            // length check
+            if (username.Length == 0) { DisplayErrorMessage(ref newUsernameInvalid, "*Username cannot be empty."); return; }
+            if (username.Length < 4 || username.Length > 16) { DisplayErrorMessage(ref newUsernameInvalid, "*Username must be between 4 and 16 characters."); return; }
+
+            ToggleButtonSpinner(ref newUsernameChangeButton);
+
+            bool usernameExists = await DataAccessProvider.Instance.IsUsernameExistsAsync(username);
+            if (usernameExists) DisplayErrorMessage(ref newUsernameInvalid, "*Username already exists.");
+            else { _mainWindow.CurrentUser.ChangeUsername(username); UpdateUser(); }
+
+            ToggleButtonSpinner(ref newUsernameChangeButton);
+        }
+
+        private async void newEmailChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            string email = newEmailTextBox.Text;
+            
+            ToggleButtonSpinner(ref newEmailChangeButton);
+
+            bool emailExists = await DataAccessProvider.Instance.IsEmailExistsAsync(email);
+
+            if (emailExists) DisplayErrorMessage(ref newEmailInvalid, "Email already in use");
+            else { _mainWindow.CurrentUser.ChangeEmail(email); UpdateUser(); }
+
+            ToggleButtonSpinner(ref newEmailChangeButton);
+        }
+
+        private void newPasswordChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!newPasswordTextBox.Password.Equals(newPasswordConfirmTextBox.Password)) { DisplayErrorMessage(ref newPasswordInvalid, "*Password do not match."); return; }
+
+            string password = newPasswordTextBox.Password;
+
+            ToggleButtonSpinner(ref newPasswordChangeButton);
+
+            _mainWindow.CurrentUser.ChangePassword(password);
+            UpdateUser();
+
+            ToggleButtonSpinner(ref newPasswordChangeButton);
+        }
+
+        private void newPhoneChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            string phone = newPhoneTextBox.Text;
+
+            ToggleButtonSpinner(ref newPhoneChangeButton);
+
+            _mainWindow.CurrentUser.ChangePhoneNumber(phone);
+            UpdateUser();
+
+            ToggleButtonSpinner(ref newPhoneChangeButton);
+        }
+
+        private void newOrganizationChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            string organization = newOrganizationTextBox.Text;
+
+            ToggleButtonSpinner(ref newOrganizationChangeButton);
+
+            ((Donee)_mainWindow.CurrentUser).ChangeOrganization(organization);
+            UpdateUser();
+
+            ToggleButtonSpinner(ref newOrganizationChangeButton);
+        }
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            _mainWindow.Close();
+        }
+        #endregion
     }
 }

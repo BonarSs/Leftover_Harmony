@@ -599,6 +599,32 @@ namespace Leftover_Harmony.Services
             if (result == null) return false;
             return (bool)result;
         }
+        public bool IsEmailExists(string email)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM email_exists(:_email)", conn);
+            cmd.Parameters.AddWithValue("_email", email);
+
+            object? result = cmd.ExecuteScalar();
+            if (result == null) return false;
+            return (bool)result;
+        }
+        public async Task<bool> IsEmailExistsAsync(string email)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM email_exists(:_email)", conn);
+            cmd.Parameters.AddWithValue("_email", email);
+
+            object? result = await cmd.ExecuteScalarAsync();
+            if (result == null) return false;
+            return (bool)result;
+        }
         #endregion
 
         #region Base Updater

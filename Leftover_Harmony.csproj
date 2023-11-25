@@ -54,7 +54,7 @@
     <EmbeddedResource Include="Resources\Images\telur.jpg" />
     <EmbeddedResource Include="Resources\Images\tepung.jpg" />
     <EmbeddedResource Include="Resources\Images\yae.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
