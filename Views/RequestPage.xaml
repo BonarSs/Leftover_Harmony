@@ -3,10 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:uc="clr-namespace:Leftover_Harmony.Resources.Components"
       xmlns:local="clr-namespace:Leftover_Harmony.Views"
       mc:Ignorable="d" 
       d:DesignHeight="616" d:DesignWidth="1024"
-      Title="RequestPage">
+      Title="RequestPage" Loaded="Page_Loaded">
 
     <Page.Resources>
         <DrawingImage x:Key="dash">
@@ -39,7 +40,7 @@
                 <DockPanel Margin="12">
                     <Rectangle DockPanel.Dock="Left" Stroke="{DynamicResource DarkColor}" StrokeThickness="1" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" RadiusX="5" RadiusY="5">
                         <Rectangle.Fill>
-                            <ImageBrush x:Name="rqImage"/>
+                            <ImageBrush x:Name="lfImage" Stretch="UniformToFill"/>
                         </Rectangle.Fill>
                     </Rectangle>
 
@@ -76,8 +77,8 @@
                             </StackPanel>
                             <Grid>
                                 <Border x:Name="lfProgressBar" Height="10" Background="{DynamicResource Neutral400}" CornerRadius="5"/>
-                                <Border x:Name="lfDonating" Height="10" Background="{DynamicResource Info400}" CornerRadius="5"/>
-                                <Border x:Name="lfDonated" Height="10" Background="{DynamicResource Success400}" CornerRadius="5"/>
+                                <Border x:Name="lfDonating" Height="10" Background="{DynamicResource Info400}" CornerRadius="5" HorizontalAlignment="Left"/>
+                                <Border x:Name="lfDonated" Height="10" Background="{DynamicResource Success400}" CornerRadius="5" HorizontalAlignment="Left"/>
                             </Grid>
                         </DockPanel>
 
@@ -96,28 +97,42 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <ScrollViewer Style="{StaticResource ScrollViewerStyle}">
-                <StackPanel>
-                    <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
                         <StackPanel Margin="16">
                             <TextBlock Margin="0,0,0,16" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Text="Description"/>
                             <TextBlock x:Name="rqDescription" FontFamily="{StaticResource Roboto}" FontSize="18" Text="Lorem ipsum dolor sit amet"/>
                         </StackPanel>
                     </Border>
-                    <TextBlock Margin="0,16,0,8" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Text="Leftovers"/>
-                    <ContentControl Template="{StaticResource LeftoverContentTemplate}" Margin="0,8,0,8"/>
-                    <ContentControl Template="{StaticResource LeftoverContentTemplate}" Margin="0,8,0,8"/>
-                </StackPanel>
+                    <TextBlock DockPanel.Dock="Top" Margin="0,16,0,8" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Text="Leftovers"/>
+                    <Grid DockPanel.Dock="Top">
+                        <Grid x:Name="LeftoverSpinner" Background="{DynamicResource DarkColor}" Opacity="0.6" Visibility="Hidden">
+                            <uc:SpinnerUserControl />
+                        </Grid>
+                        <StackPanel x:Name="LeftoverList"/>
+                    </Grid>
+                </DockPanel>
             </ScrollViewer>
             <DockPanel Margin="16,0,0,0" Grid.Column="1">
-                <Border Margin="0,16,0,32" DockPanel.Dock="Bottom" BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" CornerRadius="10">
-                    <StackPanel Margin="8" Orientation="Horizontal">
-                        <Ellipse Margin="0,0,16,0" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Stroke="{DynamicResource DarkColor}" StrokeThickness="1"/>
-                        <StackPanel>
-                            <TextBlock x:Name="dnDisplayName" FontFamily="{StaticResource Montserrat}" FontSize="24" FontWeight="Bold" Text="John Doe"/>
-                            <TextBlock x:Name="dnOrganization" FontFamily="{StaticResource Montserrat}" FontSize="14" Text="Donee of {organization}"/>
+                <Grid DockPanel.Dock="Bottom" Margin="0,16,0,32">
+                    <Border BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" CornerRadius="10">
+                        <StackPanel Margin="8" Orientation="Horizontal">
+                            <Ellipse Margin="0,0,16,0" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Stroke="{DynamicResource DarkColor}" StrokeThickness="1">
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="dnImage" Stretch="UniformToFill"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <StackPanel>
+                                <TextBlock x:Name="dnDisplayName" FontFamily="{StaticResource Montserrat}" FontSize="24" FontWeight="Bold" Text="John Doe"/>
+                                <TextBlock x:Name="dnOrganization" FontFamily="{StaticResource Montserrat}" FontSize="14" Text="Donee of {organization}"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </Border>
+                    </Border>
+                    <Border x:Name="DoneeSpinner" Background="{DynamicResource DarkColor}" Opacity="0.6" CornerRadius="10" Visibility="Hidden">
+                        <uc:SpinnerUserControl/>
+                    </Border>
+                </Grid>
+                
                 <TextBlock x:Name="rqDate" DockPanel.Dock="Bottom" FontFamily="{StaticResource Roboto}" FontSize="14" Text="Created at {date}" Opacity="0.5"/>
                 <TextBlock x:Name="rqTitle" Margin="0,16,0,0" DockPanel.Dock="Bottom" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Text="Description"/>
                 <Rectangle DockPanel.Dock="Top" Stroke="{DynamicResource DarkColor}" StrokeThickness="1" RadiusX="10" RadiusY="10">

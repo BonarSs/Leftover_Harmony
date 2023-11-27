@@ -23,11 +23,18 @@ namespace Leftover_Harmony.Views
     /// </summary>
     public partial class HomePage : Page
     {
+        private MainWindow _mainWindow;
         private List<Request> requestList = new List<Request>();
 
-        public HomePage()
+        public HomePage(MainWindow mainWindow)
         {
+            _mainWindow = mainWindow;
             InitializeComponent();
+        }
+
+        private void DisplayRequest(Request request)
+        {
+            _mainWindow.SwitchPage(request);
         }
 
         private void AddRequest(Request request)
@@ -60,6 +67,8 @@ namespace Leftover_Harmony.Views
                     Stretch = Stretch.UniformToFill
                 };
             };
+
+            contentControl.MouseUp += (sender, e) => DisplayRequest(request);
 
             RequestList.Children.Add(contentControl);
             requestList.Add(request);
