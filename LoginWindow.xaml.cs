@@ -28,12 +28,28 @@ namespace Leftover_Harmony
             InitializeComponent();
         }
 
+        private void ToggleButtonSpinner(ref Button button)
+        {
+            ContentPresenter content = (ContentPresenter)button.Template.FindName("ContentPresenter", button);
+            FrameworkElement spinner = (FrameworkElement)button.Template.FindName("Spinner", button);
+
+            if (content == null || spinner == null) return;
+
+            if (spinner.Visibility == Visibility.Visible)
+            {
+                spinner.Visibility = Visibility.Hidden;
+                content.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                spinner.Visibility = Visibility.Visible;
+                content.Visibility = Visibility.Hidden;
+            }
+        }
+
         private async void usrLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            FrameworkElement spinner = (FrameworkElement)usrLoginButton.Template.FindName("Spinner", usrLoginButton);
-
-            spinner.Visibility = Visibility.Visible;
-            usrLoginButton.Content = "";
+            ToggleButtonSpinner(ref usrLoginButton);
 
             string username = usrUsername.Text;
             string password = usrPassword.Password;
@@ -45,8 +61,7 @@ namespace Leftover_Harmony
             if (user == null)
             {
                 InvalidLabel.Opacity = 1;
-                spinner.Visibility = Visibility.Hidden;
-                usrLoginButton.Content = "Login";
+                ToggleButtonSpinner(ref usrLoginButton);
                 return;
             }
 
