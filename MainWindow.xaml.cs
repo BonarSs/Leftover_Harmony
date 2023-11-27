@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
@@ -59,7 +58,7 @@ namespace Leftover_Harmony
         {
             if (_user.Image != null) uiProfilePicture.Fill = new ImageBrush
             {
-                ImageSource = ImageConverter.ResizeBitmap(ImageConverter.ByteArraytoImage(_user.Image), 0.25),
+                ImageSource = ImageConverter.ResizeBitmapUniformToFill(ImageConverter.ByteArraytoImage(_user.Image), 50),
                 Stretch = Stretch.UniformToFill
             };
         }

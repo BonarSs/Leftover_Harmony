@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="7.0.6" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,7 +54,7 @@
     <EmbeddedResource Include="Resources\Images\telur.jpg" />
     <EmbeddedResource Include="Resources\Images\tepung.jpg" />
     <EmbeddedResource Include="Resources\Images\yae.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 

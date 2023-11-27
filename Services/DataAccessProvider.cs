@@ -573,6 +573,58 @@ namespace Leftover_Harmony.Services
         /// <param name="request">The Request object for which associated Donations are to be fetched.</param>
         /// <returns>A list of Donation objects associated with the provided Request.</returns>
         public List<Donation> FetchRequestDonation(Request request) { return FetchRequestDonation(request.Id); }
+        public bool IsUsernameExists(string username)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM username_exists(:_username)", conn);
+            cmd.Parameters.AddWithValue("_username", username);
+
+            object? result = cmd.ExecuteScalar();
+            if (result == null) return false;
+            return (bool)result;
+        }
+        public async Task<bool> IsUsernameExistsAsync(string username)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM username_exists(:_username)", conn);
+            cmd.Parameters.AddWithValue("_username", username);
+
+            object? result = await cmd.ExecuteScalarAsync();
+            if (result == null) return false;
+            return (bool)result;
+        }
+        public bool IsEmailExists(string email)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM email_exists(:_email)", conn);
+            cmd.Parameters.AddWithValue("_email", email);
+
+            object? result = cmd.ExecuteScalar();
+            if (result == null) return false;
+            return (bool)result;
+        }
+        public async Task<bool> IsEmailExistsAsync(string email)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM email_exists(:_email)", conn);
+            cmd.Parameters.AddWithValue("_email", email);
+
+            object? result = await cmd.ExecuteScalarAsync();
+            if (result == null) return false;
+            return (bool)result;
+        }
         #endregion
 
         #region Base Updater
