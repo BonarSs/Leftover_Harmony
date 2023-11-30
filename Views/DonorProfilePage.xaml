@@ -181,13 +181,13 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Border x:Name="usrRecentDonationsSpinner" Grid.ColumnSpan="3" Background="#7F000000" CornerRadius="10">
-                        <uc:SpinnerUserControl />
-                    </Border>
                     <StackPanel x:Name="NoDonation" VerticalAlignment="Center" Grid.ColumnSpan="3">
                         <Image Margin="0,0,0,16" Source="{StaticResource leaf}" Height="100"/>
                         <TextBlock FontFamily="{StaticResource Montserrat}" FontSize="28" Text="This donor has no donation." HorizontalAlignment="Center"/>
                     </StackPanel>
+                    <Border x:Name="usrRecentDonationsSpinner" Grid.ColumnSpan="3" Background="#7F000000" CornerRadius="10">
+                        <uc:SpinnerUserControl />
+                    </Border>
                 </Grid>
             </Grid>
         </Grid>
