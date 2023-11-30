@@ -90,8 +90,8 @@
             </Grid>
             <Grid Grid.Column="2" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" HorizontalAlignment="Right">
                 <Grid Margin="16,16,16,16">
-                    <Ellipse Fill="{DynamicResource Primary800}"/>
-                    <Ellipse x:Name="uiProfilePicture" Fill="{DynamicResource Primary800}" Cursor="Hand" MouseLeftButtonDown="uiProfilePicture_MouseLeftButtonDown"/>
+                    <Ellipse Fill="{DynamicResource Primary900}"/>
+                    <Ellipse x:Name="uiProfilePicture" Fill="{DynamicResource Primary900}" Cursor="Hand" MouseLeftButtonDown="uiProfilePicture_MouseLeftButtonDown"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -110,6 +110,7 @@
                     <StackPanel Margin="16,16,16,0" Grid.RowSpan="2">
                         <RadioButton x:Name="HomeButton" Content="Home" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="HomeButton_Checked"/>
                         <RadioButton x:Name="RequestsButton" Content="Requests" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="RequestsButton_Checked"/>
+                        <RadioButton x:Name="DonationsButton" Content="Requests" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="DonationsButton_Checked"/>
                         <RadioButton x:Name="ProfileButton" Content="Profile" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="ProfileButton_Checked"/>
                         <RadioButton x:Name="SettingsButton" Content="Settings" Style="{StaticResource SidebarNavigationButton}" VerticalAlignment="Center" GroupName="Navigation" Checked="SettingsButton_Checked"/>
                     </StackPanel>

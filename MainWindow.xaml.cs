@@ -75,6 +75,16 @@ namespace Leftover_Harmony
             MainFrame.NavigationService.Navigate(new HomePage(this));
 
             if (_user is Donor) RequestsButton.Visibility = Visibility.Collapsed;
+            else DonationsButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void ResetSidebar()
+        {
+            HomeButton.IsChecked = false;
+            RequestsButton.IsChecked = false;
+            DonationsButton.IsChecked = false;
+            ProfileButton.IsChecked = false;
+            SettingsButton.IsChecked = false;
         }
 
         private void ProfileButton_Checked(object sender, RoutedEventArgs e)
@@ -99,6 +109,11 @@ namespace Leftover_Harmony
         {
             ClearFrame();
             MainFrame.NavigationService.Navigate(new RequestListPage(this));
+        }
+        private void DonationsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ClearFrame();
+            MainFrame.NavigationService.Navigate(new DonationListPage(this));
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -125,6 +140,7 @@ namespace Leftover_Harmony
             ClearFrame();
             if (_user is Donor) MainFrame.NavigationService.Navigate(new RequestPageDonor(this, request, (Donor)_user));
             else if (_user is Donee) MainFrame.NavigationService.Navigate(new RequestPageDonee(this, request, (Donee)_user));
+            ResetSidebar();
         }
         /// <summary>
         /// Switches to Donee Page
@@ -134,11 +150,17 @@ namespace Leftover_Harmony
         {
             ClearFrame();
             MainFrame.NavigationService.Navigate(new DoneeProfilePage(this, donee));
+            ResetSidebar();
         }
         public void NewRequestPage()
         {
             ClearFrame();
             MainFrame.NavigationService.Navigate(new NewRequestPage(this));
+            ResetSidebar();
+        }
+        public void RequestListPage()
+        {
+            RequestsButton.IsChecked = true;
         }
 
         private void CustomQueries()
