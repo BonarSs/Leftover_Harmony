@@ -110,7 +110,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="NewLeftoverImageButton" TargetType="Button">
+        <Style x:Key="NewRequestImageButton" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -118,7 +118,7 @@
                             <Grid>
                                 <Rectangle RadiusX="5" RadiusY="5">
                                     <Rectangle.Fill>
-                                        <ImageBrush x:Name="newlfImage" Stretch="UniformToFill"/>
+                                        <ImageBrush x:Name="rqImage" Stretch="UniformToFill"/>
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <Grid x:Name="Overlay" Visibility="Hidden">
@@ -179,11 +179,12 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <DockPanel Margin="16,0,0,0" Grid.Column="1">
-                    <TextBox DockPanel.Dock="Top" Margin="0,0,0,8" Style="{StaticResource NewRequestTitleTextBox}"/>
-                    <TextBox DockPanel.Dock="Top" Margin="0,0,0,8" Style="{StaticResource NewRequestDescriptionTextBox}"/>
-                    <Button DockPanel.Dock="Top" VerticalAlignment="Bottom" Height="40" Style="{StaticResource ButtonStyle}" Content="Create Request"/>
+                    <TextBox x:Name="rqTitle" DockPanel.Dock="Top" Margin="0,0,0,8" Style="{StaticResource NewRequestTitleTextBox}"/>
+                    <TextBox x:Name="rqDescription" DockPanel.Dock="Top" Margin="0,0,0,8" Style="{StaticResource NewRequestDescriptionTextBox}"/>
+                    <TextBlock x:Name="InvalidLabel" DockPanel.Dock="Top" Margin="0,0,0,8" FontFamily="{StaticResource Roboto}" FontSize="14" Foreground="{DynamicResource Danger600}" Visibility="Hidden" Text="*Title and description can't be empty"/>
+                    <Button x:Name="AddRequestButton" DockPanel.Dock="Top" VerticalAlignment="Bottom" Height="40" Style="{StaticResource ButtonStyle}" Content="Create Request" Click="AddRequestButton_Click"/>
                 </DockPanel>
-                <Button Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Style="{StaticResource NewLeftoverImageButton}"/>
+                <Button x:Name="rqImageButton" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Style="{StaticResource NewRequestImageButton}" Click="rqImageButton_Click"/>
             </Grid>
         </StackPanel>
         
