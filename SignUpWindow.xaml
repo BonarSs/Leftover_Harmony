@@ -1,0 +1,100 @@
+﻿<Window x:Class="Leftover_Harmony.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:Leftover_Harmony.Resources.Components"
+        xmlns:local="clr-namespace:Leftover_Harmony"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Leftover Harmony - Login" Height="720" Width="640">
+
+    <Window.Resources>
+        <Style x:Key="LoginButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{DynamicResource BackgroundColor}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="BackgroundRectangle" Background="{DynamicResource Primary800}" CornerRadius="10"/>
+                            <ContentPresenter  x:Name="ContentPresenter"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundRectangle" Property="Background" Value="{DynamicResource Primary900}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="BackgroundRectangle" Property="Background" Value="{DynamicResource Primary800}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="UsernameTextBox" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border BorderBrush="{DynamicResource ForegroundColor}" BorderThickness="1" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="PasswordTextBox" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border BorderBrush="{DynamicResource ForegroundColor}" BorderThickness="1" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{DynamicResource BackgroundColor}">
+        <Image Source="{StaticResource leftover_harmony_logo}" Opacity="0.05" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1280" Height="1280"/>
+        
+        
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image Source="{StaticResource leftover_harmony_logo}" Height="80" Margin="0,0,0,16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <StackPanel>
+                <TextBlock Text="Leftover Harmony" FontSize="36" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource Montserrat}" Foreground="{DynamicResource ForegroundColor}"/>
+                <TextBlock Text="Login to Your Account" FontSize="18" HorizontalAlignment="Center" FontFamily="{StaticResource Roboto}" Foreground="{DynamicResource ForegroundColor}"/>
+            </StackPanel>
+            <Rectangle Stroke="{DynamicResource ForegroundColor}" Margin="0,24,0,24"/>
+
+            <StackPanel Margin="0,8,0,0">
+                <TextBlock Text="Your Email" FontFamily="{StaticResource Inter}" Margin="0,0,0,8" FontSize="18" Foreground="{DynamicResource ForegroundColor}"/>
+                <PasswordBox x:Name="newEmail" Padding="8,12,0,12" FontSize="18" Style="{StaticResource PasswordTextBox}" Foreground="{DynamicResource ForegroundColor}"/>
+            </StackPanel>
+
+            <StackPanel>
+                <TextBlock Text="Enter Username" FontFamily="{StaticResource Inter}" Margin="0,0,0,8" FontSize="18" Foreground="{DynamicResource ForegroundColor}"/>
+                <TextBox x:Name="NewUsername" Padding="8,12,0,12" FontFamily="{StaticResource Roboto}" FontSize="18" Style="{StaticResource UsernameTextBox}" Foreground="{DynamicResource ForegroundColor}"/>
+            </StackPanel>
+            <StackPanel Margin="0,8,0,0">
+                <TextBlock Text="Enter Password" FontFamily="{StaticResource Inter}" Margin="0,0,0,8" FontSize="18" Foreground="{DynamicResource ForegroundColor}"/>
+                <PasswordBox x:Name="newPassword" Padding="8,12,0,12" FontSize="18" Style="{StaticResource PasswordTextBox}" Foreground="{DynamicResource ForegroundColor}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0,8,0,0">
+                <TextBlock Text="Phone Number" FontFamily="{StaticResource Inter}" Margin="0,0,0,8" FontSize="18" Foreground="{DynamicResource ForegroundColor}"/>
+                <PasswordBox x:Name="newPhone" Padding="8,12,0,12" FontSize="18" Style="{StaticResource PasswordTextBox}" Foreground="{DynamicResource ForegroundColor}"/>
+            </StackPanel>
+
+            <TextBlock Text="Already Have an Account? Go" FontFamily="{StaticResource Inter}" Margin="0,20,0,-5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource ForegroundColor}"/>
+
+
+            <TextBlock x:Name="InvalidLabel" Text="*Username or password is incorrect" Margin="0,8,0,0" FontFamily="{StaticResource Roboto}" FontSize="14" Foreground="Red" Opacity="0"/>
+            <Button x:Name="usrSignUpButton" Content="Sign Up" Style="{StaticResource LoginButton}" Height="48" FontSize="18" Click="usrLoginButton_Click"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
