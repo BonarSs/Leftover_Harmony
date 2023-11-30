@@ -350,6 +350,27 @@ namespace Leftover_Harmony.Services
             return FetchDonee(donee_id);
         }
         /// <summary>
+        /// Asynchronously retrieves a Donee associated with a specific Request.
+        /// </summary>
+        /// <param name="request">The Request object for which the associated Donee is to be fetched.</param>
+        /// <returns>The Donee object associated with the provided Request.</returns>
+        public async Task<Donee> FetchDoneeAsync(Request request)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT donee_id FROM \"Request\" WHERE request_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", request.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            int donee_id = (int)dataTable.Rows[0]["donee_id"];
+
+            conn.Close();
+
+            return FetchDonee(donee_id);
+        }
+        /// <summary>
         /// Retrieves a Leftover associated with a specific Donation.
         /// </summary>
         /// <param name="donation">The Donation object for which the associated Leftover is to be fetched.</param>
@@ -927,6 +948,92 @@ namespace Leftover_Harmony.Services
             cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
 
             if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        public bool AddLeftover(int request_id, string name, string description, int amount, byte[]? image)
+        {
+            NpgsqlCommand cmd;
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"Leftover\"" +
+                "(\"name\", \"description\", \"image\")" +
+                "VALUES (" +
+                    ":_name, " +
+                    ":_description, " +
+                    ":_image" +
+                ") " +
+                "RETURNING \"leftover_id\""
+                , conn);
+            cmd.Parameters.AddWithValue("_name", name);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (image != null) ? image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            object? result = cmd.ExecuteScalar();
+            if (result == null) throw new NullReferenceException("Failed to get leftover_id");
+
+            int leftover_id = (int)result;
+
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"RequestLeftover\"" +
+                "(\"request_id\", \"leftover_id\", \"amount\")" +
+                "VALUES (" +
+                    ":_request_id, " +
+                    ":_leftover_id, " +
+                    ":_amount" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_request_id", request_id);
+            cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
+            cmd.Parameters.AddWithValue("_amount", amount);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddLeftoverAsync(int request_id, string name, string description, int amount, byte[]? image)
+        {
+            NpgsqlCommand cmd;
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"Leftover\"" +
+                "(\"name\", \"description\", \"image\")" +
+                "VALUES (" +
+                    ":_name, " +
+                    ":_description, " +
+                    ":_image" +
+                ") " +
+                "RETURNING \"leftover_id\""
+                , conn);
+            cmd.Parameters.AddWithValue("_name", name);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (image != null) ? image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            object? result = await cmd.ExecuteScalarAsync();
+            if (result == null) throw new NullReferenceException("Failed to get leftover_id");
+
+            int leftover_id = (int)result;
+
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"RequestLeftover\"" +
+                "(\"request_id\", \"leftover_id\", \"amount\")" +
+                "VALUES (" +
+                    ":_request_id, " +
+                    ":_leftover_id, " +
+                    ":_amount" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_request_id", request_id);
+            cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
+            cmd.Parameters.AddWithValue("_amount", amount);
 
             await cmd.ExecuteNonQueryAsync();
 
