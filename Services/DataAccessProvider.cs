@@ -872,5 +872,42 @@ namespace Leftover_Harmony.Services
             return true;
         }
         #endregion
+
+        #region Base Adder
+        public bool AddDonation(int leftover_id, int donor_id, int request_id, DateTime date_donated, int amount)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donation\"" +
+                "(\"status\", \"description\", \"date_donated\", \"amount\", \"donor_id\", \"request_id\", \"leftover_id\")" +
+                "VALUES (" +
+                ":_status, " +
+                ":_description, " +
+                ":_date_donated, " +
+                ":_amount, " +
+                ":_donor_id, " +
+                ":_request_id, " +
+                ":_leftover_id, " +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_status", "Approved");
+            cmd.Parameters.AddWithValue("_description", "");
+            cmd.Parameters.AddWithValue("_password", donor.Password);
+            cmd.Parameters.AddWithValue("_email", donor.Email);
+            cmd.Parameters.AddWithValue("_phone_number", donor.PhoneNumber);
+            cmd.Parameters.AddWithValue("_display_name", (donor.DisplayName != null) ? donor.DisplayName : DBNull.Value);
+            cmd.Parameters.AddWithValue("_bio", (donor.Bio != null) ? donor.Bio : DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (donor.Image != null) ? donor.Image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+            INSERT INTO "Donation"("status", "description", "date_donated", "amount", "donor_id", "request_id", "leftover_id")
+            return true;
+        }
+        #endregion
     }
 }

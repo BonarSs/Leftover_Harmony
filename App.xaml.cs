@@ -18,7 +18,7 @@ namespace Leftover_Harmony
         public Theme ApplicationTheme = Theme.Default;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresUriLocal"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["PostgresUri"].ConnectionString;
             DataAccessProvider.Instance.Connect(connectionString);
 
             if (!Enum.TryParse(Leftover_Harmony.Properties.Settings.Default.Theme, out Theme theme)) theme = Theme.Default;
