@@ -115,7 +115,7 @@ namespace Leftover_Harmony
         public void SwitchPage(Request request)
         {
             ClearFrame();
-            MainFrame.NavigationService.Navigate(new RequestPageDonor(this, request));
+            if (_user is Donor) MainFrame.NavigationService.Navigate(new RequestPageDonor(this, request, (Donor)_user));
         }
 
         private void CustomQueries()

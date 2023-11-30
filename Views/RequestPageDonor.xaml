@@ -91,6 +91,7 @@
         <ControlTemplate x:Key="LeftoverContentTemplate">
             <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
                 <DockPanel Margin="12">
+                    <TextBlock x:Name="lfId" Text="0" Visibility="Collapsed"/>
                     <Rectangle DockPanel.Dock="Left" Stroke="{DynamicResource DarkColor}" StrokeThickness="1" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" RadiusX="5" RadiusY="5">
                         <Rectangle.Fill>
                             <ImageBrush x:Name="lfImage" Stretch="UniformToFill"/>
@@ -104,15 +105,16 @@
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="lfDonatedValue" Text="0" Visibility="Collapsed"/>
                             <Button x:Name="lfCounterSubtract" Style="{StaticResource CounterSubtractButtonStyle}">
                                 <Button.Background>
                                     <ImageBrush ImageSource="{StaticResource plus}" Stretch="Uniform"/>
                                 </Button.Background>
                             </Button>
                             <Border BorderBrush="{StaticResource DarkColor}" BorderThickness="1,0,1,0" Grid.Column="1">
-                                <TextBox x:Name="lfCounterText" Style="{StaticResource CounterTextBoxStyle}" Text="0"/>
+                                <TextBox x:Name="lfCounterText" Style="{StaticResource CounterTextBoxStyle}" Foreground="{DynamicResource DarkColor}" Text="0"/>
                             </Border>
-                            <Button x:Name="lfCounterAdd" Style="{StaticResource CounterAddButtonStyle}"  Grid.Column="2">
+                            <Button x:Name="lfCounterAdd" Style="{StaticResource CounterAddButtonStyle}" Grid.Column="2">
                                 <Button.Background>
                                     <ImageBrush ImageSource="{StaticResource dash}" Stretch="Uniform"/>
                                 </Button.Background>
@@ -122,18 +124,22 @@
                     <StackPanel Margin="8,0,8,0">
                         <TextBlock x:Name="lfTitle" DockPanel.Dock="Top" FontFamily="{StaticResource Montserrat}" FontSize="18" FontWeight="Bold"  Text="Telur"/>
                         <TextBlock x:Name="lfDescription" DockPanel.Dock="Top" FontFamily="{StaticResource Roboto}" FontSize="14" FontWeight="Regular"  Text="Lorem Ipsum"/>
-                        <DockPanel Margin="0,8,0,0">
-                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="8,0,0,0">
-                                <TextBlock x:Name="lfProgressNumerator" FontFamily="{StaticResource Roboto}" FontSize="14" Text="5" Foreground="{DynamicResource Info500}"/>
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <TextBlock x:Name="lfProgressNumerator" FontFamily="{StaticResource Roboto}" FontSize="14" Text="1000" Foreground="{DynamicResource Info500}"/>
                                 <TextBlock FontFamily="{StaticResource Roboto}" FontSize="14" Text="/"/>
-                                <TextBlock x:Name="lfProgressDenominator" FontFamily="{StaticResource Roboto}" FontSize="14" Text="5"/>
+                                <TextBlock x:Name="lfProgressDenominator" FontFamily="{StaticResource Roboto}" FontSize="14" Text="1000"/>
                             </StackPanel>
                             <Grid>
                                 <Border x:Name="lfProgressBar" Height="10" Background="{DynamicResource Neutral400}" CornerRadius="5"/>
                                 <Border x:Name="lfDonating" Height="10" Background="{DynamicResource Info400}" CornerRadius="5" HorizontalAlignment="Left"/>
                                 <Border x:Name="lfDonated" Height="10" Background="{DynamicResource Success400}" CornerRadius="5" HorizontalAlignment="Left"/>
                             </Grid>
-                        </DockPanel>
+                        </Grid>
 
                     </StackPanel>
                 </DockPanel>
@@ -164,7 +170,7 @@
                             <StackPanel x:Name="LeftoverList">
                                 <ContentControl Template="{StaticResource LeftoverContentTemplate}"/>
                             </StackPanel>
-                            <Button x:Name="DonateButton" Margin="16" Style="{StaticResource ButtonStyle}" Content="Donate" Height="40"/>
+                            <Button x:Name="DonateButton" Margin="16" Style="{StaticResource ButtonStyle}" Content="Donate" Height="40" Click="DonateButton_Click"/>
                         </StackPanel>
                     </Grid>
                 </DockPanel>
@@ -188,7 +194,7 @@
                         <uc:SpinnerUserControl/>
                     </Border>
                 </Grid>
-                
+
                 <TextBlock x:Name="rqDate" DockPanel.Dock="Bottom" FontFamily="{StaticResource Roboto}" FontSize="14" Text="Created at {date}" Opacity="0.5"/>
                 <TextBlock x:Name="rqTitle" Margin="0,16,0,0" DockPanel.Dock="Bottom" FontFamily="{StaticResource Montserrat}" FontSize="28" FontWeight="Bold" Text="Description"/>
                 <Rectangle DockPanel.Dock="Top" Stroke="{DynamicResource DarkColor}" StrokeThickness="1" RadiusX="10" RadiusY="10">
