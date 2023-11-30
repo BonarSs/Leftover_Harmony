@@ -219,7 +219,28 @@ namespace Leftover_Harmony.Services
 
             return leftover;
         }
-        
+        /// <summary>
+        /// Asynchronously retrieves a Leftover by its ID.
+        /// </summary>
+        /// <param name="leftover_id">The ID of the leftover to fetch.</param>
+        /// <returns>The Leftover object retrieved based on the provided ID.</returns>
+        public async Task<Leftover> FetchLeftoverAsync(int leftover_id)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Leftover\" WHERE leftover_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", leftover_id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            Leftover leftover = Leftover.From(dataTable.Rows[0]);
+
+            conn.Close();
+
+            return leftover;
+        }
+
         #endregion
 
         #region Specific Fetchers
@@ -301,6 +322,27 @@ namespace Leftover_Harmony.Services
             cmd.Parameters.AddWithValue("_id", donation.Id);
 
             dataTable.Load(cmd.ExecuteReader());
+            int request_id = (int)dataTable.Rows[0]["request_id"];
+
+            conn.Close();
+
+            return FetchRequest(request_id);
+        }
+        /// <summary>
+        /// Asynchronously retrieves a Request associated with a specific Donation.
+        /// </summary>
+        /// <param name="donation">The Donation object for which the associated Request is to be fetched.</param>
+        /// <returns>The Request object associated with the provided Donation.</returns>
+        public async Task<Request> FetchRequestAsync(Donation donation)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT request_id FROM \"Donation\" WHERE donation_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", donation.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
             int request_id = (int)dataTable.Rows[0]["request_id"];
 
             conn.Close();
@@ -390,6 +432,27 @@ namespace Leftover_Harmony.Services
             conn.Close();
 
             return FetchLeftover(leftover_id);
+        }
+        /// <summary>
+        /// Asynchronously retrieves a Leftover associated with a specific Donation.
+        /// </summary>
+        /// <param name="donation">The Donation object for which the associated Leftover is to be fetched.</param>
+        /// <returns>The Leftover object associated with the provided Donation.</returns>
+        public async Task<Leftover> FetchLeftoverAsync(Donation donation)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT leftover_id FROM \"Donation\" WHERE donation_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", donation.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            int leftover_id = (int)dataTable.Rows[0]["leftover_id"];
+
+            conn.Close();
+
+            return await FetchLeftoverAsync(leftover_id);
         }
         /// <summary>
         /// Retrieves a list of all available requests.
@@ -912,7 +975,7 @@ namespace Leftover_Harmony.Services
                 , conn);
             cmd.Parameters.AddWithValue("_status", "Approved");
             cmd.Parameters.AddWithValue("_description", "");
-            cmd.Parameters.AddWithValue("_date_donated", DateTime.Now.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("_date_donated", DateTime.Now);
             cmd.Parameters.AddWithValue("_amount", amount);
             cmd.Parameters.AddWithValue("_donor_id", donor_id);
             cmd.Parameters.AddWithValue("_request_id", request_id);
@@ -1162,6 +1225,60 @@ namespace Leftover_Harmony.Services
             cmd.Parameters.AddWithValue("_display_name", username);
             cmd.Parameters.AddWithValue("_bio", DBNull.Value);
             cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        public bool AddRequest(string title, string description, int donee_id, byte[]? image)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Request\"" +
+                "(\"title\", \"description\", \"date_created\", \"donee_id\", \"image\")" +
+                "VALUES (" +
+                ":_title, " +
+                ":_description, " +
+                ":_date_created, " +
+                ":_donee_id, " +
+                ":_image " +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_title", title);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_date_created", DateTime.Now);
+            cmd.Parameters.AddWithValue("_donee_id", donee_id);
+            cmd.Parameters.AddWithValue("_image", (image != null) ? image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddRequestAsync(string title, string description, int donee_id, byte[]? image)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Request\"" +
+                "(\"title\", \"description\", \"date_created\", \"donee_id\", \"image\")" +
+                "VALUES (" +
+                ":_title, " +
+                ":_description, " +
+                ":_date_created, " +
+                ":_donee_id, " +
+                ":_image " +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_title", title);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_date_created", DateTime.Now);
+            cmd.Parameters.AddWithValue("_donee_id", donee_id);
+            cmd.Parameters.AddWithValue("_image", (image != null) ? image : DBNull.Value);
 
             if (conn.State == ConnectionState.Closed) conn.Open();
 
