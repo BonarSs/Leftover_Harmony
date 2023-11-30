@@ -71,6 +71,8 @@ namespace Leftover_Harmony.Views
                 return border;
             }
 
+            if (requests.Count > 0) NoRequest.Visibility = Visibility.Collapsed;
+
             for (int i = 0; i < 2; i++)
             {
                 if (i >= requests.Count) break;
