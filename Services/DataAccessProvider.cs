@@ -895,7 +895,7 @@ namespace Leftover_Harmony.Services
         #endregion
 
         #region Base Adder
-        public void AddDonation(int leftover_id, int donor_id, int request_id, int amount)
+        public bool AddDonation(int leftover_id, int donor_id, int request_id, int amount)
         {
             NpgsqlCommand cmd = new NpgsqlCommand(
                 "INSERT INTO \"Donation\"" +
@@ -923,6 +923,8 @@ namespace Leftover_Harmony.Services
             cmd.ExecuteNonQuery();
 
             conn.Close();
+
+            return true;
         }
         public async Task<bool> AddDonationAsync(int leftover_id, int donor_id, int request_id, int amount)
         {
@@ -1034,6 +1036,134 @@ namespace Leftover_Harmony.Services
             cmd.Parameters.AddWithValue("_request_id", request_id);
             cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
             cmd.Parameters.AddWithValue("_amount", amount);
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        public bool AddDonor(string username, string email, string password, string phone)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donor\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddDonorAsync(string username, string email, string password, string phone)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donor\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        public bool AddDonee(string username, string email, string password, string phone, string organization)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donor\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"organization\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_organization, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_organization", organization);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddDoneeAsync(string username, string email, string password, string phone, string organization)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donor\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"organization\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_organization, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_organization", organization);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
 
             await cmd.ExecuteNonQueryAsync();
 

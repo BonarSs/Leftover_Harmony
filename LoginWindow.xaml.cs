@@ -46,6 +46,20 @@ namespace Leftover_Harmony
                 content.Visibility = Visibility.Hidden;
             }
         }
+        private void ShowInvalid(ref TextBlock textBlock, string message)
+        {
+            textBlock.Text = message;
+            textBlock.Visibility = Visibility.Visible;
+        }
+        private void ResetSignUp()
+        {
+            newUsername.Text = "";
+            newEmail.Text = "";
+            newPassword.Password = "";
+            newPhone.Text = "";
+            newOrganization.Text = "";
+            SignUpInvalidLabel.Visibility = Visibility.Hidden;
+        }
 
         private async void usrLoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +74,7 @@ namespace Leftover_Harmony
 
             if (user == null)
             {
-                InvalidLabel.Opacity = 1;
+                ShowInvalid(ref LoginInvalidLabel, "*Username or password is incorrect");
                 ToggleButtonSpinner(ref usrLoginButton);
                 return;
             }
@@ -68,6 +82,64 @@ namespace Leftover_Harmony
             MainWindow mainWindow = new MainWindow(user);
             mainWindow.Show();
             this.Close();
+        }
+
+        private async void usrSignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (newUsername.Text == "" || newEmail.Text == "" || newPassword.Password == "" || newPhone.Text == "")
+            {
+                ShowInvalid(ref SignUpInvalidLabel, "*Please fill all fields.");
+                return;
+            }
+            if (OrganizationPanel.Visibility == Visibility.Visible && newOrganization.Text == "")
+            {
+                ShowInvalid(ref SignUpInvalidLabel, "*Please fill all fields.");
+                return;
+            }
+
+            ToggleButtonSpinner(ref usrSignUpButton);
+
+            bool usernameExists = await DataAccessProvider.Instance.IsUsernameExistsAsync(newUsername.Text);
+
+            if (usernameExists) { ShowInvalid(ref SignUpInvalidLabel, "*Username already exists."); }
+            else if (OrganizationPanel.Visibility == Visibility.Visible) await DataAccessProvider.Instance.AddDoneeAsync(newUsername.Text, newEmail.Text, newPassword.Password, newPhone.Text, newOrganization.Text);
+            else await DataAccessProvider.Instance.AddDonorAsync(newUsername.Text, newEmail.Text, newPassword.Password, newPhone.Text);
+
+            ToggleButtonSpinner(ref usrSignUpButton);
+            SwitchToLoginButton_Click(sender, e);
+        }
+
+        private void SwitchToSignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginPanel.Visibility = Visibility.Collapsed;
+            RoleSelectPanel.Visibility = Visibility.Collapsed;
+            SignUpPanel.Visibility = Visibility.Visible;
+        }
+        private void SwitchToLoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginPanel.Visibility = Visibility.Visible;
+            RoleSelectPanel.Visibility = Visibility.Collapsed;
+            SignUpPanel.Visibility = Visibility.Collapsed;
+            ResetSignUp();
+        }
+
+        private void SwitchToRoleSelectButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginPanel.Visibility = Visibility.Collapsed;
+            RoleSelectPanel.Visibility = Visibility.Visible;
+            SignUpPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void SetRoleDonor_Checked(object sender, RoutedEventArgs e)
+        {
+            SwitchToSignUpButton.Visibility = Visibility.Visible;
+            OrganizationPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void SetRoleDonee_Checked(object sender, RoutedEventArgs e)
+        {
+            SwitchToSignUpButton.Visibility = Visibility.Visible;
+            OrganizationPanel.Visibility = Visibility.Visible;
         }
     }
 }
