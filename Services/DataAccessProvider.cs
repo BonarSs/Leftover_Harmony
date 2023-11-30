@@ -17,7 +17,6 @@ namespace Leftover_Harmony.Services
     {
         private static DataAccessProvider? _instance;
         private NpgsqlConnection? conn;
-        private bool _caching = false;
 
         /// <summary>
         /// The singleton instance of the DataFetcher class.
@@ -30,9 +29,6 @@ namespace Leftover_Harmony.Services
             conn = new NpgsqlConnection(connectionString);
         }
 
-        public bool Caching() { return _caching; }
-        public void Caching(bool value) { _caching = value; }
-
         #region Base Fetchers
         /// <summary>
         /// Retrieves a Donee by its ID.
@@ -41,8 +37,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Donee object retrieved based on the provided ID.</returns>
         public Donee FetchDonee(int donee_id)
         {
-            if (_caching && VirtualDatabase.Instance.Donees.ContainsKey(donee_id)) return VirtualDatabase.Instance.Donees[donee_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -54,8 +48,6 @@ namespace Leftover_Harmony.Services
             Donee donee = Donee.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            VirtualDatabase.Instance.Donees.Add(donee_id, donee);
 
             return donee;
         }
@@ -87,8 +79,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Donor object retrieved based on the provided ID.</returns>
         public Donor FetchDonor(int donor_id)
         {
-            if (_caching && VirtualDatabase.Instance.Donors.ContainsKey(donor_id)) return VirtualDatabase.Instance.Donors[donor_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -100,8 +90,6 @@ namespace Leftover_Harmony.Services
             Donor donor = Donor.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            if (_caching) VirtualDatabase.Instance.Donors.Add(donor_id, donor);
 
             return donor;
         }
@@ -133,8 +121,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Donation object retrieved based on the provided ID.</returns>
         public Donation FetchDonation(int donation_id)
         {
-            if (_caching && VirtualDatabase.Instance.Donations.ContainsKey(donation_id)) return VirtualDatabase.Instance.Donations[donation_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -146,8 +132,6 @@ namespace Leftover_Harmony.Services
             Donation donation = Donation.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            if (_caching) VirtualDatabase.Instance.Donations.Add(donation_id, donation);
 
             return donation;
         }
@@ -179,8 +163,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Request object retrieved based on the provided ID.</returns>
         public Request FetchRequest(int request_id)
         {
-            if (_caching && VirtualDatabase.Instance.Requests.ContainsKey(request_id)) return VirtualDatabase.Instance.Requests[request_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -193,8 +175,6 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
 
-            if (_caching) VirtualDatabase.Instance.Requests.Add(request_id, request);
-
             return request;
         }
         /// <summary>
@@ -204,8 +184,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Request object retrieved based on the provided ID.</returns>
         public async Task<Request> FetchRequestAsync(int request_id)
         {
-            if (_caching && VirtualDatabase.Instance.Requests.ContainsKey(request_id)) return VirtualDatabase.Instance.Requests[request_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -218,8 +196,6 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
 
-            if (_caching) VirtualDatabase.Instance.Requests.Add(request_id, request);
-
             return request;
         }
         /// <summary>
@@ -229,8 +205,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Leftover object retrieved based on the provided ID.</returns>
         public Leftover FetchLeftover(int leftover_id)
         {
-            if (_caching && VirtualDatabase.Instance.Leftovers.ContainsKey(leftover_id)) return VirtualDatabase.Instance.Leftovers[leftover_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -242,8 +216,6 @@ namespace Leftover_Harmony.Services
             Leftover leftover = Leftover.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            if (_caching) VirtualDatabase.Instance.Leftovers.Add(leftover_id, leftover);
 
             return leftover;
         }

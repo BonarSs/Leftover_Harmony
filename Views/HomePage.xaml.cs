@@ -42,7 +42,6 @@ namespace Leftover_Harmony.Views
             if (request == null) return;
 
             int index = requestList.Count;
-            if (index >= 5) return;
 
             ContentControl contentControl = new ContentControl();
             contentControl.SetValue(Grid.ColumnProperty, index % 3);

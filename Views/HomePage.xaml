@@ -10,7 +10,7 @@
 
     <Page.Resources>
         <ControlTemplate x:Key="RequestContentTemplate">
-            <Grid>
+            <Grid Background="{DynamicResource BackgroundColor}" Cursor="Hand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>

@@ -24,9 +24,39 @@
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
-        <Style x:Key="CounterButtonStyle" TargetType="Button">
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
+        <Style x:Key="CounterAddButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="ButtonOverlay" Background="{DynamicResource DarkColor}" Opacity="0.3" CornerRadius="0,5,5,0" Visibility="Hidden"/>
+                            <Image Source="{StaticResource plus}" Stretch="Uniform"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Visibility" Value="Visible" TargetName="ButtonOverlay"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CounterSubtractButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="ButtonOverlay" Background="{DynamicResource DarkColor}" Opacity="0.3" CornerRadius="5,0,0,5" Visibility="Hidden"/>
+                            <Image Source="{StaticResource dash}" Stretch="Uniform"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Visibility" Value="Visible" TargetName="ButtonOverlay"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style x:Key="CounterTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
@@ -34,6 +64,29 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="{DynamicResource LightColor}"/>
+            <Setter Property="Background" Value="{DynamicResource Primary700}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat}"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="BackgroundRectangle" Background="{TemplateBinding Background}" CornerRadius="8"/>
+                            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundRectangle" Property="Background" Value="{DynamicResource Primary900}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <ControlTemplate x:Key="LeftoverContentTemplate">
             <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" CornerRadius="10">
@@ -51,17 +104,17 @@
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="lfCounterAdd" Style="{StaticResource CounterButtonStyle}">
+                            <Button x:Name="lfCounterSubtract" Style="{StaticResource CounterSubtractButtonStyle}">
                                 <Button.Background>
-                                    <ImageBrush ImageSource="{StaticResource dash}" Stretch="Uniform"/>
+                                    <ImageBrush ImageSource="{StaticResource plus}" Stretch="Uniform"/>
                                 </Button.Background>
                             </Button>
                             <Border BorderBrush="{StaticResource DarkColor}" BorderThickness="1,0,1,0" Grid.Column="1">
                                 <TextBox x:Name="lfCounterText" Style="{StaticResource CounterTextBoxStyle}" Text="0"/>
                             </Border>
-                            <Button x:Name="lfCounterSubtract" Style="{StaticResource CounterButtonStyle}" Grid.Column="2">
+                            <Button x:Name="lfCounterAdd" Style="{StaticResource CounterAddButtonStyle}"  Grid.Column="2">
                                 <Button.Background>
-                                    <ImageBrush ImageSource="{StaticResource plus}" Stretch="Uniform"/>
+                                    <ImageBrush ImageSource="{StaticResource dash}" Stretch="Uniform"/>
                                 </Button.Background>
                             </Button>
                         </Grid>
@@ -71,9 +124,9 @@
                         <TextBlock x:Name="lfDescription" DockPanel.Dock="Top" FontFamily="{StaticResource Roboto}" FontSize="14" FontWeight="Regular"  Text="Lorem Ipsum"/>
                         <DockPanel Margin="0,8,0,0">
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="8,0,0,0">
-                                <TextBlock x:Name="lfProgressNumerator" Text="5"/>
-                                <TextBlock Text="/"/>
-                                <TextBlock x:Name="lfProgressDenominator" Text="5"/>
+                                <TextBlock x:Name="lfProgressNumerator" FontFamily="{StaticResource Roboto}" FontSize="14" Text="5" Foreground="{DynamicResource Info500}"/>
+                                <TextBlock FontFamily="{StaticResource Roboto}" FontSize="14" Text="/"/>
+                                <TextBlock x:Name="lfProgressDenominator" FontFamily="{StaticResource Roboto}" FontSize="14" Text="5"/>
                             </StackPanel>
                             <Grid>
                                 <Border x:Name="lfProgressBar" Height="10" Background="{DynamicResource Neutral400}" CornerRadius="5"/>
@@ -85,9 +138,7 @@
                     </StackPanel>
                 </DockPanel>
             </Border>
-            
         </ControlTemplate>
-        
     </Page.Resources>
 
     <Grid Background="{DynamicResource BackgroundColor}">
@@ -109,7 +160,12 @@
                         <Grid x:Name="LeftoverSpinner" Background="{DynamicResource DarkColor}" Opacity="0.6" Visibility="Hidden">
                             <uc:SpinnerUserControl />
                         </Grid>
-                        <StackPanel x:Name="LeftoverList"/>
+                        <StackPanel>
+                            <StackPanel x:Name="LeftoverList">
+                                <ContentControl Template="{StaticResource LeftoverContentTemplate}"/>
+                            </StackPanel>
+                            <Button x:Name="DonateButton" Margin="16" Style="{StaticResource ButtonStyle}" Content="Donate" Height="40"/>
+                        </StackPanel>
                     </Grid>
                 </DockPanel>
             </ScrollViewer>

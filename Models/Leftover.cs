@@ -18,7 +18,7 @@ namespace Leftover_Harmony.Models
         public int Id { get { return _id; } }
         public string Name { get { return _name; } set { _name = value; } }
         public string Description { get { return _description; } set { _description = value; } }
-        public byte[] Image { get { return _image; } }
+        public byte[]? Image { get { return _image; } }
         public Leftover(int id, string name, string description)
         {
             _id = id;
