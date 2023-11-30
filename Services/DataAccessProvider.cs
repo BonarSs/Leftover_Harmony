@@ -903,6 +903,37 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
         }
+        public async Task<bool> AddDonationAsync(int leftover_id, int donor_id, int request_id, int amount)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donation\"" +
+                "(\"status\", \"description\", \"date_donated\", \"amount\", \"donor_id\", \"request_id\", \"leftover_id\")" +
+                "VALUES (" +
+                ":_status, " +
+                ":_description, " +
+                ":_date_donated, " +
+                ":_amount, " +
+                ":_donor_id, " +
+                ":_request_id, " +
+                ":_leftover_id" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_status", "Approved");
+            cmd.Parameters.AddWithValue("_description", "");
+            cmd.Parameters.AddWithValue("_date_donated", DateTime.Now);
+            cmd.Parameters.AddWithValue("_amount", amount);
+            cmd.Parameters.AddWithValue("_donor_id", donor_id);
+            cmd.Parameters.AddWithValue("_request_id", request_id);
+            cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
         #endregion
     }
 }

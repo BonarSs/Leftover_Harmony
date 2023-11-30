@@ -27,11 +27,13 @@ namespace Leftover_Harmony.Views
     {
         private Request request;
         private MainWindow _mainWindow;
-        public RequestPageDonor(MainWindow mainWindow, Request request)
+        private Donor donor;
+        public RequestPageDonor(MainWindow mainWindow, Request request, Donor donor)
         {
             InitializeComponent();
             this.request = request;
             this._mainWindow = mainWindow;
+            this.donor = donor;
         }
 
         private void ToggleLeftoverListSpinner()
@@ -44,11 +46,30 @@ namespace Leftover_Harmony.Views
             if (DoneeSpinner.Visibility == Visibility.Visible) DoneeSpinner.Visibility = Visibility.Hidden;
             else DoneeSpinner.Visibility = Visibility.Visible;
         }
+        private void ToggleButtonSpinner(ref Button button)
+        {
+            ContentPresenter content = (ContentPresenter)button.Template.FindName("ContentPresenter", button);
+            FrameworkElement spinner = (FrameworkElement)button.Template.FindName("Spinner", button);
 
-        private async void RefreshRequest()
+            if (content == null || spinner == null) return;
+
+            if (spinner.Visibility == Visibility.Visible)
+            {
+                spinner.Visibility = Visibility.Hidden;
+                content.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                spinner.Visibility = Visibility.Visible;
+                content.Visibility = Visibility.Hidden;
+            }
+        }
+        private async Task<bool> RefreshRequest()
         {
             request = await DataAccessProvider.Instance.FetchRequestAsync(request.Id);
             LoadRequest();
+
+            return true;
         }
         private void ClearLeftovers()
         {
@@ -59,7 +80,7 @@ namespace Leftover_Harmony.Views
             rqTitle.Text = request.Title;
             rqDescription.Text = request.Description;
             rqDate.Text = rqDate.Text.Replace("{date}", request.Date.ToString("d"));
-            rqImage.ImageSource = ImageConverter.ByteArraytoImage(request.Image);
+            if (request.Image != null) rqImage.ImageSource = ImageConverter.ByteArraytoImage(request.Image);
 
             ToggleLeftoverListSpinner();
             ToggleDoneeSpinner();
@@ -92,10 +113,16 @@ namespace Leftover_Harmony.Views
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
         }
+        private void FormatLeftoverTextBox(ref TextBox textBox)
+        {
+            if (textBox.Text == "") textBox.Text = "0";
+            else textBox.Text = int.Parse(textBox.Text.Replace(" ", "")).ToString();
+        }
         private void UpdateLeftoverBar(ref ContentControl contentControl)
         {
             if (contentControl == null) return;
 
+            TextBlock lfDonatedValue = (TextBlock)contentControl.Template.FindName("lfDonatedValue", contentControl);
             TextBox lfCounterText = (TextBox)contentControl.Template.FindName("lfCounterText", contentControl);
             TextBlock lfProgressNumerator = (TextBlock)contentControl.Template.FindName("lfProgressNumerator", contentControl);
             TextBlock lfProgressDenominator = (TextBlock)contentControl.Template.FindName("lfProgressDenominator", contentControl);
@@ -104,17 +131,31 @@ namespace Leftover_Harmony.Views
             Border lfDonated = (Border)contentControl.Template.FindName("lfDonated", contentControl);
 
             int requested = int.Parse(lfProgressDenominator.Text);
-            int donated = int.Parse(lfProgressNumerator.Text);
-            int donating = int.Parse(lfCounterText.Text);
+            int donating = (lfCounterText.Text != "") ? int.Parse(lfCounterText.Text) : 0;
+            int donated = int.Parse(lfDonatedValue.Text);
+
+            if ((donated + donating) > requested) { donating = requested - donated; lfCounterText.Text = (requested - donated).ToString(); }
 
             if (donating > 0 && Application.Current.TryFindResource("Info500") is SolidColorBrush info500Brush) lfProgressNumerator.Foreground = info500Brush;
+            else if (Application.Current.TryFindResource("DarkColor") is SolidColorBrush darkColorBrush) lfProgressNumerator.Foreground = darkColorBrush;
+
+            lfProgressNumerator.Text = (donated + donating).ToString();
+
+            float donated_progress = donated / (float)requested;
+            float donating_progress = (donated + donating) / (float)requested;
+
+            lfDonated.Width = lfProgressBar.ActualWidth * donated_progress;
+            lfDonating.Width = lfProgressBar.ActualWidth * donating_progress;
         }
-        private void LoadLeftover(ref ContentControl contentControl, Leftover leftover, int requested_amount, int donated_amount)
+        private void LoadLeftover(ref ContentControl ContentControl, Leftover leftover, int requested_amount, int donated_amount)
         {
+            ContentControl contentControl = ContentControl;
+            TextBlock lfId = (TextBlock)contentControl.Template.FindName("lfId", contentControl);
             TextBlock lfTitle = (TextBlock)contentControl.Template.FindName("lfTitle", contentControl);
             TextBlock lfDescription = (TextBlock)contentControl.Template.FindName("lfDescription", contentControl);
             ImageBrush lfImage = (ImageBrush)contentControl.Template.FindName("lfImage", contentControl);
 
+            TextBlock lfDonatedValue = (TextBlock)contentControl.Template.FindName("lfDonatedValue", contentControl);
             TextBox lfCounterText = (TextBox)contentControl.Template.FindName("lfCounterText", contentControl);
             Button lfCounterAdd = (Button)contentControl.Template.FindName("lfCounterAdd", contentControl);
             Button lfCounterSubtract = (Button)contentControl.Template.FindName("lfCounterSubtract", contentControl);
@@ -126,24 +167,25 @@ namespace Leftover_Harmony.Views
             Border lfDonating = (Border)contentControl.Template.FindName("lfDonating", contentControl);
             Border lfDonated = (Border)contentControl.Template.FindName("lfDonated", contentControl);
 
+            lfId.Text = leftover.Id.ToString();
             lfTitle.Text = leftover.Name;
             lfDescription.Text = leftover.Description;
             if (leftover.Image != null) lfImage.ImageSource = ImageConverter.ByteArraytoImage(leftover.Image);
 
+            lfDonatedValue.Text = donated_amount.ToString();
             lfProgressNumerator.Text = donated_amount.ToString();
             lfProgressDenominator.Text = requested_amount.ToString();
 
-            float donation_progress = donated_amount / (float)requested_amount;
-
-            lfDonated.Width = lfProgressBar.ActualWidth * donation_progress;
+            UpdateLeftoverBar(ref contentControl);
 
             lfCounterText.PreviewTextInput += CounterPreviewTextInput;
-            lfCounterText.LostFocus += (sender, e) => { lfCounterText.Text = int.Parse(lfCounterText.Text.Replace(" ", "")).ToString(); };
+            lfCounterText.LostFocus += (sender, e) => { FormatLeftoverTextBox(ref lfCounterText); UpdateLeftoverBar(ref contentControl); };
+            lfCounterText.TextChanged += (sender, e) => { if (!lfCounterText.IsFocused) UpdateLeftoverBar(ref contentControl); };
 
             lfCounterAdd.Click += (sender, e) => { lfCounterText.Text = (int.Parse(lfCounterText.Text.Replace(" ", "")) + 1).ToString(); };
             lfCounterSubtract.Click += (sender, e) => { lfCounterText.Text = Math.Max(int.Parse(lfCounterText.Text.Replace(" ", "")) - 1, 0).ToString(); };
+            
         }
-
         private void AddLeftover(Leftover leftover, int requested_amount, int donated_amount)
         {
             if (leftover == null) return;
@@ -156,10 +198,31 @@ namespace Leftover_Harmony.Views
 
             LeftoverList.Children.Add(contentControl);
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadRequest();
+        }
+        private async void DonateButton_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleButtonSpinner(ref DonateButton);
+
+            foreach (var contentControl in LeftoverList.Children)
+            {
+                if (contentControl is ContentControl leftover)
+                {
+                    TextBlock lfId = (TextBlock)leftover.Template.FindName("lfId", leftover);
+                    TextBox lfCounterText = (TextBox)leftover.Template.FindName("lfCounterText", leftover);
+
+                    if (int.Parse(lfCounterText.Text) > 0)
+                    {
+                        await DataAccessProvider.Instance.AddDonationAsync(int.Parse(lfId.Text), donor.Id, request.Id, int.Parse(lfCounterText.Text));
+                    }
+                }
+            }
+
+            await RefreshRequest();
+
+            ToggleButtonSpinner(ref DonateButton);
         }
     }
 }
