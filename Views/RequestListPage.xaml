@@ -9,6 +9,13 @@
       Title="RequestListPage" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <DrawingImage x:Key="plus">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                    <GeometryDrawing Brush="{DynamicResource DarkColor}" Geometry="F1 M16,16z M0,0z M8,4A0.5,0.5,0,0,1,8.5,4.5L8.5,7.5 11.5,7.5A0.5,0.5,0,0,1,11.5,8.5L8.5,8.5 8.5,11.5A0.5,0.5,0,0,1,7.5,11.5L7.5,8.5 4.5,8.5A0.5,0.5,0,0,1,4.5,7.5L7.5,7.5 7.5,4.5A0.5,0.5,0,0,1,8,4" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
         <ControlTemplate x:Key="RequestContentTemplate">
             <Grid Margin="16" Background="{DynamicResource BackgroundColor}" Cursor="Hand">
                 <Grid.RowDefinitions>
@@ -31,15 +38,18 @@
                 <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" Grid.RowSpan="2" CornerRadius="10"/>
             </Grid>
         </ControlTemplate>
+        <ControlTemplate x:Key="NewRequestContentTemplate">
+            <Rectangle Margin="16" Stroke="{DynamicResource DarkColor}" StrokeThickness="1" RadiusX="10" RadiusY="10">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="{StaticResource plus}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </ControlTemplate>
     </Page.Resources>
 
     <ScrollViewer Style="{StaticResource ScrollViewerStyle}" Margin="0,8,0,8">
         <Grid x:Name="Container">
             <UniformGrid x:Name="RequestList" Background="{DynamicResource BackgroundColor}" Columns="3" VerticalAlignment="Top"/>
-            <StackPanel x:Name="NoRequest" VerticalAlignment="Center" Grid.ColumnSpan="3" Grid.RowSpan="2">
-                <Image Margin="0,0,0,16" Source="{StaticResource leaf}" Height="100"/>
-                <TextBlock FontFamily="{StaticResource Montserrat}" FontSize="28" Text="You have no request." HorizontalAlignment="Center"/>
-            </StackPanel>
         </Grid>
     </ScrollViewer>
 </Page>

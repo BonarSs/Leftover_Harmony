@@ -24,7 +24,6 @@ namespace Leftover_Harmony.Views
     public partial class RequestListPage : Page
     {
         private MainWindow _mainWindow;
-        private List<Request> requestList = new List<Request>();
 
         public RequestListPage(MainWindow mainWindow)
         {
@@ -36,16 +35,22 @@ namespace Leftover_Harmony.Views
         {
             _mainWindow.SwitchPage(request);
         }
+        private void AddNewRequest()
+        {
+            ContentControl contentControl = new ContentControl();
+            contentControl.Height = Container.ActualHeight / 2;
 
+            contentControl.Template = (ControlTemplate)FindResource("NewRequestContentTemplate");
+
+            contentControl.MouseUp += (sender, e) => { _mainWindow.NewRequestPage(); };
+
+            RequestList.Children.Add(contentControl);
+        }
         private void AddRequest(Request request)
         {
             if (request == null) return;
 
-            int index = requestList.Count;
-
             ContentControl contentControl = new ContentControl();
-            contentControl.SetValue(Grid.ColumnProperty, index % 3);
-            contentControl.SetValue(Grid.RowProperty, index / 3);
             contentControl.Height = Container.ActualHeight / 2;
 
             contentControl.Template = (ControlTemplate)FindResource("RequestContentTemplate");
@@ -70,14 +75,13 @@ namespace Leftover_Harmony.Views
             contentControl.MouseUp += (sender, e) => DisplayRequest(request);
 
             RequestList.Children.Add(contentControl);
-            requestList.Add(request);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Request> requests = DataAccessProvider.Instance.FetchDoneeRequests((Donee)_mainWindow.CurrentUser);
+            AddNewRequest();
 
-            if (requests.Count > 0) NoRequest.Visibility = Visibility.Collapsed;
+            List<Request> requests = DataAccessProvider.Instance.FetchDoneeRequests((Donee)_mainWindow.CurrentUser);
 
             foreach (Request request in requests)
             {
