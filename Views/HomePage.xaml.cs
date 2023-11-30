@@ -46,7 +46,7 @@ namespace Leftover_Harmony.Views
             ContentControl contentControl = new ContentControl();
             contentControl.SetValue(Grid.ColumnProperty, index % 3);
             contentControl.SetValue(Grid.RowProperty, index / 3);
-            contentControl.Margin = new Thickness(16,16,16,16);
+            contentControl.Height = Container.ActualHeight / 2;
 
             contentControl.Template = (ControlTemplate)FindResource("RequestContentTemplate");
 

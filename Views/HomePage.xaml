@@ -10,7 +10,7 @@
 
     <Page.Resources>
         <ControlTemplate x:Key="RequestContentTemplate">
-            <Grid Background="{DynamicResource BackgroundColor}" Cursor="Hand">
+            <Grid Margin="16" Background="{DynamicResource BackgroundColor}" Cursor="Hand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -34,18 +34,9 @@
     </Page.Resources>
 
     <ScrollViewer Style="{StaticResource ScrollViewerStyle}" Margin="0,8,0,8">
-        <Grid x:Name="RequestList" Background="{DynamicResource BackgroundColor}">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
+        <Grid x:Name="Container">
+            <UniformGrid x:Name="RequestList" Background="{DynamicResource BackgroundColor}" Columns="3" VerticalAlignment="Top">
+            </UniformGrid>
         </Grid>
     </ScrollViewer>
     
