@@ -96,6 +96,12 @@ namespace Leftover_Harmony.Views
 
             List<object> leftovers = await DataAccessProvider.Instance.FetchRequestLeftoverAmountsAsync(request);
 
+            if (leftovers.Count > 0)
+            {
+                LeftoverListPanel.Visibility = Visibility.Visible;
+                NoLeftover.Visibility = Visibility.Collapsed;
+            }
+
             foreach (object item in leftovers)
             {
                 Leftover? leftover = (Leftover?)item.GetType()?.GetProperty("Leftover")?.GetValue(item);
