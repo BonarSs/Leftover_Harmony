@@ -1,4 +1,4 @@
-﻿<Page x:Class="Leftover_Harmony.Views.RequestPage"
+﻿<Page x:Class="Leftover_Harmony.Views.RequestPageDonor"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

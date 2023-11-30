@@ -23,11 +23,11 @@ namespace Leftover_Harmony.Views
     /// <summary>
     /// Interaction logic for RequestPage.xaml
     /// </summary>
-    public partial class RequestPage : Page
+    public partial class RequestPageDonor : Page
     {
         private Request request;
         private MainWindow _mainWindow;
-        public RequestPage(MainWindow mainWindow, Request request)
+        public RequestPageDonor(MainWindow mainWindow, Request request)
         {
             InitializeComponent();
             this.request = request;
