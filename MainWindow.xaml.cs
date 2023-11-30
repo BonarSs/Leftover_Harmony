@@ -11,6 +11,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,6 +73,8 @@ namespace Leftover_Harmony
             CustomQueries();
 
             MainFrame.NavigationService.Navigate(new HomePage(this));
+
+            if (_user is Donor) RequestsButton.Visibility = Visibility.Collapsed;
         }
 
         private void ProfileButton_Checked(object sender, RoutedEventArgs e)
@@ -91,6 +94,11 @@ namespace Leftover_Harmony
         {
             ClearFrame();
             MainFrame.NavigationService.Navigate(new SettingsPage(this));
+        }
+        private void RequestsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ClearFrame();
+            MainFrame.NavigationService.Navigate(new RequestListPage(this));
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -126,6 +134,11 @@ namespace Leftover_Harmony
         {
             ClearFrame();
             MainFrame.NavigationService.Navigate(new DoneeProfilePage(this, donee));
+        }
+        public void NewRequestPage()
+        {
+            ClearFrame();
+            MainFrame.NavigationService.Navigate(new NewRequestPage(this));
         }
 
         private void CustomQueries()
@@ -167,5 +180,7 @@ namespace Leftover_Harmony
         {
 
         }
+
+        
     }
 }
