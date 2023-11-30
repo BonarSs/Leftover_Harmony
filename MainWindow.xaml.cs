@@ -71,7 +71,7 @@ namespace Leftover_Harmony
 
             CustomQueries();
 
-            MainFrame.NavigationService.Navigate(new HomePage());
+            MainFrame.NavigationService.Navigate(new HomePage(this));
         }
 
         private void ProfileButton_Checked(object sender, RoutedEventArgs e)
@@ -84,7 +84,7 @@ namespace Leftover_Harmony
         private void HomeButton_Checked(object sender, RoutedEventArgs e)
         {
             ClearFrame();
-            MainFrame.NavigationService.Navigate(new HomePage());
+            MainFrame.NavigationService.Navigate(new HomePage(this));
         }
 
         private void SettingsButton_Checked(object sender, RoutedEventArgs e)
@@ -106,6 +106,16 @@ namespace Leftover_Harmony
         public bool IsCurrentUser(User user)
         {
             return _user == user;
+        }
+
+        /// <summary>
+        /// Switches to Request Page
+        /// </summary>
+        /// <param name="request"></param>
+        public void SwitchPage(Request request)
+        {
+            ClearFrame();
+            MainFrame.NavigationService.Navigate(new RequestPageDonor(this, request));
         }
 
         private void CustomQueries()
