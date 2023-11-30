@@ -24,7 +24,6 @@ namespace Leftover_Harmony.Views
     public partial class HomePage : Page
     {
         private MainWindow _mainWindow;
-        private List<Request> requestList = new List<Request>();
 
         public HomePage(MainWindow mainWindow)
         {
@@ -41,11 +40,7 @@ namespace Leftover_Harmony.Views
         {
             if (request == null) return;
 
-            int index = requestList.Count;
-
             ContentControl contentControl = new ContentControl();
-            contentControl.SetValue(Grid.ColumnProperty, index % 3);
-            contentControl.SetValue(Grid.RowProperty, index / 3);
             contentControl.Height = Container.ActualHeight / 2;
 
             contentControl.Template = (ControlTemplate)FindResource("RequestContentTemplate");
@@ -70,7 +65,6 @@ namespace Leftover_Harmony.Views
             contentControl.MouseUp += (sender, e) => DisplayRequest(request);
 
             RequestList.Children.Add(contentControl);
-            requestList.Add(request);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
