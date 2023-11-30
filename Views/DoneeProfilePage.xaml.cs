@@ -63,6 +63,7 @@ namespace Leftover_Harmony.Views
                 Border border = new Border();
                 border.SetValue(Grid.ColumnProperty, index);
                 border.CornerRadius = new CornerRadius(10, 10, 10, 10);
+                border.Cursor = Cursors.Hand;
 
                 if (index == 0) border.Margin = new Thickness(0, 0, 16, 0);
                 else border.Margin = new Thickness(16, 0, 0, 0);
@@ -105,6 +106,8 @@ namespace Leftover_Harmony.Views
             };
 
             container.Child = contentControl;
+
+            container.MouseUp += (sender, e) => { _mainWindow.SwitchPage(request); };
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

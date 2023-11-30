@@ -97,6 +97,8 @@ namespace Leftover_Harmony.Views
                 border.BorderBrush = Brushes.Black;
                 border.BorderThickness = new Thickness(1, 1, 1, 1);
                 border.CornerRadius = new CornerRadius(10, 10, 10, 10);
+                border.Cursor = Cursors.Hand;
+                border.Background = Brushes.Transparent;
 
                 if (index == 0) border.Margin = new Thickness(0, 0, 16, 0);
                 else if (index == 1) border.Margin = new Thickness(8, 0, 8, 0);
@@ -163,6 +165,8 @@ namespace Leftover_Harmony.Views
             };
 
             container.Child = contentControl;
+
+            container.MouseUp += (sender, e) => { _mainWindow.SwitchPage(request); };
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
