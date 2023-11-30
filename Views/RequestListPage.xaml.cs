@@ -77,16 +77,19 @@ namespace Leftover_Harmony.Views
             RequestList.Children.Add(contentControl);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddNewRequest();
 
-            List<Request> requests = DataAccessProvider.Instance.FetchDoneeRequests((Donee)_mainWindow.CurrentUser);
+            List<Request> requests = await DataAccessProvider.Instance.FetchDoneeRequestsAsync((Donee)_mainWindow.CurrentUser);
+            requests = requests.OrderByDescending(request => request.Id).ToList();
 
             foreach (Request request in requests)
             {
                 this.AddRequest(request);
             }
+
+            Spinner.Visibility = Visibility.Collapsed;
         }
     }
 }

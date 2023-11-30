@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:uc="clr-namespace:Leftover_Harmony.Resources.Components"
       xmlns:local="clr-namespace:Leftover_Harmony.Views"
       mc:Ignorable="d" 
       d:DesignHeight="616" d:DesignWidth="1024"
@@ -39,17 +40,23 @@
             </Grid>
         </ControlTemplate>
         <ControlTemplate x:Key="NewRequestContentTemplate">
-            <Rectangle Margin="16" Stroke="{DynamicResource DarkColor}" StrokeThickness="1" RadiusX="10" RadiusY="10">
-                <Rectangle.Fill>
-                    <ImageBrush ImageSource="{StaticResource plus}"/>
-                </Rectangle.Fill>
-            </Rectangle>
+            <Border Background="Transparent" Margin="16" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" Cursor="Hand">
+                <Rectangle Width="100" Height="100">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{StaticResource plus}"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
         </ControlTemplate>
     </Page.Resources>
 
-    <ScrollViewer Style="{StaticResource ScrollViewerStyle}" Margin="0,8,0,8">
+    <ScrollViewer Style="{StaticResource ScrollViewerStyle}">
         <Grid x:Name="Container">
             <UniformGrid x:Name="RequestList" Background="{DynamicResource BackgroundColor}" Columns="3" VerticalAlignment="Top"/>
+            <Grid x:Name="Spinner">
+                <uc:SpinnerUserControl />
+                <Rectangle Fill="{DynamicResource DarkColor}" Opacity="0.6"/>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </Page>
