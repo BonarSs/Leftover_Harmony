@@ -874,7 +874,7 @@ namespace Leftover_Harmony.Services
         #endregion
 
         #region Base Adder
-        public bool AddDonation(int leftover_id, int donor_id, int request_id, DateTime date_donated, int amount)
+        public void AddDonation(int leftover_id, int donor_id, int request_id, int amount)
         {
             NpgsqlCommand cmd = new NpgsqlCommand(
                 "INSERT INTO \"Donation\"" +
@@ -891,22 +891,17 @@ namespace Leftover_Harmony.Services
                 , conn);
             cmd.Parameters.AddWithValue("_status", "Approved");
             cmd.Parameters.AddWithValue("_description", "");
-            cmd.Parameters.AddWithValue("_password", donor.Password);
-            cmd.Parameters.AddWithValue("_email", donor.Email);
-            cmd.Parameters.AddWithValue("_phone_number", donor.PhoneNumber);
-            cmd.Parameters.AddWithValue("_display_name", (donor.DisplayName != null) ? donor.DisplayName : DBNull.Value);
-            cmd.Parameters.AddWithValue("_bio", (donor.Bio != null) ? donor.Bio : DBNull.Value);
-            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (donor.Image != null) ? donor.Image : DBNull.Value);
+            cmd.Parameters.AddWithValue("_date_donated", DateTime.Now.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("_amount", amount);
+            cmd.Parameters.AddWithValue("_donor_id", donor_id);
+            cmd.Parameters.AddWithValue("_request_id", request_id);
+            cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
 
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             cmd.ExecuteNonQuery();
 
             conn.Close();
-
-            return true;
-            INSERT INTO "Donation"("status", "description", "date_donated", "amount", "donor_id", "request_id", "leftover_id")
-            return true;
         }
         #endregion
     }
