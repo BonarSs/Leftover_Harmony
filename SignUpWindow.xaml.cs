@@ -21,9 +21,9 @@ namespace Leftover_Harmony
     /// <summary>
     /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class SignUpWindow : Window
     {
-        public LoginWindow()
+        public SignUpWindow()
         {
             InitializeComponent();
         }
@@ -46,7 +46,7 @@ namespace Leftover_Harmony
                 content.Visibility = Visibility.Hidden;
             }
         }
-
+        /*
         private async void usrLoginButton_Click(object sender, RoutedEventArgs e)
         {
             ToggleButtonSpinner(ref usrLoginButton);
@@ -69,5 +69,6 @@ namespace Leftover_Harmony
             mainWindow.Show();
             this.Close();
         }
+        */
     }
 }
