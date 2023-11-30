@@ -3,6 +3,7 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ namespace Leftover_Harmony.Services
     {
         private static DataAccessProvider? _instance;
         private NpgsqlConnection? conn;
-        private bool _caching = false;
 
         /// <summary>
         /// The singleton instance of the DataFetcher class.
@@ -29,9 +29,6 @@ namespace Leftover_Harmony.Services
             conn = new NpgsqlConnection(connectionString);
         }
 
-        public bool Caching() { return _caching; }
-        public void Caching(bool value) { _caching = value; }
-
         #region Base Fetchers
         /// <summary>
         /// Retrieves a Donee by its ID.
@@ -40,8 +37,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Donee object retrieved based on the provided ID.</returns>
         public Donee FetchDonee(int donee_id)
         {
-            if (_caching && VirtualDatabase.Instance.Donees.ContainsKey(donee_id)) return VirtualDatabase.Instance.Donees[donee_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -53,8 +48,6 @@ namespace Leftover_Harmony.Services
             Donee donee = Donee.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            VirtualDatabase.Instance.Donees.Add(donee_id, donee);
 
             return donee;
         }
@@ -86,8 +79,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Donor object retrieved based on the provided ID.</returns>
         public Donor FetchDonor(int donor_id)
         {
-            if (_caching && VirtualDatabase.Instance.Donors.ContainsKey(donor_id)) return VirtualDatabase.Instance.Donors[donor_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -99,8 +90,6 @@ namespace Leftover_Harmony.Services
             Donor donor = Donor.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            if (_caching) VirtualDatabase.Instance.Donors.Add(donor_id, donor);
 
             return donor;
         }
@@ -132,8 +121,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Donation object retrieved based on the provided ID.</returns>
         public Donation FetchDonation(int donation_id)
         {
-            if (_caching && VirtualDatabase.Instance.Donations.ContainsKey(donation_id)) return VirtualDatabase.Instance.Donations[donation_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -145,8 +132,6 @@ namespace Leftover_Harmony.Services
             Donation donation = Donation.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            if (_caching) VirtualDatabase.Instance.Donations.Add(donation_id, donation);
 
             return donation;
         }
@@ -178,8 +163,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Request object retrieved based on the provided ID.</returns>
         public Request FetchRequest(int request_id)
         {
-            if (_caching && VirtualDatabase.Instance.Requests.ContainsKey(request_id)) return VirtualDatabase.Instance.Requests[request_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -192,7 +175,26 @@ namespace Leftover_Harmony.Services
 
             conn.Close();
 
-            if (_caching) VirtualDatabase.Instance.Requests.Add(request_id, request);
+            return request;
+        }
+        /// <summary>
+        /// Asynchronously retrieves a Request by its ID.
+        /// </summary>
+        /// <param name="request_id">The ID of the request to fetch.</param>
+        /// <returns>The Request object retrieved based on the provided ID.</returns>
+        public async Task<Request> FetchRequestAsync(int request_id)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Request\" WHERE request_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", request_id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            Request request = Request.From(dataTable.Rows[0]);
+
+            conn.Close();
 
             return request;
         }
@@ -203,8 +205,6 @@ namespace Leftover_Harmony.Services
         /// <returns>The Leftover object retrieved based on the provided ID.</returns>
         public Leftover FetchLeftover(int leftover_id)
         {
-            if (_caching && VirtualDatabase.Instance.Leftovers.ContainsKey(leftover_id)) return VirtualDatabase.Instance.Leftovers[leftover_id];
-
             if (conn.State == ConnectionState.Closed) conn.Open();
 
             DataTable dataTable = new DataTable();
@@ -216,8 +216,6 @@ namespace Leftover_Harmony.Services
             Leftover leftover = Leftover.From(dataTable.Rows[0]);
 
             conn.Close();
-
-            if (_caching) VirtualDatabase.Instance.Leftovers.Add(leftover_id, leftover);
 
             return leftover;
         }
@@ -428,6 +426,11 @@ namespace Leftover_Harmony.Services
         /// <param name="donee">The Donee object for which associated Requests are to be fetched.</param>
         /// <returns>A list of Request objects associated with the provided Donee.</returns>
         public List<Request> FetchDoneeRequests(Donee donee) { return FetchDoneeRequests(donee.Id); }
+        /// <summary>
+        /// Asynchronously retrieves a list of Requests associated with a specific Donee by their ID.
+        /// </summary>
+        /// <param name="donee_id">The ID of the Donee for which associated Requests are to be fetched.</param>
+        /// <returns>A list of Request objects associated with the provided Donee ID.</returns>
         public async Task<List<Request>> FetchDoneeRequestsAsync(int donee_id)
         {
             if (conn.State == ConnectionState.Closed) conn.Open();
@@ -449,6 +452,11 @@ namespace Leftover_Harmony.Services
 
             return requests;
         }
+        /// <summary>
+        /// Asynchronously retrieves a list of Requests associated with a specific Donee.
+        /// </summary>
+        /// <param name="donee">The Donee object for which associated Requests are to be fetched.</param>
+        /// <returns>A list of Request objects associated with the provided Donee.</returns>
         public async Task<List<Request>> FetchDoneeRequestsAsync(Donee donee) { return await FetchDoneeRequestsAsync((int)donee.Id); }
         /// <summary>
         /// Retrieves a list of Donations associated with a specific Donor by their ID.
@@ -508,6 +516,11 @@ namespace Leftover_Harmony.Services
 
             return donations;
         }
+        /// <summary>
+        /// Asynchronously retrieves a list of Donations associated with a specific Donor.
+        /// </summary>
+        /// <param name="donor">The Donor object for which associated Donations are to be fetched.</param>
+        /// <returns>A list of Donation objects associated with the provided Donor.</returns>
         public async Task<List<Donation>> FetchDonorDonationsAsync(Donor donor) { return await FetchDonorDonationsAsync(donor.Id); }
         /// <summary>
         /// Retrieves a list of Leftovers associated with a specific Request by its ID.
@@ -573,6 +586,60 @@ namespace Leftover_Harmony.Services
         /// <param name="request">The Request object for which associated Donations are to be fetched.</param>
         /// <returns>A list of Donation objects associated with the provided Request.</returns>
         public List<Donation> FetchRequestDonation(Request request) { return FetchRequestDonation(request.Id); }
+        public List<object> FetchRequestLeftoverAmounts(int request_id)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<object> leftovers = new List<object>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT get_request_leftovers(:_id)", conn);
+            cmd.Parameters.AddWithValue("_id", request_id);
+
+            dataTable.Load(cmd.ExecuteReader());
+            foreach (DataRow row in dataTable.Rows)
+            {
+                leftovers.Add(new {
+                    Leftover = Leftover.From(row),
+                    RequestedAmount = (int)row["requested_amount"],
+                    DonatedAmount = (int)row["donated_amount"]
+                });
+            }
+
+            conn.Close();
+
+            return leftovers;
+        }
+        public List<object> FetchRequestLeftoverAmounts(Request request) { return FetchRequestLeftoverAmounts(request.Id); }
+        public async Task<List<object>> FetchRequestLeftoverAmountsAsync(int request_id)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<object> leftovers = new List<object>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM get_request_leftovers(:_id)", conn);
+            cmd.Parameters.AddWithValue("_id", request_id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            // foreach (DataColumn col in dataTable.Columns) Trace.WriteLine(col.ColumnName);
+            foreach (DataRow row in dataTable.Rows)
+            {
+                leftovers.Add(new
+                {
+                    Leftover = Leftover.From(row),
+                    RequestedAmount = (int)row["requested_amount"],
+                    DonatedAmount = (int)row["donated_amount"]
+                });
+            }
+
+            conn.Close();
+
+            return leftovers;
+        }
+        public async Task<List<object>> FetchRequestLeftoverAmountsAsync(Request request) { return await FetchRequestLeftoverAmountsAsync(request.Id); }
         public bool IsUsernameExists(string username)
         {
             if (conn.State == ConnectionState.Closed) conn.Open();
@@ -803,6 +870,38 @@ namespace Leftover_Harmony.Services
             conn.Close();
 
             return true;
+        }
+        #endregion
+
+        #region Base Adder
+        public void AddDonation(int leftover_id, int donor_id, int request_id, int amount)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donation\"" +
+                "(\"status\", \"description\", \"date_donated\", \"amount\", \"donor_id\", \"request_id\", \"leftover_id\")" +
+                "VALUES (" +
+                ":_status, " +
+                ":_description, " +
+                ":_date_donated, " +
+                ":_amount, " +
+                ":_donor_id, " +
+                ":_request_id, " +
+                ":_leftover_id, " +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_status", "Approved");
+            cmd.Parameters.AddWithValue("_description", "");
+            cmd.Parameters.AddWithValue("_date_donated", DateTime.Now.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("_amount", amount);
+            cmd.Parameters.AddWithValue("_donor_id", donor_id);
+            cmd.Parameters.AddWithValue("_request_id", request_id);
+            cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
         }
         #endregion
     }

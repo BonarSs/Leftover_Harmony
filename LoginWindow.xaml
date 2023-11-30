@@ -19,8 +19,8 @@
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Border x:Name="BackgroundRectangle" Background="{DynamicResource Primary800}" CornerRadius="10"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                            <ContentPresenter  x:Name="ContentPresenter"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <uc:SpinnerUserControl x:Name="Spinner" Width="40" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">

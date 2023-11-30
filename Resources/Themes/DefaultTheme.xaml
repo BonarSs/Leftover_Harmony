@@ -43,4 +43,13 @@
     <SolidColorBrush x:Key="Success300" Color="#60c46e"/>
     <SolidColorBrush x:Key="Success200" Color="#74cb80"/>
     <SolidColorBrush x:Key="Success100" Color="#88d392"/>
+    <SolidColorBrush x:Key="Info900" Color="#21365b"/>
+    <SolidColorBrush x:Key="Info800" Color="#2a4372"/>
+    <SolidColorBrush x:Key="Info700" Color="#3a5ea0"/>
+    <SolidColorBrush x:Key="Info600" Color="#426bb6"/>
+    <SolidColorBrush x:Key="Info500" Color="#5386e4"/>
+    <SolidColorBrush x:Key="Info400" Color="#759ee9"/>
+    <SolidColorBrush x:Key="Info300" Color="#a9c3f2"/>
+    <SolidColorBrush x:Key="Info200" Color="#cbdbf7"/>
+    <SolidColorBrush x:Key="Info100" Color="#eef3fc"/>
 </ResourceDictionary>
