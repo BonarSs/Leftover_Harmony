@@ -218,7 +218,7 @@
             </ScrollViewer>
             <DockPanel Margin="16,0,0,0" Grid.Column="1">
                 <Grid DockPanel.Dock="Bottom" Margin="0,16,0,32">
-                    <Border BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" CornerRadius="10">
+                    <Border x:Name="DoneeProfile" Background="Transparent" BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" CornerRadius="10" Cursor="Hand" MouseUp="DoneeProfile_MouseUp">
                         <StackPanel Margin="8" Orientation="Horizontal">
                             <Ellipse Margin="0,0,16,0" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Stroke="{DynamicResource DarkColor}" StrokeThickness="1">
                                 <Ellipse.Fill>

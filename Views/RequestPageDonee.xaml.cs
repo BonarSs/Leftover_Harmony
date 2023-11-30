@@ -221,5 +221,10 @@ namespace Leftover_Harmony.Views
                 }
             }
         }
+        private async void DoneeProfile_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Donee request_donee = await request.GetDoneeAsync();
+            if (request_donee != null) _mainWindow.SwitchPage(request_donee);
+        }
     }
 }
