@@ -105,9 +105,11 @@ namespace Leftover_Harmony.Views
                 return border;
             }
 
+            if (donations.Count > 0) NoDonation.Visibility = Visibility.Collapsed;
+
             for (int i = 0; i < 3; i++)
             {
-                if (donations[i] == null) break;
+                if (donations.Count == i) break;
 
                 Border border = GetBorder(i);
                 FormatDonation(donations[i], border);
