@@ -153,6 +153,9 @@ namespace Leftover_Harmony
 
         }
 
-        
+        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
     }
 }

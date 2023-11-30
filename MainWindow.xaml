@@ -116,6 +116,6 @@
             </Grid>
 
         </Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Panel.ZIndex="1" Source="" Grid.Column="1" Grid.Row="1"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Panel.ZIndex="1" Source="" Grid.Column="1" Grid.Row="1" Navigated="MainFrame_Navigated"/>
     </Grid>
 </Window>
