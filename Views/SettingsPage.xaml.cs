@@ -36,6 +36,7 @@ namespace Leftover_Harmony.Views
 
             InitializeProfileTab();
             InitializeAppearanceTab();
+            InitializeAccountTab();
 
             ProfileSettingsTab.IsChecked = true;
         }
