@@ -118,6 +118,15 @@ namespace Leftover_Harmony
             if (_user is Donor) MainFrame.NavigationService.Navigate(new RequestPageDonor(this, request, (Donor)_user));
             else if (_user is Donee) MainFrame.NavigationService.Navigate(new RequestPageDonee(this, request, (Donee)_user));
         }
+        /// <summary>
+        /// Switches to Donee Page
+        /// </summary>
+        /// <param name="donee"></param>
+        public void SwitchPage(Donee donee)
+        {
+            ClearFrame();
+            MainFrame.NavigationService.Navigate(new DoneeProfilePage(this, donee));
+        }
 
         private void CustomQueries()
         {
