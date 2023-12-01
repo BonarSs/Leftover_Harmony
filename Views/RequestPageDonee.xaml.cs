@@ -94,7 +94,7 @@ namespace Leftover_Harmony.Views
             ToggleLeftoverListSpinner();
             ToggleDoneeSpinner();
 
-            Donee donee = request.Donee;
+            Donee donee = await request.GetDoneeAsync();
             dnDisplayName.Text = donee.DisplayName;
             dnOrganization.Text = dnOrganization.Text.Replace("{organization}", donee.Organization);
             if (donee.Image != null) dnImage.ImageSource = ImageConverter.ByteArraytoImage(donee.Image);
@@ -118,7 +118,7 @@ namespace Leftover_Harmony.Views
                 AddLeftover(leftover, (int)requestedAmount, (int)donatedAmount);
             }
 
-            if ((await request.GetDoneeAsync()).Id == donee.Id) NewLeftoverButton.Visibility = Visibility.Visible;
+            if (this.donee.Id == donee.Id) NewLeftoverButton.Visibility = Visibility.Visible;
 
             ToggleLeftoverListSpinner();
         }
