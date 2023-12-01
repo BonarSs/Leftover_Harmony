@@ -10,6 +10,41 @@
       Title="DoneeProfilePage" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <DrawingImage x:Key="leaf">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V504.125 H504.125 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF3A7F0D" Geometry="F1 M504.125,504.125z M0,0z M339.772,0C339.772,0 384.308,108.954 193.435,182.138 89.719,221.893 10.059,323.789 105.173,481.193 113.05,410.836 146.826,255.708 292.061,220.309 292.061,220.309 156.885,270.855 144.944,499.656 214.403,509.408 377.305,515.961 425.67,374.594 489.536,187.817 339.772,0 339.772,0z" />
+                    <GeometryDrawing Brush="#FF49A010" Geometry="F1 M504.125,504.125z M0,0z M145.007,498.704C292.463,439.855 399.755,301.994 414.563,137.421 384.418,56.107 339.772,0 339.772,0 339.772,0 384.308,108.954 193.435,182.138 89.719,221.893 10.059,323.789 105.173,481.193 113.05,410.836 146.826,255.708 292.061,220.309 292.053,220.31 157.279,270.73 145.007,498.704z" />
+                    <GeometryDrawing Brush="#FF3A7F0D">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="13.785" RadiusY="13.785" Center="90.459,171.985" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FF49A010">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="9.846" RadiusY="9.846" Center="133.782,158.2" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF49A010">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="24.615" RadiusY="24.615" Center="124.921,64.662" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF49A010">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="7.877" RadiusY="7.877" Center="200.736,120.785" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing Brush="#FF49A010">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="22.646" RadiusY="22.646" Center="266.713,76.477" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
         <DrawingImage x:Key="telephone_fill">
             <DrawingImage.Drawing>
                 <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
@@ -99,7 +134,10 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-
+                    <StackPanel x:Name="NoRequest" VerticalAlignment="Center" Grid.ColumnSpan="3">
+                        <Image Margin="0,0,0,16" Source="{StaticResource leaf}" Height="100"/>
+                        <TextBlock FontFamily="{StaticResource Montserrat}" FontSize="28" Text="This donee has no request." HorizontalAlignment="Center"/>
+                    </StackPanel>
                     <Border x:Name="usrRecentRequestsSpinner" Grid.ColumnSpan="3" Background="#7F000000" CornerRadius="10">
                         <uc:SpinnerUserControl />
                     </Border>

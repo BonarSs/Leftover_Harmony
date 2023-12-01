@@ -1,14 +1,22 @@
-﻿<Page x:Class="Leftover_Harmony.Views.HomePage"
+﻿<Page x:Class="Leftover_Harmony.Views.RequestListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:uc="clr-namespace:Leftover_Harmony.Resources.Components"
       xmlns:local="clr-namespace:Leftover_Harmony.Views"
       mc:Ignorable="d" 
       d:DesignHeight="616" d:DesignWidth="1024"
-      Title="HomePage" Loaded="Page_Loaded">
+      Title="RequestListPage" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <DrawingImage x:Key="plus">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V16 H16 V0 H0 Z">
+                    <GeometryDrawing Brush="{DynamicResource DarkColor}" Geometry="F1 M16,16z M0,0z M8,4A0.5,0.5,0,0,1,8.5,4.5L8.5,7.5 11.5,7.5A0.5,0.5,0,0,1,11.5,8.5L8.5,8.5 8.5,11.5A0.5,0.5,0,0,1,7.5,11.5L7.5,8.5 4.5,8.5A0.5,0.5,0,0,1,4.5,7.5L7.5,7.5 7.5,4.5A0.5,0.5,0,0,1,8,4" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
         <ControlTemplate x:Key="RequestContentTemplate">
             <Grid Margin="16" Background="{DynamicResource BackgroundColor}" Cursor="Hand">
                 <Grid.RowDefinitions>
@@ -31,14 +39,24 @@
                 <Border BorderBrush="{DynamicResource DarkColor}" BorderThickness="1" Grid.RowSpan="2" CornerRadius="10"/>
             </Grid>
         </ControlTemplate>
+        <ControlTemplate x:Key="NewRequestContentTemplate">
+            <Border Background="Transparent" Margin="16" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" Cursor="Hand">
+                <Rectangle Width="100" Height="100">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{StaticResource plus}"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+        </ControlTemplate>
     </Page.Resources>
 
-    <ScrollViewer Style="{StaticResource ScrollViewerStyle}" Margin="0,8,0,8">
+    <ScrollViewer Style="{StaticResource ScrollViewerStyle}">
         <Grid x:Name="Container">
-            <UniformGrid x:Name="RequestList" Background="{DynamicResource BackgroundColor}" Columns="3" VerticalAlignment="Top">
-            </UniformGrid>
+            <UniformGrid x:Name="RequestList" Background="{DynamicResource BackgroundColor}" Columns="3" VerticalAlignment="Top"/>
+            <Grid x:Name="Spinner">
+                <uc:SpinnerUserControl />
+                <Rectangle Fill="{DynamicResource DarkColor}" Opacity="0.6"/>
+            </Grid>
         </Grid>
     </ScrollViewer>
-    
-
 </Page>

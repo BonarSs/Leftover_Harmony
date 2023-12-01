@@ -58,6 +58,10 @@ namespace Leftover_Harmony.Models
             return request;
         }
         public void SetImage(byte[] image) { _image = image; }
+        public async Task<Donee> GetDoneeAsync()
+        {
+            return await DataAccessProvider.Instance.FetchDoneeAsync(this);
+        }
         public List<Donation> AllDonations()
         {
             return Donations;

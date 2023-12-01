@@ -28,6 +28,7 @@ namespace Leftover_Harmony.Views
         private Request request;
         private MainWindow _mainWindow;
         private Donor donor;
+        private Donee? donee;
         public RequestPageDonor(MainWindow mainWindow, Request request, Donor donor)
         {
             InitializeComponent();
@@ -85,7 +86,7 @@ namespace Leftover_Harmony.Views
             ToggleLeftoverListSpinner();
             ToggleDoneeSpinner();
 
-            Donee donee = request.Donee;
+            donee = await request.GetDoneeAsync();
             dnDisplayName.Text = donee.DisplayName;
             dnOrganization.Text = dnOrganization.Text.Replace("{organization}", donee.Organization);
             if (donee.Image != null) dnImage.ImageSource = ImageConverter.ByteArraytoImage(donee.Image);
@@ -95,6 +96,12 @@ namespace Leftover_Harmony.Views
             ClearLeftovers();
 
             List<object> leftovers = await DataAccessProvider.Instance.FetchRequestLeftoverAmountsAsync(request);
+
+            if (leftovers.Count > 0)
+            {
+                LeftoverListPanel.Visibility = Visibility.Visible;
+                NoLeftover.Visibility = Visibility.Collapsed;
+            }
 
             foreach (object item in leftovers)
             {
@@ -223,6 +230,10 @@ namespace Leftover_Harmony.Views
             await RefreshRequest();
 
             ToggleButtonSpinner(ref DonateButton);
+        }
+        private void DoneeProfile_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (donee != null) _mainWindow.SwitchPage(donee);
         }
     }
 }

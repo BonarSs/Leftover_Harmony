@@ -19,13 +19,13 @@ using System.Windows.Shapes;
 namespace Leftover_Harmony.Views
 {
     /// <summary>
-    /// Interaction logic for HomePage.xaml
+    /// Interaction logic for RequestListPage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class RequestListPage : Page
     {
         private MainWindow _mainWindow;
 
-        public HomePage(MainWindow mainWindow)
+        public RequestListPage(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
             InitializeComponent();
@@ -35,7 +35,17 @@ namespace Leftover_Harmony.Views
         {
             _mainWindow.SwitchPage(request);
         }
+        private void AddNewRequest()
+        {
+            ContentControl contentControl = new ContentControl();
+            contentControl.Height = Container.ActualHeight / 2;
 
+            contentControl.Template = (ControlTemplate)FindResource("NewRequestContentTemplate");
+
+            contentControl.MouseUp += (sender, e) => { _mainWindow.NewRequestPage(); };
+
+            RequestList.Children.Add(contentControl);
+        }
         private void AddRequest(Request request)
         {
             if (request == null) return;
@@ -69,11 +79,17 @@ namespace Leftover_Harmony.Views
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Request> requests = await DataAccessProvider.Instance.FetchAllRequestsAsync();
+            AddNewRequest();
+
+            List<Request> requests = await DataAccessProvider.Instance.FetchDoneeRequestsAsync((Donee)_mainWindow.CurrentUser);
+            requests = requests.OrderByDescending(request => request.Id).ToList();
+
             foreach (Request request in requests)
             {
                 this.AddRequest(request);
             }
+
+            Spinner.Visibility = Visibility.Collapsed;
         }
     }
 }

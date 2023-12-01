@@ -219,7 +219,28 @@ namespace Leftover_Harmony.Services
 
             return leftover;
         }
-        
+        /// <summary>
+        /// Asynchronously retrieves a Leftover by its ID.
+        /// </summary>
+        /// <param name="leftover_id">The ID of the leftover to fetch.</param>
+        /// <returns>The Leftover object retrieved based on the provided ID.</returns>
+        public async Task<Leftover> FetchLeftoverAsync(int leftover_id)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Leftover\" WHERE leftover_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", leftover_id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            Leftover leftover = Leftover.From(dataTable.Rows[0]);
+
+            conn.Close();
+
+            return leftover;
+        }
+
         #endregion
 
         #region Specific Fetchers
@@ -308,6 +329,69 @@ namespace Leftover_Harmony.Services
             return FetchRequest(request_id);
         }
         /// <summary>
+        /// Asynchronously retrieves a Request associated with a specific Donation.
+        /// </summary>
+        /// <param name="donation">The Donation object for which the associated Request is to be fetched.</param>
+        /// <returns>The Request object associated with the provided Donation.</returns>
+        public async Task<Request> FetchRequestAsync(Donation donation)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT request_id FROM \"Donation\" WHERE donation_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", donation.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            int request_id = (int)dataTable.Rows[0]["request_id"];
+
+            conn.Close();
+
+            return FetchRequest(request_id);
+        }
+        /// <summary>
+        /// Retrieves a Request associated with a specific Leftover.
+        /// </summary>
+        /// <param name="leftover">The Leftover object for which the associated Request is to be fetched.</param>
+        /// <returns>The Request object associated with the provided Leftover.</returns>
+        public Request FetchRequest(Leftover leftover)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT request_id FROM \"RequestLeftover\" WHERE leftover_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", leftover.Id);
+
+            dataTable.Load(cmd.ExecuteReader());
+            int request_id = (int)dataTable.Rows[0]["request_id"];
+
+            conn.Close();
+
+            return FetchRequest(request_id);
+        }
+        /// <summary>
+        /// Retrieves a Request associated with a specific Leftover.
+        /// </summary>
+        /// <param name="leftover">The Leftover object for which the associated Request is to be fetched.</param>
+        /// <returns>The Request object associated with the provided Leftover.</returns>
+        public async Task<Request> FetchRequestAsync(Leftover leftover)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT request_id FROM \"RequestLeftover\" WHERE leftover_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", leftover.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            int request_id = (int)dataTable.Rows[0]["request_id"];
+
+            conn.Close();
+
+            return await FetchRequestAsync(request_id);
+        }
+        /// <summary>
         /// Retrieves a Donor associated with a specific Donation.
         /// </summary>
         /// <param name="donation">The Donation object for which the associated Donor is to be fetched.</param>
@@ -350,6 +434,27 @@ namespace Leftover_Harmony.Services
             return FetchDonee(donee_id);
         }
         /// <summary>
+        /// Asynchronously retrieves a Donee associated with a specific Request.
+        /// </summary>
+        /// <param name="request">The Request object for which the associated Donee is to be fetched.</param>
+        /// <returns>The Donee object associated with the provided Request.</returns>
+        public async Task<Donee> FetchDoneeAsync(Request request)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT donee_id FROM \"Request\" WHERE request_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", request.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            int donee_id = (int)dataTable.Rows[0]["donee_id"];
+
+            conn.Close();
+
+            return FetchDonee(donee_id);
+        }
+        /// <summary>
         /// Retrieves a Leftover associated with a specific Donation.
         /// </summary>
         /// <param name="donation">The Donation object for which the associated Leftover is to be fetched.</param>
@@ -371,6 +476,27 @@ namespace Leftover_Harmony.Services
             return FetchLeftover(leftover_id);
         }
         /// <summary>
+        /// Asynchronously retrieves a Leftover associated with a specific Donation.
+        /// </summary>
+        /// <param name="donation">The Donation object for which the associated Leftover is to be fetched.</param>
+        /// <returns>The Leftover object associated with the provided Donation.</returns>
+        public async Task<Leftover> FetchLeftoverAsync(Donation donation)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT leftover_id FROM \"Donation\" WHERE donation_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", donation.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            int leftover_id = (int)dataTable.Rows[0]["leftover_id"];
+
+            conn.Close();
+
+            return await FetchLeftoverAsync(leftover_id);
+        }
+        /// <summary>
         /// Retrieves a list of all available requests.
         /// </summary>
         /// <returns>A List of Request objects containing all available requests.</returns>
@@ -385,6 +511,30 @@ namespace Leftover_Harmony.Services
             NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Request\"", conn);
 
             dataTable.Load(cmd.ExecuteReader());
+            foreach (DataRow row in dataTable.Rows)
+            {
+                requests.Add(Request.From(row));
+            }
+
+            conn.Close();
+
+            return requests;
+        }
+        /// <summary>
+        /// Asynchronously retrieves a list of all available requests.
+        /// </summary>
+        /// <returns>A List of Request objects containing all available requests.</returns>
+        public async Task<List<Request>> FetchAllRequestsAsync()
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<Request> requests = new List<Request>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Request\"", conn);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
             foreach (DataRow row in dataTable.Rows)
             {
                 requests.Add(Request.From(row));
@@ -874,7 +1024,7 @@ namespace Leftover_Harmony.Services
         #endregion
 
         #region Base Adder
-        public void AddDonation(int leftover_id, int donor_id, int request_id, int amount)
+        public bool AddDonation(int leftover_id, int donor_id, int request_id, int amount)
         {
             NpgsqlCommand cmd = new NpgsqlCommand(
                 "INSERT INTO \"Donation\"" +
@@ -891,7 +1041,7 @@ namespace Leftover_Harmony.Services
                 , conn);
             cmd.Parameters.AddWithValue("_status", "Approved");
             cmd.Parameters.AddWithValue("_description", "");
-            cmd.Parameters.AddWithValue("_date_donated", DateTime.Now.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("_date_donated", DateTime.Now);
             cmd.Parameters.AddWithValue("_amount", amount);
             cmd.Parameters.AddWithValue("_donor_id", donor_id);
             cmd.Parameters.AddWithValue("_request_id", request_id);
@@ -902,6 +1052,8 @@ namespace Leftover_Harmony.Services
             cmd.ExecuteNonQuery();
 
             conn.Close();
+
+            return true;
         }
         public async Task<bool> AddDonationAsync(int leftover_id, int donor_id, int request_id, int amount)
         {
@@ -933,6 +1085,317 @@ namespace Leftover_Harmony.Services
             conn.Close();
 
             return true;
+        }
+        public bool AddLeftover(int request_id, string name, string description, int amount, byte[]? image)
+        {
+            NpgsqlCommand cmd;
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"Leftover\"" +
+                "(\"name\", \"description\", \"image\")" +
+                "VALUES (" +
+                    ":_name, " +
+                    ":_description, " +
+                    ":_image" +
+                ") " +
+                "RETURNING \"leftover_id\""
+                , conn);
+            cmd.Parameters.AddWithValue("_name", name);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (image != null) ? image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            object? result = cmd.ExecuteScalar();
+            if (result == null) throw new NullReferenceException("Failed to get leftover_id");
+
+            int leftover_id = (int)result;
+
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"RequestLeftover\"" +
+                "(\"request_id\", \"leftover_id\", \"amount\")" +
+                "VALUES (" +
+                    ":_request_id, " +
+                    ":_leftover_id, " +
+                    ":_amount" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_request_id", request_id);
+            cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
+            cmd.Parameters.AddWithValue("_amount", amount);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddLeftoverAsync(int request_id, string name, string description, int amount, byte[]? image)
+        {
+            NpgsqlCommand cmd;
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"Leftover\"" +
+                "(\"name\", \"description\", \"image\")" +
+                "VALUES (" +
+                    ":_name, " +
+                    ":_description, " +
+                    ":_image" +
+                ") " +
+                "RETURNING \"leftover_id\""
+                , conn);
+            cmd.Parameters.AddWithValue("_name", name);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_image", NpgsqlTypes.NpgsqlDbType.Bytea, (image != null) ? image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            object? result = await cmd.ExecuteScalarAsync();
+            if (result == null) throw new NullReferenceException("Failed to get leftover_id");
+
+            int leftover_id = (int)result;
+
+            cmd = new NpgsqlCommand(
+                "INSERT INTO \"RequestLeftover\"" +
+                "(\"request_id\", \"leftover_id\", \"amount\")" +
+                "VALUES (" +
+                    ":_request_id, " +
+                    ":_leftover_id, " +
+                    ":_amount" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_request_id", request_id);
+            cmd.Parameters.AddWithValue("_leftover_id", leftover_id);
+            cmd.Parameters.AddWithValue("_amount", amount);
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        public bool AddDonor(string username, string email, string password, string phone)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donor\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddDonorAsync(string username, string email, string password, string phone)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donor\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        public bool AddDonee(string username, string email, string password, string phone, string organization)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donee\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"organization\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_organization, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_organization", organization);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddDoneeAsync(string username, string email, string password, string phone, string organization)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Donee\"" +
+                "(\"username\", \"password\", \"email\", \"phone_number\", \"organization\", \"display_name\", \"bio\", \"image\")" +
+                "VALUES (" +
+                ":_username, " +
+                ":_password, " +
+                ":_email, " +
+                ":_phone_number, " +
+                ":_organization, " +
+                ":_display_name, " +
+                ":_bio, " +
+                ":_image" +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_username", username);
+            cmd.Parameters.AddWithValue("_password", password);
+            cmd.Parameters.AddWithValue("_email", email);
+            cmd.Parameters.AddWithValue("_phone_number", phone);
+            cmd.Parameters.AddWithValue("_organization", organization);
+            cmd.Parameters.AddWithValue("_display_name", username);
+            cmd.Parameters.AddWithValue("_bio", DBNull.Value);
+            cmd.Parameters.AddWithValue("_image", DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        public bool AddRequest(string title, string description, int donee_id, byte[]? image)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Request\"" +
+                "(\"title\", \"description\", \"date_created\", \"donee_id\", \"image\")" +
+                "VALUES (" +
+                ":_title, " +
+                ":_description, " +
+                ":_date_created, " +
+                ":_donee_id, " +
+                ":_image " +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_title", title);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_date_created", DateTime.Now);
+            cmd.Parameters.AddWithValue("_donee_id", donee_id);
+            cmd.Parameters.AddWithValue("_image", (image != null) ? image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+        public async Task<bool> AddRequestAsync(string title, string description, int donee_id, byte[]? image)
+        {
+            NpgsqlCommand cmd = new NpgsqlCommand(
+                "INSERT INTO \"Request\"" +
+                "(\"title\", \"description\", \"date_created\", \"donee_id\", \"image\")" +
+                "VALUES (" +
+                ":_title, " +
+                ":_description, " +
+                ":_date_created, " +
+                ":_donee_id, " +
+                ":_image " +
+                ")"
+                , conn);
+            cmd.Parameters.AddWithValue("_title", title);
+            cmd.Parameters.AddWithValue("_description", description);
+            cmd.Parameters.AddWithValue("_date_created", DateTime.Now);
+            cmd.Parameters.AddWithValue("_donee_id", donee_id);
+            cmd.Parameters.AddWithValue("_image", (image != null) ? image : DBNull.Value);
+
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return true;
+        }
+        #endregion
+
+        #region Misc
+        public List<(string, int)> GlobalSearch(string query)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<(string, int)> results = new List<(string, int)>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM global_search(:_query);", conn);
+            cmd.Parameters.AddWithValue("_query", query);
+
+            dataTable.Load(cmd.ExecuteReader());
+            
+            foreach (DataRow row in dataTable.Rows)
+            {
+                results.Add(((string)row["_type"], (int)row["_id"]));
+            }
+
+            return results;
+        }
+        public async Task<List<(string, int)>> GlobalSearchAsync(string query)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<(string, int)> results = new List<(string, int)>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM global_search(:_query);", conn);
+            cmd.Parameters.AddWithValue("_query", query);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                results.Add(((string)row["_type"], (int)row["_id"]));
+            }
+
+            return results;
         }
         #endregion
     }

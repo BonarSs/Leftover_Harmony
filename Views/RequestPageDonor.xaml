@@ -166,18 +166,24 @@
                         <Grid x:Name="LeftoverSpinner" Background="{DynamicResource DarkColor}" Opacity="0.6" Visibility="Hidden">
                             <uc:SpinnerUserControl />
                         </Grid>
-                        <StackPanel>
-                            <StackPanel x:Name="LeftoverList">
-                                <ContentControl Template="{StaticResource LeftoverContentTemplate}"/>
+                        <Grid>
+                            <StackPanel x:Name="NoLeftover" Margin="0,0,0,96" VerticalAlignment="Center">
+                                <Image Margin="0,0,0,16" Source="{StaticResource leaf}" Height="100"/>
+                                <TextBlock FontFamily="{StaticResource Montserrat}" FontSize="28" Text="This request has no leftover." HorizontalAlignment="Center"/>
                             </StackPanel>
-                            <Button x:Name="DonateButton" Margin="16" Style="{StaticResource ButtonStyle}" Content="Donate" Height="40" Click="DonateButton_Click"/>
-                        </StackPanel>
+                            <StackPanel x:Name="LeftoverListPanel" Visibility="Collapsed">
+                                <StackPanel x:Name="LeftoverList">
+                                    <ContentControl Template="{StaticResource LeftoverContentTemplate}"/>
+                                </StackPanel>
+                                <Button x:Name="DonateButton" Margin="16" Style="{StaticResource ButtonStyle}" Content="Donate" Height="40" Click="DonateButton_Click"/>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </DockPanel>
             </ScrollViewer>
             <DockPanel Margin="16,0,0,0" Grid.Column="1">
                 <Grid DockPanel.Dock="Bottom" Margin="0,16,0,32">
-                    <Border BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" CornerRadius="10">
+                    <Border x:Name="DoneeProfile" Background="Transparent" BorderThickness="1" BorderBrush="{DynamicResource DarkColor}" CornerRadius="10" Cursor="Hand" MouseUp="DoneeProfile_MouseUp">
                         <StackPanel Margin="8" Orientation="Horizontal">
                             <Ellipse Margin="0,0,16,0" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Stroke="{DynamicResource DarkColor}" StrokeThickness="1">
                                 <Ellipse.Fill>

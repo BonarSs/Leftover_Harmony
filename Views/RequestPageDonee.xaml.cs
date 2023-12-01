@@ -23,15 +23,17 @@ namespace Leftover_Harmony.Views
     /// <summary>
     /// Interaction logic for RequestPage.xaml
     /// </summary>
-    public partial class RequestPageDonor : Page
+    public partial class RequestPageDonee : Page
     {
         private Request request;
         private MainWindow _mainWindow;
-        public RequestPageDonor(MainWindow mainWindow, Request request)
+        private Donee donee;
+        public RequestPageDonee(MainWindow mainWindow, Request request, Donee donee)
         {
             InitializeComponent();
             this.request = request;
             this._mainWindow = mainWindow;
+            this.donee = donee;
         }
 
         private void ToggleLeftoverListSpinner()
@@ -44,7 +46,35 @@ namespace Leftover_Harmony.Views
             if (DoneeSpinner.Visibility == Visibility.Visible) DoneeSpinner.Visibility = Visibility.Hidden;
             else DoneeSpinner.Visibility = Visibility.Visible;
         }
+        private void ToggleButtonSpinner(ref Button button)
+        {
+            ContentPresenter content = (ContentPresenter)button.Template.FindName("ContentPresenter", button);
+            FrameworkElement spinner = (FrameworkElement)button.Template.FindName("Spinner", button);
 
+            if (content == null || spinner == null) return;
+
+            if (spinner.Visibility == Visibility.Visible)
+            {
+                spinner.Visibility = Visibility.Hidden;
+                content.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                spinner.Visibility = Visibility.Visible;
+                content.Visibility = Visibility.Hidden;
+            }
+        }
+        private void ResetNewLeftoverPanel()
+        {
+            newlfTitle.Text = "";
+            newlfDescription.Text = "";
+            newlfAmount.Text = "0";
+            ((ImageBrush)newlfImageButton.Template.FindName("newlfImage", newlfImageButton)).ImageSource = null;
+            NewLeftoverInvalidTextBox.Visibility = Visibility.Hidden;
+
+            NewLeftoverButton.Visibility = Visibility.Visible;
+            NewLeftoverPanel.Visibility = Visibility.Collapsed;
+        }
         private async void RefreshRequest()
         {
             request = await DataAccessProvider.Instance.FetchRequestAsync(request.Id);
@@ -59,7 +89,7 @@ namespace Leftover_Harmony.Views
             rqTitle.Text = request.Title;
             rqDescription.Text = request.Description;
             rqDate.Text = rqDate.Text.Replace("{date}", request.Date.ToString("d"));
-            rqImage.ImageSource = ImageConverter.ByteArraytoImage(request.Image);
+            if (request.Image != null) rqImage.ImageSource = ImageConverter.ByteArraytoImage(request.Image);
 
             ToggleLeftoverListSpinner();
             ToggleDoneeSpinner();
@@ -81,43 +111,22 @@ namespace Leftover_Harmony.Views
                 int? requestedAmount = (int?)item.GetType()?.GetProperty("RequestedAmount")?.GetValue(item);
                 int? donatedAmount = (int?)item.GetType()?.GetProperty("DonatedAmount")?.GetValue(item);
 
+                Trace.WriteLine(donatedAmount);
+
                 if (leftover == null || requestedAmount == null || donatedAmount == null) continue;
 
                 AddLeftover(leftover, (int)requestedAmount, (int)donatedAmount);
             }
 
+            if ((await request.GetDoneeAsync()).Id == donee.Id) NewLeftoverButton.Visibility = Visibility.Visible;
+
             ToggleLeftoverListSpinner();
-        }
-        private void CounterPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
-        }
-        private void UpdateLeftoverBar(ref ContentControl contentControl)
-        {
-            if (contentControl == null) return;
-
-            TextBox lfCounterText = (TextBox)contentControl.Template.FindName("lfCounterText", contentControl);
-            TextBlock lfProgressNumerator = (TextBlock)contentControl.Template.FindName("lfProgressNumerator", contentControl);
-            TextBlock lfProgressDenominator = (TextBlock)contentControl.Template.FindName("lfProgressDenominator", contentControl);
-            Border lfProgressBar = (Border)contentControl.Template.FindName("lfProgressBar", contentControl);
-            Border lfDonating = (Border)contentControl.Template.FindName("lfDonating", contentControl);
-            Border lfDonated = (Border)contentControl.Template.FindName("lfDonated", contentControl);
-
-            int requested = int.Parse(lfProgressDenominator.Text);
-            int donated = int.Parse(lfProgressNumerator.Text);
-            int donating = int.Parse(lfCounterText.Text);
-
-            if (donating > 0 && Application.Current.TryFindResource("Info500") is SolidColorBrush info500Brush) lfProgressNumerator.Foreground = info500Brush;
         }
         private void LoadLeftover(ref ContentControl contentControl, Leftover leftover, int requested_amount, int donated_amount)
         {
             TextBlock lfTitle = (TextBlock)contentControl.Template.FindName("lfTitle", contentControl);
             TextBlock lfDescription = (TextBlock)contentControl.Template.FindName("lfDescription", contentControl);
             ImageBrush lfImage = (ImageBrush)contentControl.Template.FindName("lfImage", contentControl);
-
-            TextBox lfCounterText = (TextBox)contentControl.Template.FindName("lfCounterText", contentControl);
-            Button lfCounterAdd = (Button)contentControl.Template.FindName("lfCounterAdd", contentControl);
-            Button lfCounterSubtract = (Button)contentControl.Template.FindName("lfCounterSubtract", contentControl);
 
             TextBlock lfProgressNumerator = (TextBlock)contentControl.Template.FindName("lfProgressNumerator", contentControl);
             TextBlock lfProgressDenominator = (TextBlock)contentControl.Template.FindName("lfProgressDenominator", contentControl);
@@ -136,14 +145,7 @@ namespace Leftover_Harmony.Views
             float donation_progress = donated_amount / (float)requested_amount;
 
             lfDonated.Width = lfProgressBar.ActualWidth * donation_progress;
-
-            lfCounterText.PreviewTextInput += CounterPreviewTextInput;
-            lfCounterText.LostFocus += (sender, e) => { lfCounterText.Text = int.Parse(lfCounterText.Text.Replace(" ", "")).ToString(); };
-
-            lfCounterAdd.Click += (sender, e) => { lfCounterText.Text = (int.Parse(lfCounterText.Text.Replace(" ", "")) + 1).ToString(); };
-            lfCounterSubtract.Click += (sender, e) => { lfCounterText.Text = Math.Max(int.Parse(lfCounterText.Text.Replace(" ", "")) - 1, 0).ToString(); };
         }
-
         private void AddLeftover(Leftover leftover, int requested_amount, int donated_amount)
         {
             if (leftover == null) return;
@@ -156,10 +158,73 @@ namespace Leftover_Harmony.Views
 
             LeftoverList.Children.Add(contentControl);
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadRequest();
+        }
+        private void NewLeftoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewLeftoverButton.Visibility = Visibility.Collapsed;
+            NewLeftoverPanel.Visibility = Visibility.Visible;
+        }
+        private void CancelNewLeftoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewLeftoverButton.Visibility = Visibility.Visible;
+            NewLeftoverPanel.Visibility = Visibility.Collapsed;
+        }
+        private async void AddNewLeftoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (newlfTitle.Text == "" || newlfDescription.Text == "" || newlfAmount.Text == "0")
+            {
+                NewLeftoverInvalidTextBox.Visibility = Visibility.Visible;
+                return;
+            }
+
+            ImageSource imagesource = ((ImageBrush)newlfImageButton.Template.FindName("newlfImage", newlfImageButton)).ImageSource;
+
+            byte[]? image = (imagesource == null)? null : ImageConverter.ImageSourcetoByteArray(imagesource);
+
+            ToggleButtonSpinner(ref AddNewLeftoverButton);
+
+            await DataAccessProvider.Instance.AddLeftoverAsync(request.Id, newlfTitle.Text, newlfDescription.Text, int.Parse(newlfAmount.Text), (image != null) ? image : null);
+
+            ToggleButtonSpinner(ref AddNewLeftoverButton);
+            ResetNewLeftoverPanel();
+            RefreshRequest();
+        }
+        private void newlfAmount_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+        }
+        private void newlfAmount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (newlfAmount.Text == "") newlfAmount.Text = "0";
+            else newlfAmount.Text = Math.Min(int.Parse(newlfAmount.Text.Replace(" ", "")), 9999).ToString();
+        }
+        private void newlfImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Filter = "PNG Images (.png)|*.png";
+
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    BitmapImage transformedBitmap = ImageConverter.ResizeBitmapUniformToFill(ImageConverter.StreamtoImage(dialog.OpenFile()), 500);
+                    ImageBrush image = (ImageBrush)newlfImageButton.Template.FindName("newlfImage", newlfImageButton);
+                    image.ImageSource = transformedBitmap;
+                }
+                catch (InvalidOperationException)
+                {
+                    return;
+                }
+            }
+        }
+        private async void DoneeProfile_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Donee request_donee = await request.GetDoneeAsync();
+            if (request_donee != null) _mainWindow.SwitchPage(request_donee);
         }
     }
 }
