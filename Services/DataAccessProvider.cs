@@ -521,6 +521,30 @@ namespace Leftover_Harmony.Services
             return requests;
         }
         /// <summary>
+        /// Asynchronously retrieves a list of all available requests.
+        /// </summary>
+        /// <returns>A List of Request objects containing all available requests.</returns>
+        public async Task<List<Request>> FetchAllRequestsAsync()
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<Request> requests = new List<Request>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Request\"", conn);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            foreach (DataRow row in dataTable.Rows)
+            {
+                requests.Add(Request.From(row));
+            }
+
+            conn.Close();
+
+            return requests;
+        }
+        /// <summary>
         /// Retrieves a list of Requests associated with a specific Donee by their ID.
         /// </summary>
         /// <param name="donee_id">The ID of the Donee for which associated Requests are to be fetched.</param>

@@ -134,7 +134,7 @@
             </Grid>
         </Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Panel.ZIndex="1" Source="" Grid.Column="1" Grid.Row="1" Navigated="MainFrame_Navigated"/>
-        <Grid x:Name="SearchPanel" Grid.Column="1" Grid.Row="1" Panel.ZIndex="1000" Visibility="Visible">
+        <Grid x:Name="SearchPanel" Grid.Column="1" Grid.Row="1" Panel.ZIndex="1000" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="4*"/>

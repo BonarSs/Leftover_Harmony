@@ -67,9 +67,9 @@ namespace Leftover_Harmony.Views
             RequestList.Children.Add(contentControl);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Request> requests = DataAccessProvider.Instance.FetchAllRequests();
+            List<Request> requests = await DataAccessProvider.Instance.FetchAllRequestsAsync();
             foreach (Request request in requests)
             {
                 this.AddRequest(request);
