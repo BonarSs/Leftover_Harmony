@@ -1237,7 +1237,7 @@ namespace Leftover_Harmony.Services
         public bool AddDonee(string username, string email, string password, string phone, string organization)
         {
             NpgsqlCommand cmd = new NpgsqlCommand(
-                "INSERT INTO \"Donor\"" +
+                "INSERT INTO \"Donee\"" +
                 "(\"username\", \"password\", \"email\", \"phone_number\", \"organization\", \"display_name\", \"bio\", \"image\")" +
                 "VALUES (" +
                 ":_username, " +
@@ -1270,7 +1270,7 @@ namespace Leftover_Harmony.Services
         public async Task<bool> AddDoneeAsync(string username, string email, string password, string phone, string organization)
         {
             NpgsqlCommand cmd = new NpgsqlCommand(
-                "INSERT INTO \"Donor\"" +
+                "INSERT INTO \"Donee\"" +
                 "(\"username\", \"password\", \"email\", \"phone_number\", \"organization\", \"display_name\", \"bio\", \"image\")" +
                 "VALUES (" +
                 ":_username, " +
