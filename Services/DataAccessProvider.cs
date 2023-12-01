@@ -350,6 +350,48 @@ namespace Leftover_Harmony.Services
             return FetchRequest(request_id);
         }
         /// <summary>
+        /// Retrieves a Request associated with a specific Leftover.
+        /// </summary>
+        /// <param name="leftover">The Leftover object for which the associated Request is to be fetched.</param>
+        /// <returns>The Request object associated with the provided Leftover.</returns>
+        public Request FetchRequest(Leftover leftover)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT request_id FROM \"RequestLeftover\" WHERE leftover_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", leftover.Id);
+
+            dataTable.Load(cmd.ExecuteReader());
+            int request_id = (int)dataTable.Rows[0]["request_id"];
+
+            conn.Close();
+
+            return FetchRequest(request_id);
+        }
+        /// <summary>
+        /// Retrieves a Request associated with a specific Leftover.
+        /// </summary>
+        /// <param name="leftover">The Leftover object for which the associated Request is to be fetched.</param>
+        /// <returns>The Request object associated with the provided Leftover.</returns>
+        public async Task<Request> FetchRequestAsync(Leftover leftover)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT request_id FROM \"RequestLeftover\" WHERE leftover_id = :_id", conn);
+            cmd.Parameters.AddWithValue("_id", leftover.Id);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+            int request_id = (int)dataTable.Rows[0]["request_id"];
+
+            conn.Close();
+
+            return await FetchRequestAsync(request_id);
+        }
+        /// <summary>
         /// Retrieves a Donor associated with a specific Donation.
         /// </summary>
         /// <param name="donation">The Donation object for which the associated Donor is to be fetched.</param>
@@ -1287,6 +1329,49 @@ namespace Leftover_Harmony.Services
             conn.Close();
 
             return true;
+        }
+        #endregion
+
+        #region Misc
+        public List<(string, int)> GlobalSearch(string query)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<(string, int)> results = new List<(string, int)>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM global_search(:_query);", conn);
+            cmd.Parameters.AddWithValue("_query", query);
+
+            dataTable.Load(cmd.ExecuteReader());
+            
+            foreach (DataRow row in dataTable.Rows)
+            {
+                results.Add(((string)row["_type"], (int)row["_id"]));
+            }
+
+            return results;
+        }
+        public async Task<List<(string, int)>> GlobalSearchAsync(string query)
+        {
+            if (conn.State == ConnectionState.Closed) conn.Open();
+
+            List<(string, int)> results = new List<(string, int)>();
+
+            DataTable dataTable = new DataTable();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM global_search(:_query);", conn);
+            cmd.Parameters.AddWithValue("_query", query);
+
+            dataTable.Load(await cmd.ExecuteReaderAsync());
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                results.Add(((string)row["_type"], (int)row["_id"]));
+            }
+
+            return results;
         }
         #endregion
     }
