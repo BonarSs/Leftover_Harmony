@@ -9,7 +9,7 @@ In the home page, you will directly see all the requests that has been made. The
 You can click on each request to see more detail about the requests.
 
 <p align="center">
-    <img src="../../../images/window_home_page.png"/>
+    <img src="../../images/window_home_page.png"/>
 </p>
 
 
