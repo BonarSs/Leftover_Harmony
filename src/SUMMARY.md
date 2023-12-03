@@ -12,5 +12,8 @@
 - [Windows](./feature_reference/windows.md)
 	- [Authentication Window](./feature_reference/windows/authentication_window.md)
 	- [Application Window](./feature_reference/windows/main_window.md)
+		- [Home Page](./feature_reference/windows/main_window.md)
+		- [Donation Page](./feature_reference/windows/donations_window.md)
 		- [Settings Page](./feature_reference/windows/main_window/settings.md)
-
+		- [Request Preview](./feature_reference/windows/request_preview_window.md)
+		
