@@ -1,5 +1,5 @@
-# Settings
-Here ini settings page user are able to customize appearance, profile information, and account information. On the settings page, user will find 3 tabs, that is Profile tab, Appearance tab, and Account tab. 
+# Settings Page
+Here in settings page user are able to customize appearance, profile information, and account information. On the settings page, user will find 3 tabs, that is Profile tab, Appearance tab, and Account tab. 
 
 
 ## Profile tab
