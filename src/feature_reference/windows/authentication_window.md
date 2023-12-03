@@ -9,7 +9,7 @@ When you open Leftover Harmony, it immediately show the authentication window. A
 Login page is the default page displayed whenever Authentication Window is opened.
 
 <p align="center">
-<img src="../images/authentication_window_login_numbered.png" alt="authentication_window_login_numbered" width="50%"/>
+<img src="../../images/authentication_window_login_numbered.png" alt="authentication_window_login_numbered" width="50%"/>
 </p>
 
 You will see 4 main parts where all of them are useful for authentication method.
@@ -22,7 +22,7 @@ You will see 4 main parts where all of them are useful for authentication method
 Role Selection Page is a page for new users to select their account role before making an account (see [Account](../account.md)).
 
 <p align="center">
-<img src="../images/authentication_window_role_selection_numbered.png" alt="authentication_window_role_selection_numbered" width="50%"/>
+<img src="../../images/authentication_window_role_selection_numbered.png" alt="authentication_window_role_selection_numbered" width="50%"/>
 </p>
 
 There are 3 main parts in this page:
@@ -34,8 +34,8 @@ There are 3 main parts in this page:
 Sign Up Page is a page for new users to make their new account after selecting their account role (see [Account](../account.md)).
 
 <p align="center">
-<img src="../images/authentication_window_sign_up_donor_numbered.png" alt="authentication_window_sign_up_donor_numbered" width="40%"/>
-<img src="../images/authentication_window_sign_up_donee_numbered.png" alt="authentication_window_sign_up_donee_numbered" width="40%"/>
+<img src="../../images/authentication_window_sign_up_donor_numbered.png" alt="authentication_window_sign_up_donor_numbered" width="40%"/>
+<img src="../../images/authentication_window_sign_up_donee_numbered.png" alt="authentication_window_sign_up_donee_numbered" width="40%"/>
 </p>
 
 Sign Up Page has two versions, Donor Sign Up Page (left) and Donee Sign Up Page (right). While different for each roles, it is mostly similar and consist of 4 main parts.
