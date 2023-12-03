@@ -8,6 +8,5 @@ There are 2 roles in this application scenario. These 2 roles has different auth
 <br>As a Donee, one must have a company or organization that is verified and trusted to distribute the donations to them who really need it.
 <br>In this application, you can intialize a Request post for donations and adjust it with your organization needs.
 
-<br>
 ## Donor
 <br>As a Donor, you do not need any verified organization to enroll. Everyone may become a Donor. As a Donor, you can search for the Request post that you are intrested in and donate for to it
