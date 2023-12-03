@@ -5,7 +5,7 @@ Here ini settings page user are able to customize appearance, profile informatio
 ## Profile tab
 On the profile tab, user may customize their profile that will be shown to the other user. User may customize Display name, Bio, and profile picture in this tab. For the profile picture, only picture with .png extension that is allowed to use for the profile picture. Just simply click the profile page frame then choose your desired png picture.
 <p align="center">
-<img src="../images/SettingsPage_Profile Tab.png" alt="Profile_Tab" widht="50%" height="50%"/>
+<img src="../images/SettingsPage_Profile_Tab.png" alt="Profile_Tab" widht="50%" height="50%"/>
 </p>
 
 
